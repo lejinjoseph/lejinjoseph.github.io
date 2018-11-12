@@ -53,5 +53,13 @@ I use [GitHub](https://github.com/jaiimeriios/Bootstrap-Theme-Event) for version
 
 1.0
 
+### Theme Version
+
+1.0
+
+### Release Date
+
+November 2018
+
 #### EVENT
 ![Image of Event Theme]()
