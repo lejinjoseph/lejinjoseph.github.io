@@ -41,7 +41,7 @@ If you like the template, please spread the word.
 
 ## Versioning
 
-I use [GitHub](https://github.com/jaiimeriios/Bootstrap-Theme-Event) for versioning.
+I use [GitHub](https://github.com/jaiimeriios/Bootstrap-Theme-Event) for versioning
 
 ## Authors
 
