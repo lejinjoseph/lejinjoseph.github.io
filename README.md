@@ -49,10 +49,6 @@ I use [GitHub](https://github.com/jaiimeriios/Bootstrap-Theme-Event) for version
 
 * **Jaime Alejandro Rios** - *Website* - [jaiimeriios.com](http://jaiimeriios.com)
 
-## Version
-
-1.0
-
 ### Theme Version
 
 1.0
