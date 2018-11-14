@@ -103,19 +103,20 @@ h1, h2, h3, h4, h5, h6 {
   height: 5px;
   background: #d29e02;
   bottom: 0;
-  left: calc(50% - 25px);
+  left: 0;
+  /* left: calc(50% - 25px); */
 }
 
 .section-header h2 {
   font-size: 36px;
   text-transform: uppercase;
-  text-align: center;
+  text-align: left;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
 .section-header p {
-  text-align: center;
+  text-align: left;
   padding: 0;
   margin: 0;
   font-size: 18px;
