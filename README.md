@@ -58,4 +58,4 @@ I use [GitHub](https://github.com/jaiimeriios/Bootstrap-Theme-Event) for version
 November 2018
 
 #### EVENT
-![Image of Event Theme]()
+![Image of Event Theme](https://raw.githubusercontent.com/jaiimeriios/Bootstrap-Theme-Event/master/img/home.jpg)
