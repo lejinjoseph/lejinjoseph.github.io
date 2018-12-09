@@ -9,7 +9,7 @@ If you like the template, please spread the word.
 
 ## View Live Demo
 
-* [Live Demo](http://jaiimeriios.com/portfolio/event-demo/index.html)
+* [Live Demo](https://jaiimeriios.github.io/Bootstrap-Theme-Event/)
 
 ## Built With
 
