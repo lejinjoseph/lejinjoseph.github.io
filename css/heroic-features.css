@@ -10,3 +10,7 @@ body {
 .imagealign{
 	height: 50%;
 }
+
+.cardheight{
+	height: 85%!important;
+}
