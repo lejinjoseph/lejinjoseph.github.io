@@ -134,12 +134,43 @@
 			<div class="col-lg-3 col-md-6 mb-4">
 				<div class="card cardheight">
 					<div class="card-body">
+						<h4 class="card-title">Archdiocesan Internet Mission Ekm (Malayalam)</h4>
+						<p class="card-text">Holy mass on weekdays 06.30 AM IST (01.00 AM GMT) <br/>
+							Sunday 06.30 AM , 08.30 AM IST (01.00 AM , 03.00 AM GMT)<br/>	
+						</p>
+					</div>
+					<div class="card-footer">
+						<a href="https://www.youtube.com/channel/UCXQMk3mi-ydB-2iwQpriOpQ"
+							class="btn btn-warning goButton text-white font-weight-bold">Watch</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-3 col-md-6 mb-4">
+				<div class="card cardheight">
+					<div class="card-body">
 						<h4 class="card-title">Palai Roopatha (Malayalam)</h4>
-						<p class="card-text">Palai Roopatha. Holy mass and spiritual
-							talks</p>
+						<p class="card-text">Holy mass on weekdays 05.30 AM, 06.30 AM,04.30 PM IST <br/>
+							(12.00 AM , 01.00 AM , 11.00 AM GMT)<br/>	
+						</p>
 					</div>
 					<div class="card-footer">
 						<a href="https://www.youtube.com/PalaiRoopathaOfficial"
+							class="btn btn-warning goButton text-white font-weight-bold">Watch</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-3 col-md-6 mb-4">
+				<div class="card cardheight">
+					<div class="card-body">
+						<h4 class="card-title">Fr. Xavier Khan Vattayil (Malayalam)</h4>
+						<p class="card-text">Holy mass every day @ 12.00 PM  IST <br/>
+							(06.30 AM GMT)<br/>	
+						</p>
+					</div>
+					<div class="card-footer">
+						<a href="https://www.youtube.com/channel/UCabOQzfih6On4vNBKN1Za2g"
 							class="btn btn-warning goButton text-white font-weight-bold">Watch</a>
 					</div>
 				</div>
@@ -208,6 +239,44 @@
 		<!-- /.container -->
 	</footer>
 
+	<!-- modal for online mass  -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">GUIDELINES FOR ATTENDING HOLY MASS ONLINE</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+
+				Start preparing for HOLY MASS before-hand.
+				Do not rush !!!
+				
+				<br/>
+				✝ Set-up a SIMPLE ALTAR with a CRUCIFIX & a CANDLE in your table near the device (mobile phone, tablet, laptop, TV) streaming the HOLY MASS.
+				<br/>
+				✝ Wear APPROPRIATE ATTIRE
+				(Do not attend the mass in your leisure wear or home wear). Be serious in your preparation.
+				<br/>
+				✝ TURN OFF other online devices &  DO NOT DO ANYTHING ELSE while you are participating in the HOLY MASS. There should be nothing to distract your attention on the mass.
+				<br/>
+				✝ RECITE the corresponding RESPONSES to the prayers in the HOLY MASS. 
+				<br/>
+				✝	Observe the PROPER GESTURES of standing, kneeling & sitting at appropriate times in the HOLY MASS.
+				<br/>
+				✝	During the time of receiving communion, please RECITE the SPIRITUAL COMMUNION PRAYER.
+			
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	<!-- modal ends -->
+
 	<!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -219,8 +288,14 @@
   gtag('js', new Date());
 
   gtag('config', 'UA-161546265-1');
-</script>
 
+  
+</script>
+<script type="text/javascript">
+    $(window).on('load',function(){
+        $('#exampleModal').modal('show');
+    });
+</script>
 </body>
 
 </html>
