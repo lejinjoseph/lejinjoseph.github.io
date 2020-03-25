@@ -6,7 +6,31 @@ body {
   color: #2f3138;
   font-family: "Open Sans", sans-serif;
 }
+.nopadding {
+  padding: 5px 20px  !important; 
+ }
+ 
+ .dropdowncustom{
+  float: right;  
+  margin-right: 5%;
+ }
 
+ .noborderbottom{
+   border-bottom: 0px solid !important;
+ }
+ 
+ .bg-white{
+    background: white;
+ }
+
+ .section-bg-white{
+   background-color: white !important;
+ }
+ 
+ .headerwhite{
+   color:white;
+ }
+ 
 a {
   color: #d29e02;
   transition: 0.5s;
