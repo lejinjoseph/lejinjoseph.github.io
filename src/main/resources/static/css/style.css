@@ -37,6 +37,10 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 70px;
 }
 
+.lej-padding{
+    padding-top:2%;
+}
+
 .wow {
   visibility: hidden;
 }
@@ -152,7 +156,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header #logo h1 {
-  font-size: 36px;
+  font-size: 22px;
   margin: 0;
   padding: 6px 0;
   line-height: 1;
