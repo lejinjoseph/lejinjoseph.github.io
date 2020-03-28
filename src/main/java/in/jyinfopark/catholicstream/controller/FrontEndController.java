@@ -52,9 +52,7 @@ public class FrontEndController {
                 ZoneId fromTimeZone = ZoneId.of(time);
                 if (null != mass.getTime()) {
                     try {
-                        ZonedDateTime zonedDateTime = ZonedDateTime.parse("2015-05-05T"+mass.getTime().toString()+"+05:30[Asia/Kolkata]");
-                        mass.setPrettyTime(zonedDateTime.toInstant().atZone(fromTimeZone).format(DateTimeFormatter.ofPattern("hh:mm a")));
-
+                        mass.setPrettyTime(mass.getTime().toInstant().atZone(fromTimeZone).format(DateTimeFormatter.ofPattern("hh:mm a")));
                     } catch (Exception e) {
                         e.printStackTrace();
                         mass.setPrettyTime("N/A");
@@ -90,8 +88,7 @@ public class FrontEndController {
             ZoneId fromTimeZone = ZoneId.of(time);
             if(null!=mass.getTime()){
                 try {
-                    ZonedDateTime zonedDateTime = ZonedDateTime.parse("2015-05-05T"+mass.getTime().toString()+"+05:30[Asia/Kolkata]");
-                    mass.setPrettyTime(zonedDateTime.toInstant().atZone(fromTimeZone).format(DateTimeFormatter.ofPattern("hh:mm a")));
+                    mass.setPrettyTime(mass.getTime().toInstant().atZone(fromTimeZone).format(DateTimeFormatter.ofPattern("hh:mm a")));
                 }catch (Exception e){
                     mass.setPrettyTime("N/A");
                 }
