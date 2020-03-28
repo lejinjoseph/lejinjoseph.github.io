@@ -77,8 +77,8 @@
     <section id="schedule" class="section-with-bg">
       <div class="container wow fadeInUp">
         <div class="section-header">
-          <h2>[[${language}]] Mass today</h2>
-          <p class="font-weight-bold">All the schedules are in [[${timezone}]]  timezone</p>
+          <h2>Holy Mass today</h2>
+          <p class="font-weight-bold">Holy masses from all around the world</p>
 
           <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item lej-padding">
@@ -124,7 +124,7 @@
           <div role="tabpanel" class="col-lg-9  tab-pane fade" id="sun">
 
             <div class="row schedule-item" th:each="mass : ${sunday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]]</time></div>
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
                 <h4 th:text="${mass.name}"></h4>
                 <p th:text="${mass.description}">.</p><br/>
@@ -140,7 +140,7 @@
           <div role="tabpanel" class="col-lg-9  tab-pane fade" id="mon">
 
             <div class="row schedule-item" th:each="mass : ${monday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]]</time></div>
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
                 <h4 th:text="${mass.name}"></h4>
                 <p th:text="${mass.description}">.</p><br/>
@@ -156,7 +156,7 @@
           <div role="tabpanel" class="col-lg-9  tab-pane fade" id="tue">
 
             <div class="row schedule-item" th:each="mass : ${tuesday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]]</time></div>
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
                 <h4 th:text="${mass.name}"></h4>
                 <p th:text="${mass.description}">.</p><br/>
@@ -172,7 +172,7 @@
           <div role="tabpanel" class="col-lg-9  tab-pane fade" id="wed">
 
             <div class="row schedule-item" th:each="mass : ${wednesday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]]</time></div>
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
                 <h4 th:text="${mass.name}"></h4>
                 <p th:text="${mass.description}">.</p><br/>
@@ -186,7 +186,7 @@
           <div role="tabpanel" class="col-lg-9  tab-pane fade" id="thu">
 
             <div class="row schedule-item" th:each="mass : ${thursday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]]</time></div>
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
                 <h4 th:text="${mass.name}"></h4>
                 <p th:text="${mass.description}">.</p><br/>
@@ -201,7 +201,7 @@
           <div role="tabpanel" class="col-lg-9  tab-pane fade" id="fri">
 
             <div class="row schedule-item" th:each="mass : ${friday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]]</time></div>
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
                 <h4 th:text="${mass.name}"></h4>
                 <p th:text="${mass.description}">.</p><br/>
@@ -216,7 +216,7 @@
           <div role="tabpanel" class="col-lg-9  tab-pane fade" id="sat">
 
             <div class="row schedule-item" th:each="mass : ${saturday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]]</time></div>
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
                 <h4 th:text="${mass.name}"></h4>
                 <p th:text="${mass.description}">.</p><br/>
@@ -266,12 +266,18 @@
 
   <!-- Template Main Javascript File -->
   <script th:src="@{/js/main.js}"></script>
-<script>
-  function redirectTo(url){
-   window.location(url);
-  }
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async
+          src="https://www.googletagmanager.com/gtag/js?id=UA-161546265-1"></script>
+  <script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
 
-</script>
+		gtag('config', 'UA-161546265-1');
+	</script>
 </body>
 
 </html>
