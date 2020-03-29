@@ -61,7 +61,7 @@
   ============================-->
   <section id="intro">
     <div class="intro-container wow fadeIn">
-      <h1 class="mb-4 pb-0">Catholic <span>Stream</span><br>Online catholic  streams</h1>
+      <h1 class="mb-4 pb-0">Live online catholic <span>Streams</span></h1>
       <!-- <p class="mb-4 pb-0">10-12 July, San Diego, CA</p>
       <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video"
         data-autoplay="true"></a>
@@ -78,17 +78,23 @@
       <div class="container wow fadeInUp">
         <div class="section-header">
           <h2>[[${language}]] Holy Mass</h2>
-          <p class="font-weight-bold">Holy masses from all around the world</p>
-
+          <button class="btn btn-small btn-warning" onclick="openModal()">Instructions</button>
+          <br><br>
+          <p class="font-weight-bold">Holy masses from all around the world. All timings are in IST (GMT+5.30)</p>
+          <br>
           <ul class="nav nav-tabs" role="tablist">
+
             <li class="nav-item lej-padding">
-              <a class="nav-link active" th:href="@{/masses/malayalam}">Malayalam</a>
+              <a th:if="${language != 'malayalam'}" class="nav-link" th:href="@{/masses/malayalam}">Malayalam</a>
+              <a th:if="${language == 'malayalam'}" class="nav-link active" th:href="@{/masses/malayalam}">Malayalam</a>
             </li>
             <li class="nav-item lej-padding">
-              <a class="nav-link active" th:href="@{/masses/english}" >English</a>
+              <a th:if="${language != 'english'}" class="nav-link" th:href="@{/masses/english}">English</a>
+              <a th:if="${language == 'english'}" class="nav-link active" th:href="@{/masses/english}">English</a>
             </li>
             <li class="nav-item lej-padding">
-              <a class="nav-link active" th:href="@{/masses/hindi}" >Hindi</a>
+              <a th:if="${language != 'hindi'}" class="nav-link" th:href="@{/masses/hindi}">Hindi</a>
+              <a th:if="${language == 'hindi'}" class="nav-link active" th:href="@{/masses/hindi}">Hindi</a>
             </li>
 
           </ul>
@@ -98,31 +104,40 @@
 
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item lej-padding">
-            <a class="nav-link" href="#sun" role="tab" data-toggle="tab">Sunday</a>
+            <a th:if="${day == 'sunday'}" class="nav-link active show" href="#sun" role="tab" data-toggle="tab" aria-selected="true">Sunday</a>
+            <a th:if="${day != 'sunday'}" class="nav-link" href="#sun" role="tab" data-toggle="tab">Sunday</a>
           </li>
           <li class="nav-item lej-padding">
-            <a class="nav-link" href="#mon" role="tab" data-toggle="tab">Monday</a>
+            <a th:if="${day == 'monday'}" class="nav-link active show" href="#mon" role="tab" data-toggle="tab" aria-selected="true">Monday</a>
+            <a th:if="${day != 'monday'}" class="nav-link" href="#mon" role="tab" data-toggle="tab">Monday</a>
           </li>
           <li class="nav-item lej-padding">
-            <a class="nav-link" href="#tue" role="tab" data-toggle="tab">Tuesday</a>
+            <a th:if="${day == 'tuesday'}" class="nav-link active show" href="#tue" role="tab" data-toggle="tab" aria-selected="true">Tuesday</a>
+            <a th:if="${day != 'tuesday'}" class="nav-link" href="#tue" role="tab" data-toggle="tab">Tuesday</a>
 		  </li>
 		  <li class="nav-item lej-padding">
-            <a class="nav-link" href="#wed" role="tab" data-toggle="tab">Wednesday</a>
+            <a th:if="${day == 'wednesday'}" class="nav-link active show" href="#wed" role="tab" data-toggle="tab" aria-selected="true">Wednesday</a>
+            <a th:if="${day != 'wednesday'}" class="nav-link" href="#wed" role="tab" data-toggle="tab">Wednesday</a>
           </li>
           <li class="nav-item lej-padding">
-            <a class="nav-link" href="#thu" role="tab" data-toggle="tab">Thursday</a>
+            <a th:if="${day == 'thursday'}" class="nav-link active show" href="#thu" role="tab" data-toggle="tab" aria-selected="true">Thursday</a>
+            <a th:if="${day != 'thursday'}" class="nav-link" href="#thu" role="tab" data-toggle="tab">Thursday</a>
           </li>
           <li class="nav-item lej-padding">
-            <a class="nav-link" href="#fri" role="tab" data-toggle="tab">Friday</a>
+            <a th:if="${day == 'friday'}" class="nav-link active show" href="#fri" role="tab" data-toggle="tab" aria-selected="true">Friday</a>
+            <a th:if="${day != 'friday'}" class="nav-link" href="#fri" role="tab" data-toggle="tab">Friday</a>
 		  </li>
+          <li class="nav-item lej-padding">
+            <a th:if="${day == 'saturday'}" class="nav-link active show" href="#sat" role="tab" data-toggle="tab" aria-selected="true">Saturday</a>
+            <a th:if="${day != 'saturday'}" class="nav-link" href="#sat" role="tab" data-toggle="tab">Saturday</a>
+          </li>
 
         </ul>
 
         <div class="tab-content row justify-content-center">
 
           <!-- Sunday -->
-          <div role="tabpanel" class="col-lg-9  tab-pane fade" id="sun">
-
+          <div  th:if="${day == 'sunday'}"  role="tabpanel" class="col-lg-9  tab-pane fade active show" id="sun">
             <div class="row schedule-item" th:each="mass : ${sunday}">
               <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
@@ -131,14 +146,22 @@
                 <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
               </div>
             </div>
+          </div>
 
-
+          <div  th:if="${day != 'sunday'}"  role="tabpanel" class="col-lg-9  tab-pane fade" id="sun">
+            <div class="row schedule-item" th:each="mass : ${sunday}">
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-10">
+                <h4 th:text="${mass.name}"></h4>
+                <p th:text="${mass.description}">.</p><br/>
+                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+              </div>
+            </div>
           </div>
           <!-- End Sunday -->
 
           <!-- Monday -->
-          <div role="tabpanel" class="col-lg-9  tab-pane fade" id="mon">
-
+          <div th:if="${day == 'monday'}" role="tabpanel" class="col-lg-9  tab-pane fade active show" id="mon">
             <div class="row schedule-item" th:each="mass : ${monday}">
               <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
@@ -147,14 +170,22 @@
                 <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
               </div>
             </div>
+          </div>
 
-
+          <div th:if="${day != 'monday'}" role="tabpanel" class="col-lg-9  tab-pane fade" id="mon">
+            <div class="row schedule-item" th:each="mass : ${monday}">
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-10">
+                <h4 th:text="${mass.name}"></h4>
+                <p th:text="${mass.description}">.</p><br/>
+                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+              </div>
+            </div>
           </div>
           <!-- End Monday -->
 
-          <!-- Schdule Day 3 -->
-          <div role="tabpanel" class="col-lg-9  tab-pane fade" id="tue">
-
+          <!-- Tuesday -->
+          <div th:if="${day == 'tuesday'}" role="tabpanel" class="col-lg-9  tab-pane fade active show" id="tue">
             <div class="row schedule-item" th:each="mass : ${tuesday}">
               <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
@@ -163,14 +194,34 @@
                 <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
               </div>
             </div>
-
-
           </div>
-          <!-- End Schdule Day 3 -->
 
-          <!-- Schdule Day 4 -->
-          <div role="tabpanel" class="col-lg-9  tab-pane fade" id="wed">
+          <div th:if="${day != 'tuesday'}" role="tabpanel" class="col-lg-9  tab-pane fade" id="tue">
+            <div class="row schedule-item" th:each="mass : ${tuesday}">
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-10">
+                <h4 th:text="${mass.name}"></h4>
+                <p th:text="${mass.description}">.</p><br/>
+                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Tuesday Day 3 -->
 
+          <!-- Wednesday Day 4 -->
+          <div th:if="${day == 'wednesday'}" role="tabpanel" class="col-lg-9  tab-pane fade active show" id="wed">
+            <div class="row schedule-item" th:each="mass : ${wednesday}">
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-10">
+                <h4 th:text="${mass.name}"></h4>
+                <p th:text="${mass.description}">.</p><br/>
+                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+              </div>
+            </div>
+          </div>
+
+
+          <div th:if="${day != 'wednesday'}" role="tabpanel" class="col-lg-9  tab-pane fade" id="wed">
             <div class="row schedule-item" th:each="mass : ${wednesday}">
               <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
@@ -181,10 +232,10 @@
             </div>
 
           </div>
-          <!-- End Schdule Day 4 -->
-          <!-- Schdule Day 5 -->
-          <div role="tabpanel" class="col-lg-9  tab-pane fade" id="thu">
 
+          <!-- End Wednesday Day 4 -->
+          <!-- Schdule Thursday 5 -->
+          <div th:if="${day == 'thursday'}" role="tabpanel" class="col-lg-9  tab-pane fade active show" id="thu">
             <div class="row schedule-item" th:each="mass : ${thursday}">
               <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
@@ -193,13 +244,22 @@
                 <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
               </div>
             </div>
-
           </div>
-          <!-- End Schdule Day 5 -->
 
-          <!-- Schdule Day 6 -->
-          <div role="tabpanel" class="col-lg-9  tab-pane fade" id="fri">
+          <div th:if="${day != 'thursday'}" role="tabpanel" class="col-lg-9  tab-pane fade" id="thu">
+            <div class="row schedule-item" th:each="mass : ${thursday}">
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-10">
+                <h4 th:text="${mass.name}"></h4>
+                <p th:text="${mass.description}">.</p><br/>
+                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Thursday Day 5 -->
 
+          <!-- Friday Day 6 -->
+          <div  th:if="${day == 'friday'}"role="tabpanel" class="col-lg-9  tab-pane fade active show" id="fri">
             <div class="row schedule-item" th:each="mass : ${friday}">
               <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
@@ -208,13 +268,22 @@
                 <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
               </div>
             </div>
-
           </div>
-          <!-- End Schdule Day 6 -->
 
-          <!-- Schdule Day 7 -->
-          <div role="tabpanel" class="col-lg-9  tab-pane fade" id="sat">
+          <div th:if="${day != 'friday'}" role="tabpanel" class="col-lg-9  tab-pane fade" id="fri">
+            <div class="row schedule-item" th:each="mass : ${friday}">
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-10">
+                <h4 th:text="${mass.name}"></h4>
+                <p th:text="${mass.description}">.</p><br/>
+                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Friday Day 6 -->
 
+          <!-- Saturday Day 7 -->
+          <div  th:if="${day == 'saturday'}" role="tabpanel" class="col-lg-9  tab-pane fade active show" id="sat">
             <div class="row schedule-item" th:each="mass : ${saturday}">
               <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
               <div class="col-md-10">
@@ -223,9 +292,19 @@
                 <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
               </div>
             </div>
-
           </div>
-          <!-- End Schdule Day 7 -->
+
+          <div th:if="${day != 'saturday'}" role="tabpanel" class="col-lg-9  tab-pane fade" id="sat">
+            <div class="row schedule-item" th:each="mass : ${saturday}">
+              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-10">
+                <h4 th:text="${mass.name}"></h4>
+                <p th:text="${mass.description}">.</p><br/>
+                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Saturday Day 7 -->
 
         </div>
 
@@ -248,6 +327,48 @@
     </div>
   </footer><!-- #footer -->
 
+  <!-- modal for online mass  -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Guidelines for
+            attending holy mass online</h5>
+          <button type="button" class="close" data-dismiss="modal"
+                  aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          ✝ Start preparing for holy mass before-hand. do not rush . <br />
+          ✝ Set-up a simple altar with a crucifix & a candle in your table
+          near the device (mobile phone, tablet, laptop, tv) streaming the
+          holy mass. <br /> ✝ Wear appropriate attire (do not attend the
+          mass in your leisure wear or home wear). be serious in your
+          preparation. <br /> ✝ Turn off other online devices & do not do
+          anything else while you are participating in the holy mass. there
+          should be nothing to distract your attention on the mass. <br /> ✝
+          Recite the corresponding responses to the prayers in the holy mass.
+          <br /> ✝ Observe the proper gestures of standing, kneeling &
+          sitting at appropriate times in the holy mass. <br /> ✝ During the
+          time of receiving communion, please recite the spiritual communion
+          prayer. <br /> <br />Download prayer here :
+          <a th:href="@{/img/english.jpeg}" th:attr="download=@{/img/english.jpeg}" target="_blank">English</a>
+          &nbsp;
+          <a th:href="@{/img/malayalam.jpeg}" th:attr="download=@{/img/malayalam.jpeg}" target="_blank">Malayalam</a>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+                  data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal ends -->
+
   <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
 
   <!-- JavaScript Libraries -->
@@ -260,7 +381,6 @@
   <script th:src="@{/lib/wow/wow.min.js}"></script>
   <script th:src="@{/lib/venobox/venobox.min.js}"></script>
   <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
-  <script th:src="@{/js/moment.js}"></script>
 
   <!-- Contact Form JavaScript File -->
   <script th:src="@{/contactform/contactform.js}"></script>
@@ -278,6 +398,10 @@
 		gtag('js', new Date());
 
 		gtag('config', 'UA-161546265-1');
+
+		function openModal(){
+        $('#exampleModal').modal('show');
+    }
 	</script>
 </body>
 

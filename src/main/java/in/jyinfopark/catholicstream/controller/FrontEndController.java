@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.TimeZone;
@@ -46,6 +43,7 @@ public class FrontEndController {
             }
             populateModel(model, "IST", massList);
             model.addAttribute("language", "malayalam");
+            model.addAttribute("malayalam","active");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -77,6 +75,7 @@ public class FrontEndController {
         }
         populateModel(model, "IST", massList);
         model.addAttribute("language",language);
+        model.addAttribute(language,"active");
         System.out.println(">>>>> /masses controller out");
         return "index";
     }
@@ -90,6 +89,7 @@ public class FrontEndController {
         model.addAttribute("friday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("fri") || e.getDay().equalsIgnoreCase("Everyday")).collect(Collectors.toList()));
         model.addAttribute("saturday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("sat") || e.getDay().equalsIgnoreCase("Everyday")).collect(Collectors.toList()));
         model.addAttribute("timezone", time);
+        model.addAttribute("day", LocalDate.now().getDayOfWeek().name().toLowerCase());
     }
 
 }
