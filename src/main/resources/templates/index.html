@@ -77,7 +77,7 @@
     <section id="schedule" class="section-with-bg">
       <div class="container wow fadeInUp">
         <div class="section-header">
-          <h2>Holy Mass today</h2>
+          <h2>[[${language}]] Holy Mass</h2>
           <p class="font-weight-bold">Holy masses from all around the world</p>
 
           <ul class="nav nav-tabs" role="tablist">
@@ -98,7 +98,7 @@
 
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item lej-padding">
-            <a class="nav-link active" href="#sun" role="tab" data-toggle="tab">Sunday</a>
+            <a class="nav-link" href="#sun" role="tab" data-toggle="tab">Sunday</a>
           </li>
           <li class="nav-item lej-padding">
             <a class="nav-link" href="#mon" role="tab" data-toggle="tab">Monday</a>
@@ -115,7 +115,7 @@
           <li class="nav-item lej-padding">
             <a class="nav-link" href="#fri" role="tab" data-toggle="tab">Friday</a>
 		  </li>
-		  
+
         </ul>
 
         <div class="tab-content row justify-content-center">
@@ -232,7 +232,7 @@
       </div>
 
     </section>
-    
+
 
   </main>
 
@@ -260,6 +260,7 @@
   <script th:src="@{/lib/wow/wow.min.js}"></script>
   <script th:src="@{/lib/venobox/venobox.min.js}"></script>
   <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
+  <script th:src="@{/js/moment.js}"></script>
 
   <!-- Contact Form JavaScript File -->
   <script th:src="@{/contactform/contactform.js}"></script>

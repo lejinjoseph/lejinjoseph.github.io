@@ -26,33 +26,16 @@ public class FrontEndController {
     @Autowired
     private MassRepo massRepo;
 
-
-    @GetMapping({"/","/route"})
-    public String route(Model model){
-        return "route";
-    }
-
-    @GetMapping(value = "/home")
-    public String home(Model model, HttpSession httpSession,@RequestParam(name="timezone",required = false) String timeZone) {
-        System.out.println(">>>>> /home controller in timezone="+timeZone);
-        if(null!=timeZone){
-            httpSession.setAttribute("timezone",timeZone);
-        }
-        if(null==httpSession.getAttribute("timezone") && null==timeZone){
-            return "redirect:/route";
-        }
-        String time=httpSession.getAttribute("timezone").toString();
-
-
+    @GetMapping({ "/","/home"})
+    public String home(Model model) {
+        System.out.println(">>>>> /home controller in");
         try {
-
-
             List<Mass> massList = massRepo.findAllByLanguageEquals("malayalam");
+            massList.removeIf(e->e.getTime()==null);
             for (Mass mass : massList) {
-                ZoneId fromTimeZone = ZoneId.of(time);
                 if (null != mass.getTime()) {
                     try {
-                        mass.setPrettyTime(mass.getTime().toInstant().atZone(fromTimeZone).format(DateTimeFormatter.ofPattern("hh:mm a")));
+                        mass.setPrettyTime(mass.getTime().toLocalTime().format(DateTimeFormatter.ofPattern("hh:mm a")));
                     } catch (Exception e) {
                         e.printStackTrace();
                         mass.setPrettyTime("N/A");
@@ -61,7 +44,7 @@ public class FrontEndController {
                     mass.setPrettyTime("N/A");
                 }
             }
-            populateModel(model, time, massList);
+            populateModel(model, "IST", massList);
             model.addAttribute("language", "malayalam");
         }catch (Exception e){
             e.printStackTrace();
@@ -73,22 +56,18 @@ public class FrontEndController {
     }
 
     @GetMapping("/masses/{language}")
-    public String getMasses(Model model, @PathVariable String language,HttpSession httpSession) {
-        if(null==httpSession.getAttribute("timezone")){
-            return "redirect:/route";
-        }
-        String time=httpSession.getAttribute("timezone").toString();
+    public String getMasses(Model model, @PathVariable String language) {
 
-        System.out.println(">>>>> /masses controller in lang  "+language+" time zone"+time);
+        System.out.println(">>>>> /masses controller in lang  "+language);
         if(language==null){
             language="malayalam";
         }
         List<Mass> massList=massRepo.findAllByLanguageEquals(language);
+        massList.removeIf(e->e.getTime()==null);
         for (Mass mass : massList) {
-            ZoneId fromTimeZone = ZoneId.of(time);
             if(null!=mass.getTime()){
                 try {
-                    mass.setPrettyTime(mass.getTime().toInstant().atZone(fromTimeZone).format(DateTimeFormatter.ofPattern("hh:mm a")));
+                    mass.setPrettyTime(mass.getTime().toLocalTime().format(DateTimeFormatter.ofPattern("hh:mm a")));
                 }catch (Exception e){
                     mass.setPrettyTime("N/A");
                 }
@@ -96,20 +75,20 @@ public class FrontEndController {
                 mass.setPrettyTime("N/A");
             }
         }
-        populateModel(model, time, massList);
+        populateModel(model, "IST", massList);
         model.addAttribute("language",language);
         System.out.println(">>>>> /masses controller out");
         return "index";
     }
 
     private void populateModel(Model model, String time, List<Mass> massList) {
-        model.addAttribute("sunday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("sun")).collect(Collectors.toList()));
-        model.addAttribute("monday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("mon")).collect(Collectors.toList()));
-        model.addAttribute("tuesday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("tue")).collect(Collectors.toList()));
-        model.addAttribute("wednesday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("wed")).collect(Collectors.toList()));
-        model.addAttribute("thursday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("thu")).collect(Collectors.toList()));
-        model.addAttribute("friday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("fri")).collect(Collectors.toList()));
-        model.addAttribute("saturday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("sat")).collect(Collectors.toList()));
+        model.addAttribute("sunday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("sun") || e.getDay().equalsIgnoreCase("Everyday")).collect(Collectors.toList()));
+        model.addAttribute("monday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("mon") || e.getDay().equalsIgnoreCase("Everyday")).collect(Collectors.toList()));
+        model.addAttribute("tuesday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("tue") || e.getDay().equalsIgnoreCase("Everyday")).collect(Collectors.toList()));
+        model.addAttribute("wednesday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("wed") || e.getDay().equalsIgnoreCase("Everyday")).collect(Collectors.toList()));
+        model.addAttribute("thursday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("thu") || e.getDay().equalsIgnoreCase("Everyday")).collect(Collectors.toList()));
+        model.addAttribute("friday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("fri") || e.getDay().equalsIgnoreCase("Everyday")).collect(Collectors.toList()));
+        model.addAttribute("saturday", massList.stream().filter(e -> e.getDay().equalsIgnoreCase("sat") || e.getDay().equalsIgnoreCase("Everyday")).collect(Collectors.toList()));
         model.addAttribute("timezone", time);
     }
 

@@ -25,7 +25,7 @@ public class Mass {
     private String day;
 
     @Column(name = "time_ist")
-    private Timestamp time;
+    private Time time;
 
     @Column
     private String language;
@@ -80,11 +80,11 @@ public class Mass {
     }
 
 
-    public Timestamp getTime() {
+    public Time getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(Time time) {
         this.time = time;
     }
 

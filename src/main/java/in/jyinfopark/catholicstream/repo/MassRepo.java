@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface MassRepo extends CrudRepository<Mass,Integer> {
-    @Query(value = "SELECT * FROM mass WHERE language=?1 ORDER BY time_ist asc",nativeQuery = true)
+    @Query(value = "SELECT * FROM mass WHERE language=?1 and day is not null ORDER BY time_ist asc",nativeQuery = true)
     List<Mass> findAllByLanguageEquals(String language);
 }
