@@ -2,7 +2,9 @@ package in.jyinfopark.catholicstream.controller;
 
 import in.jyinfopark.catholicstream.entity.Mass;
 import in.jyinfopark.catholicstream.repo.MassRepo;
+import in.jyinfopark.catholicstream.service.MassService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.security.PublicKey;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -21,13 +24,12 @@ import java.util.stream.Collectors;
 public class FrontEndController {
 
     @Autowired
-    private MassRepo massRepo;
+    private MassService massService;
 
     @GetMapping({ "/","/home"})
     public String home(Model model) {
-        System.out.println(">>>>> /home controller in");
         try {
-            List<Mass> massList = massRepo.findAllByLanguageEquals("malayalam");
+            List<Mass> massList = massService.getMasses("malayalam");
             massList.removeIf(e->e.getTime()==null);
             for (Mass mass : massList) {
                 if (null != mass.getTime()) {
@@ -47,20 +49,16 @@ public class FrontEndController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println(">>>>> /home controller out");
-
-
         return "index";
     }
 
     @GetMapping("/masses/{language}")
     public String getMasses(Model model, @PathVariable String language) {
-
         System.out.println(">>>>> /masses controller in lang  "+language);
         if(language==null){
             language="malayalam";
         }
-        List<Mass> massList=massRepo.findAllByLanguageEquals(language);
+        List<Mass> massList=massService.getMasses(language);
         massList.removeIf(e->e.getTime()==null);
         for (Mass mass : massList) {
             if(null!=mass.getTime()){
@@ -76,7 +74,6 @@ public class FrontEndController {
         populateModel(model, "IST", massList);
         model.addAttribute("language",language);
         model.addAttribute(language,"active");
-        System.out.println(">>>>> /masses controller out");
         return "index";
     }
 
