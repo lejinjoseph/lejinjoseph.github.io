@@ -94,18 +94,18 @@ h1, h2, h3, h4, h5, h6 {
 --------------------------------*/
 
 .section-header {
-  margin-bottom: 60px;
+  margin-bottom: 25px;
   position: relative;
-  padding-bottom: 20px;
 }
 
 .section-header::before {
+  display: none;
   content: '';
   position: absolute;
   display: block;
-  width: 60px;
-  height: 5px;
-  background: #d29e02;
+  width: 100%;
+  height: 1px;
+  background: #ccc;
   bottom: 0;
   left: 0;
   /* left: calc(50% - 25px); */
@@ -120,7 +120,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-header p {
-  text-align: left;
+  text-align: center;
   padding: 0;
   margin: 0;
   font-size: 18px;
@@ -130,6 +130,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .section-with-bg {
   background-color: #f6f7fd;
+}
+
+#langSelection > li{
+  margin: 2px;
 }
 
 /*--------------------------------------------------------------
@@ -786,13 +790,13 @@ body.mobile-nav-active #mobile-nav-toggle {
 --------------------------------------------------------------*/
 
 #schedule {
-  padding: 60px 0 60px 0;
+  padding: 40px 0;
 }
 
 #schedule .nav-tabs {
   text-align: center;
   margin: auto;
-  display: block;
+  /* display: block; */
   border-bottom: 0;
   margin-bottom: 30px;
 }
@@ -877,6 +881,10 @@ body.mobile-nav-active #mobile-nav-toggle {
   font-style: italic;
   color: #152b79;
   margin-bottom: 0;
+}
+
+#schedule #daySelection > li {
+  margin: 4px;
 }
 
 /*--------------------------------------------------------------

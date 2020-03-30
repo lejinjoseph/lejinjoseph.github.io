@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Catholoic Stream</title>
+  <title>Catholic Stream Live</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
@@ -81,13 +81,11 @@
     <section id="schedule" class="section-with-bg">
       <div class="container wow fadeInUp">
         <div class="section-header">
-          <h2>[[${language}]] Holy Mass</h2>
-          <button class="btn btn-small btn-warning" onclick="openModal()">Instructions</button>
-          <br><br>
-          <p class="font-weight-bold">Holy masses from all around the world. All timings are in IST (GMT+5.30)</p>
-          <br>
-          <ul class="nav nav-tabs" role="tablist">
-
+          <h3 class="text-center">Holy Masses from all around the world.</h3>          
+          <h3 class="text-center text-capitalize font-weight-bold text-danger">[[${language}]] Holy Mass</h3>
+          <p>All timings are in IST (GMT+5.30). <button class="btn btn-sm btn-warning" onclick="openModal()">Instructions</button></p>
+          
+          <ul id="langSelection" class="nav nav-tabs nav-fill mb-5" role="tablist">
             <li class="nav-item lej-padding">
               <a th:if="${language != 'malayalam'}" class="nav-link" th:href="@{/masses/malayalam}">Malayalam</a>
               <a th:if="${language == 'malayalam'}" class="nav-link active" th:href="@{/masses/malayalam}">Malayalam</a>
@@ -106,7 +104,7 @@
 
         </div>
 
-        <ul class="nav nav-tabs" role="tablist">
+        <ul #id="daySelection" class="nav nav-tabs nav-fill" role="tablist">
           <li class="nav-item lej-padding">
             <a th:if="${day == 'sunday'}" class="nav-link active show" href="#sun" role="tab" data-toggle="tab" aria-selected="true">Sunday</a>
             <a th:if="${day != 'sunday'}" class="nav-link" href="#sun" role="tab" data-toggle="tab">Sunday</a>
