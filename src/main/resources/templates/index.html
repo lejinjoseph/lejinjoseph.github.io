@@ -83,7 +83,7 @@
         <div class="section-header">
           <h3 class="text-center">Holy Masses from all around the world.</h3>          
           <h3 class="text-center text-capitalize font-weight-bold text-danger">[[${language}]] Holy Mass</h3>
-          <p>All timings are in IST (GMT+5.30). <button class="btn btn-sm btn-warning" onclick="openModal()">Instructions</button></p>
+          <p>All timings are in IST (GMT+5.30). <span class="instructions badge badge-info badge-pill my-1" onclick="openModal()"><i class="fa fa-book pr-1"></i>Instructions</span></p>
           
           <ul id="langSelection" class="nav nav-tabs nav-fill mb-5" role="tablist">
             <li class="nav-item lej-padding">
@@ -141,22 +141,26 @@
           <!-- Sunday -->
           <div  th:if="${day == 'sunday'}"  role="tabpanel" class="col-lg-9  tab-pane fade active show" id="sun">
             <div class="row schedule-item" th:each="mass : ${sunday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
           </div>
 
           <div  th:if="${day != 'sunday'}"  role="tabpanel" class="col-lg-9  tab-pane fade" id="sun">
             <div class="row schedule-item" th:each="mass : ${sunday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
           </div>
@@ -165,22 +169,26 @@
           <!-- Monday -->
           <div th:if="${day == 'monday'}" role="tabpanel" class="col-lg-9  tab-pane fade active show" id="mon">
             <div class="row schedule-item" th:each="mass : ${monday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
           </div>
 
           <div th:if="${day != 'monday'}" role="tabpanel" class="col-lg-9  tab-pane fade" id="mon">
             <div class="row schedule-item" th:each="mass : ${monday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
           </div>
@@ -189,22 +197,26 @@
           <!-- Tuesday -->
           <div th:if="${day == 'tuesday'}" role="tabpanel" class="col-lg-9  tab-pane fade active show" id="tue">
             <div class="row schedule-item" th:each="mass : ${tuesday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
           </div>
 
           <div th:if="${day != 'tuesday'}" role="tabpanel" class="col-lg-9  tab-pane fade" id="tue">
             <div class="row schedule-item" th:each="mass : ${tuesday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
           </div>
@@ -213,11 +225,13 @@
           <!-- Wednesday Day 4 -->
           <div th:if="${day == 'wednesday'}" role="tabpanel" class="col-lg-9  tab-pane fade active show" id="wed">
             <div class="row schedule-item" th:each="mass : ${wednesday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
           </div>
@@ -225,11 +239,13 @@
 
           <div th:if="${day != 'wednesday'}" role="tabpanel" class="col-lg-9  tab-pane fade" id="wed">
             <div class="row schedule-item" th:each="mass : ${wednesday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
 
@@ -239,22 +255,26 @@
           <!-- Schdule Thursday 5 -->
           <div th:if="${day == 'thursday'}" role="tabpanel" class="col-lg-9  tab-pane fade active show" id="thu">
             <div class="row schedule-item" th:each="mass : ${thursday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
           </div>
 
           <div th:if="${day != 'thursday'}" role="tabpanel" class="col-lg-9  tab-pane fade" id="thu">
             <div class="row schedule-item" th:each="mass : ${thursday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
           </div>
@@ -263,22 +283,26 @@
           <!-- Friday Day 6 -->
           <div  th:if="${day == 'friday'}"role="tabpanel" class="col-lg-9  tab-pane fade active show" id="fri">
             <div class="row schedule-item" th:each="mass : ${friday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
           </div>
 
           <div th:if="${day != 'friday'}" role="tabpanel" class="col-lg-9  tab-pane fade" id="fri">
             <div class="row schedule-item" th:each="mass : ${friday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
           </div>
@@ -287,22 +311,26 @@
           <!-- Saturday Day 7 -->
           <div  th:if="${day == 'saturday'}" role="tabpanel" class="col-lg-9  tab-pane fade active show" id="sat">
             <div class="row schedule-item" th:each="mass : ${saturday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
           </div>
 
           <div th:if="${day != 'saturday'}" role="tabpanel" class="col-lg-9  tab-pane fade" id="sat">
             <div class="row schedule-item" th:each="mass : ${saturday}">
-              <div class="col-md-2"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
-              <div class="col-md-10">
+              <div class="col-md-3 py-1"><time>[[${mass.prettyTime}]] ([[${timezone}]])</time></div>
+              <div class="col-md-7 py-1">
                 <h4 th:text="${mass.name}"></h4>
-                <p th:text="${mass.description}">.</p><br/>
-                <a th:href="${mass.link}"><button class="btn btn-small btn-warning" >Watch</button> </a>
+                <p th:text="${mass.description}">.</p>               
+              </div>
+              <div class="col-md-2 py-1">
+                <a th:href="${mass.link}"><button class="btn btn-sm btn-warning"><i class="fa fa-television pr-1"></i>Watch</button> </a>
               </div>
             </div>
           </div>
