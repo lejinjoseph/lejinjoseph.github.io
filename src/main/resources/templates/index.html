@@ -363,7 +363,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Guidelines for
+          <h5 class="modal-title text-danger font-weight-bold" id="exampleModalLabel">Guidelines for
             attending holy mass online</h5>
           <button type="button" class="close" data-dismiss="modal"
                   aria-label="Close">
@@ -371,28 +371,32 @@
           </button>
         </div>
         <div class="modal-body">
+          <ol id="guidelines">
+            <li>Start preparing for holy mass before-hand. do not rush.</li>
+            <li>Set-up a simple altar with a crucifix & a candle in your table
+              near the device (mobile phone, tablet, laptop, tv) streaming the
+              holy mass.</li>
+            <li>Wear appropriate attire (do not attend the
+              mass in your leisure wear or home wear). Be serious in your
+              preparation.</li>
+            <li>Turn off other online devices & do not do
+              anything else while you are participating in the holy mass. there
+              should be nothing to distract your attention on the mass.</li>
+            <li>Recite the corresponding responses to the prayers in the holy mass.</li>
+            <li>Observe the proper gestures of standing, kneeling &
+              sitting at appropriate times in the holy mass.</li>
+            <li>During the
+              time of receiving communion, please recite the spiritual communion
+              prayer.
+              <div class="pt-2">
+                  Download prayer here :
+                  <a th:href="@{/img/english.jpeg}" th:attr="download=@{/img/english.jpeg}" class="badge badge-pill badge-warning" target="_blank">English</a>
+                  &nbsp;
+                  <a th:href="@{/img/malayalam.jpeg}" th:attr="download=@{/img/malayalam.jpeg}" class="badge badge-pill badge-warning" target="_blank">Malayalam</a>
+              </div>
+            </li>
+          </ol>
 
-          ✝ Start preparing for holy mass before-hand. do not rush . <br />
-          ✝ Set-up a simple altar with a crucifix & a candle in your table
-          near the device (mobile phone, tablet, laptop, tv) streaming the
-          holy mass. <br /> ✝ Wear appropriate attire (do not attend the
-          mass in your leisure wear or home wear). be serious in your
-          preparation. <br /> ✝ Turn off other online devices & do not do
-          anything else while you are participating in the holy mass. there
-          should be nothing to distract your attention on the mass. <br /> ✝
-          Recite the corresponding responses to the prayers in the holy mass.
-          <br /> ✝ Observe the proper gestures of standing, kneeling &
-          sitting at appropriate times in the holy mass. <br /> ✝ During the
-          time of receiving communion, please recite the spiritual communion
-          prayer. <br /> <br />Download prayer here :
-          <a th:href="@{/img/english.jpeg}" th:attr="download=@{/img/english.jpeg}" target="_blank">English</a>
-          &nbsp;
-          <a th:href="@{/img/malayalam.jpeg}" th:attr="download=@{/img/malayalam.jpeg}" target="_blank">Malayalam</a>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"
-                  data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>

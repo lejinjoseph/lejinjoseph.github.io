@@ -45,6 +45,11 @@ h1, h2, h3, h4, h5, h6 {
   visibility: hidden;
 }
 
+#guidelines > li {
+  margin: 10px 0;
+  font-size: 95%;
+}
+
 /* Prelaoder */
 
 #preloader {
