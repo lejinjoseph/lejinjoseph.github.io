@@ -62,7 +62,10 @@
   ============================-->
   <section id="intro">
     <div class="intro-container wow fadeIn">
-      <h1 class="mb-4 pb-0">Live online catholic <span>Streams</span></h1>
+      <div style="width: 30%; margin-left: auto; margin-right: auto;">
+        <img class="img-fluid" th:src="@{~/img/intro-bg.jpg}">
+      </div>
+      <h1 class="mb-4 pb-0"><span>Live online catholic Streams</span></h1>
       <!-- <p class="mb-4 pb-0">10-12 July, San Diego, CA</p>
       <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video"
         data-autoplay="true"></a>
@@ -405,6 +408,11 @@
     });
     function openModal(){
       $('#exampleModal').modal('show');
+    }
+
+    str = window.location.href.substring(0,window.location.href.length-1)+'';
+    if(str !=window.location.origin){
+      window.scrollTo(0, document.getElementById('schedule').offsetTop);
     }
 	</script>
 </body>
