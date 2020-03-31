@@ -662,6 +662,17 @@ body.mobile-nav-active #mobile-nav-toggle {
   }
 }
 
+#introImage {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#introImage img{
+  max-height: 60vh;
+}
+
+
+
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
@@ -822,6 +833,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 #schedule .nav-tabs li {
   display: inline-block;
   margin-bottom: 0;
+  margin: 0 2px;
 }
 
 #schedule .nav-tabs a {
