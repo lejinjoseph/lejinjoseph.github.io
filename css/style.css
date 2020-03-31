@@ -55,6 +55,15 @@ h6 {
   font-size: 95%;
 }
 
+#guidelinesModal a.badge {
+  font-size: 80%;
+}
+
+#holyMass > .tab-pane > p {
+  text-align: center;
+  color: #9195a2;
+}
+
 /* Prelaoder */
 
 #preloader {
