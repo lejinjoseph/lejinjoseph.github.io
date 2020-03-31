@@ -142,3 +142,13 @@ jQuery(document).ready(function( $ ) {
   })
 
 });
+
+function dayOfWeekAsString(dayIndex) {
+  return ["sun","mon","tue","wed","thu","fri","sat"][dayIndex];
+}
+var day=dayOfWeekAsString(new Date().getDay());
+$('#'+day).addClass('active');
+$('#'+day).addClass('show');
+$('#'+day+'-link').addClass('active');
+$('#'+day+'-link').addClass('show');
+$('#'+day+'-link').attr('aria-selected','true');
