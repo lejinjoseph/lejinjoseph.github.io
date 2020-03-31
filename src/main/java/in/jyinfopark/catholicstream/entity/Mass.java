@@ -1,5 +1,7 @@
 package in.jyinfopark.catholicstream.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -25,14 +27,17 @@ public class Mass {
     private String day;
 
     @Column(name = "time_ist")
+    @JsonIgnore
     private Time time;
 
     @Column
     private String language;
 
     @Column
+    @JsonIgnore
     private boolean active;
 
+    @JsonIgnore
     @Column
     private String image;
 
