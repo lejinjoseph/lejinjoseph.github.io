@@ -35,11 +35,11 @@ jQuery(document).ready(function( $ ) {
   new WOW().init();
 
   // Initialize Venobox
-  $('.venobox').venobox({
-    overlayColor: 'rgba(6, 12, 34, 0.85)',
-    closeBackground: '',
-    closeColor: '#fff'
-  });
+  // $('.venobox').venobox({
+  //   overlayColor: 'rgba(6, 12, 34, 0.85)',
+  //   closeBackground: '',
+  //   closeColor: '#fff'
+  // });
 
   // Initiate superfish on nav menu
   $('.nav-menu').superfish({
