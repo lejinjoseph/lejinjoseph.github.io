@@ -42,12 +42,12 @@ jQuery(document).ready(function( $ ) {
   // });
 
   // Initiate superfish on nav menu
-  $('.nav-menu').superfish({
-    animation: {
-      opacity: 'show'
-    },
-    speed: 400
-  });
+  // $('.nav-menu').superfish({
+  //   animation: {
+  //     opacity: 'show'
+  //   },
+  //   speed: 400
+  // });
 
   // Mobile Navigation
   if ($('#nav-menu-container').length) {
