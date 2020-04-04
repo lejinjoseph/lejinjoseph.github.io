@@ -103,13 +103,14 @@ var csService = {
             var description = row.description ? `<p>${row.description}</p>` : "";
             $(tabId).append(
                 `<div class="row schedule-item">
-                    <div class="col-md-2"><time>${row.prettyTime}</time></div>
-                    <div class="col-md-10">
+                    <div class="col-md-3 py-1"><time>${row.prettyTime}</time></div>
+                    <div class="col-md-7 py-1">
                         <h4>${row.name}</h4>
                         ${description}
-                        <a href="${row.link}">
-                            <button class="btn btn-small btn-warning" >Watch</button>
-                        </a>
+                    </div>
+                    <div class="col-md-2 py-1">
+                        <a href="${row.link}" target="_blank"><button class="btn btn-sm btn-warning"><i
+                            class="fa fa-television pr-1"></i>Watch</button> </a>
                     </div>
                 </div>`
             );
