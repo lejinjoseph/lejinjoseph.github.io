@@ -71,7 +71,13 @@ var csService = {
                     </p>
                     <ul class="daySelection nav nav-tabs nav-fill" role="tablist">
                     </ul>
-                    <div class="tab-content row justify-content-center"></div>
+                    <div class="tab-content row justify-content-center m-3">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-grow text-warning" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>`
             );
         })
@@ -82,6 +88,7 @@ var csService = {
         $.each($("ul.daySelection"), function (index, dom) {
             var language = $(dom).parents(".tab-pane").attr("id");
             var tabContent = $(dom).siblings("div.tab-content");
+            $(tabContent).empty();
             $.each(days, function (index, day) {
                 var langDayId = (day.name + language).replace(' ', '-');
                 $(dom).append(
@@ -91,7 +98,13 @@ var csService = {
                 );
 
                 $(tabContent).append(
-                    `<div  role="tabpanel" class="col-lg-9  tab-pane fade" id="${langDayId}"> ${langDayId} Loading.. </div>`
+                    `<div  role="tabpanel" class="col-lg-9  tab-pane fade" id="${langDayId}">
+                        <div class="d-flex justify-content-center m-3">
+                            <div class="spinner-grow text-warning" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>`
                 );
             })
         });
@@ -99,6 +112,7 @@ var csService = {
     },
 
     displaySchedule: function (data, tabId) {
+        $(tabId).empty();
         $.each(data, function (index, row) {
             var description = row.description ? `<p>${row.description}</p>` : "";
             $(tabId).append(
