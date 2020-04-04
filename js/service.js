@@ -7,6 +7,17 @@ var csService = {
 
     init: function (params) {
         csService.getLanguanges();
+
+        $("body").on('shown.bs.tab', '.daySelection a[data-toggle="tab"]', function ($event) {
+            var aLink = $($event.target);
+            var tabId = aLink.attr("href");
+            if ($(tabId).children(".schedule-item").length < 1) {
+                var day = aLink.attr("data-day-id");
+                var language = aLink.parents(".tab-pane").attr("data-mass-lang");
+                csService.getSchedule(language, day, tabId);
+            }
+        });
+
     },
 
     capitalizeString: function (string) {
@@ -30,8 +41,13 @@ var csService = {
             });
     },
 
-    getSchedule: function () {
-
+    getSchedule: function (language, day, tabId) {
+        $.get(csService.url + `/getSchedule/${language}/${day}`, function (data) {
+            csService.displaySchedule(data, tabId)
+        })
+            .fail(function () {
+                console.log('failed to get schedule!');
+            });
     },
 
     displayLanguages: function (data) {
@@ -40,9 +56,9 @@ var csService = {
             // add language button
             $("#langSelection").append(
                 `<li class="nav-item lej-padding">
-                <a class="nav-link" href="#${language}Mass" role="tab" data-toggle="tab"
-                  aria-selected="true">${language}</a>
-              </li>`
+                    <a class="nav-link" href="#${language}Mass" role="tab" data-toggle="tab"
+                        aria-selected="true">${language}</a>
+                 </li>`
             );
 
             //add schedule tab panel
@@ -79,6 +95,26 @@ var csService = {
                 );
             })
         });
+
+    },
+
+    displaySchedule: function (data, tabId) {
+        $.each(data, function (index, row) {
+            var description = row.description ? `<p>${row.description}</p>` : "";
+            $(tabId).append(
+                `<div class="row schedule-item">
+                    <div class="col-md-2"><time>${row.prettyTime}</time></div>
+                    <div class="col-md-10">
+                        <h4>${row.name}</h4>
+                        ${description}
+                        <a href="${row.link}">
+                            <button class="btn btn-small btn-warning" >Watch</button>
+                        </a>
+                    </div>
+                </div>`
+            );
+
+        })
 
     }
 }
