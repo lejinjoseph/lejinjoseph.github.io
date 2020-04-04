@@ -14,7 +14,6 @@ public class MassServiceImpl implements MassService {
     private MassRepo massRepo;
 
     @Override
-    @Cacheable("language")
     public List<Mass> getMasses(String language) {
        return massRepo.findAllByLanguageEquals(language);
     }
