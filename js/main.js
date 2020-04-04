@@ -13,6 +13,13 @@ jQuery(document).ready(function( $ ) {
     return false;
   });
 
+  // Language selection scroll top
+  $("#langSelection > li").click(function(){
+    $('html, body').animate({
+      scrollTop: $("#schedule").offset().top - $("#header").outerHeight()
+    }, 1000, 'easeInOutExpo');
+  });
+
   // Header fixed on scroll
   $(window).scroll(function() {
     if ($(this).scrollTop() > 100) {

@@ -820,6 +820,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #schedule {
   padding: 40px 0;
+  min-height: calc(100vh - 146px); /*dijo - full height schedule*/
 }
 
 #schedule .nav-tabs {
