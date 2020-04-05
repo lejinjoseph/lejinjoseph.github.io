@@ -43,7 +43,7 @@ h6 {
 }
 
 .lej-padding {
-  padding-top: 2%;
+  padding-top: 5px;
 }
 
 .wow {
@@ -843,7 +843,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   font-weight: 600;
   background-color: #0e1b4d;
   color: #fff;
-  /* padding: 10px 100px; */
+  padding: 10px 30px;
 }
 
 #schedule .nav-tabs a.active {
@@ -1653,7 +1653,7 @@ span.badge.instructions {
   }
 
   #schedule .nav-tabs a {
-    padding: 8px 60px;
+    padding: 8px 20px;
   }
 }
 
@@ -1673,7 +1673,7 @@ span.badge.instructions {
 
 @media (max-width: 767px) {
   #schedule .nav-tabs a {
-    padding: 8px 50px;
+    padding: 5px 15px;
   }
 }
 
@@ -1685,7 +1685,7 @@ span.badge.instructions {
 
 @media (max-width: 480px) {
   #schedule .nav-tabs a {
-    padding: 8px 30px;
+    padding: 5px 10px;
   }
 }
 
