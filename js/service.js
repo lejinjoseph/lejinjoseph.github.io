@@ -4,6 +4,7 @@ jQuery(document).ready(function ($) {
 
 var csService = {
     url: 'http://catholicstreamlive-env.eba-mh2niqse.ap-south-1.elasticbeanstalk.com',
+    //url: 'https://api.catholicstreams.live',
 
     init: function (params) {
         csService.getLanguanges();
@@ -20,17 +21,28 @@ var csService = {
 
     },
 
+    showUnderMaintanence: function () {
+        $("#schedule, #footer").hide();
+        $('#maintenanceModal').modal('show');
+    },
+
+    showGuidelineModal: function () {
+        $('#guidelinesModal').modal('show');
+    },
+
     capitalizeString: function (string) {
         return string.replace(/\b\w/g, function (l) { return l.toUpperCase() })
     },
 
     getLanguanges: function () {
         $.get(csService.url + '/getLanguages', function (data) {
+            csService.showGuidelineModal();
             csService.displayLanguages(data);
             csService.getDays();
         })
             .fail(function () {
                 console.log('failed to get languages!');
+                csService.showUnderMaintanence();
             });
     },
 

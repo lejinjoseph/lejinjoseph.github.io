@@ -145,6 +145,32 @@
     </div>
   </div>
   <!-- modal ends -->
+  <div class="modal fade" id="maintenanceModal" tabindex="-1" role="dialog" aria-labelledby="maintenanceModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-danger font-weight-bold" id="maintenanceModalLabel">
+            We&rsquo;ll be back soon!
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <article>
+            <div>
+                <p>Sorry for the inconvenience but we&rsquo;re performing some maintenance at the moment. If you need to you can always <a href="http://jyinfopark.in">contact us</a>, otherwise we&rsquo;ll be back online shortly!</p>
+                <p>
+                  <i class="fa fa-heart" style="color: red;"></i>
+                  Jesus Youth Infopark
+                </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <a href="index.html#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
 
@@ -176,14 +202,6 @@
     gtag('js', new Date());
 
     gtag('config', 'UA-161546265-1');
-
-    $(window).on('load', function () {
-      $('#guidelinesModal').modal('show');
-    });
-
-    function openModal() {
-      $('#guidelinesModal').modal('show');
-    }
 
     str = window.location.href.substring(0, window.location.href.length - 1) + '';
     if (str != window.location.origin) {
