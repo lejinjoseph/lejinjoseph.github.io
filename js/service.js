@@ -84,7 +84,7 @@ var csService = {
                     <ul class="daySelection nav nav-tabs nav-fill" role="tablist">
                     </ul>
                     <div class="tab-content row justify-content-center m-3">
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center loadingContent">
                             <div class="spinner-grow text-warning" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
@@ -100,48 +100,56 @@ var csService = {
         $.each($("ul.daySelection"), function (index, dom) {
             var language = $(dom).parents(".tab-pane").attr("id");
             var tabContent = $(dom).siblings("div.tab-content");
-            $(tabContent).empty();
-            $.each(days, function (index, day) {
-                var langDayId = (day.name + language).replace(' ', '-');
-                $(dom).append(
-                    `<li class="nav-item lej-padding">
-                        <a class="nav-link" href="#${langDayId}" data-day-id="${day.name}" role="tab" data-toggle="tab">${csService.capitalizeString(day.displayName)}</a>
-                    </li>`
-                );
 
-                $(tabContent).append(
-                    `<div  role="tabpanel" class="col-lg-9  tab-pane fade" id="${langDayId}">
-                        <div class="d-flex justify-content-center m-3">
-                            <div class="spinner-grow text-warning" role="status">
-                                <span class="sr-only">Loading...</span>
+            $(tabContent).children(".loadingContent").fadeOut(500, function () {
+                $(this).remove();
+
+                $.each(days, function (index, day) {
+                    var langDayId = (day.name + language).replace(' ', '-');
+                    $(dom).append(
+                        `<li class="nav-item lej-padding">
+                            <a class="nav-link" href="#${langDayId}" data-day-id="${day.name}" role="tab" data-toggle="tab">${csService.capitalizeString(day.displayName)}</a>
+                        </li>`
+                    );
+
+                    $(tabContent).append(
+                        `<div  role="tabpanel" class="col-lg-9  tab-pane fade" id="${langDayId}">
+                            <div class="d-flex justify-content-center m-3 loadingContent">
+                                <div class="spinner-grow text-warning" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
                             </div>
-                        </div>
-                    </div>`
-                );
-            })
+                        </div>`
+                    );
+                })
+            });
+
+
         });
 
     },
 
     displaySchedule: function (data, tabId) {
-        $(tabId).empty();
-        $.each(data, function (index, row) {
-            var description = row.description ? `<p>${row.description}</p>` : "";
-            $(tabId).append(
-                `<div class="row schedule-item">
-                    <div class="col-md-3 py-1"><time>${row.prettyTime}</time></div>
-                    <div class="col-md-7 py-1">
-                        <h4>${row.name}</h4>
-                        ${description}
-                    </div>
-                    <div class="col-md-2 py-1">
-                        <a href="${row.link}" target="_blank"><button class="btn btn-sm btn-warning"><i
-                            class="fa fa-television pr-1"></i>Watch</button> </a>
-                    </div>
-                </div>`
-            );
+        $(tabId).children(".loadingContent").fadeOut(500, function () {
+            $(this).remove();
+            $.each(data, function (index, row) {
+                var description = row.description ? `<p>${row.description}</p>` : "";
+                $(tabId).append(
+                    `<div class="row schedule-item wow fadeInUp">
+                        <div class="col-md-3 py-1"><time>${row.prettyTime}</time></div>
+                        <div class="col-md-7 py-1">
+                            <h4>${row.name}</h4>
+                            ${description}
+                        </div>
+                        <div class="col-md-2 py-1">
+                            <a href="${row.link}" target="_blank"><button class="btn btn-sm btn-warning"><i
+                                class="fa fa-television pr-1"></i>Watch</button> </a>
+                        </div>
+                    </div>`
+                );
 
-        })
+            })
+        });
 
     }
 }
