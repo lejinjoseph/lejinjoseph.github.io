@@ -19,8 +19,15 @@ var csService = {
                 var language = aLink.parents(".tab-pane").attr("data-mass-lang");
                 csService.getSchedule(language, day, tabId);
             }
+            csService.scrollToHolyMass();
         });
 
+    },
+
+    scrollToHolyMass: function () {
+        $('html, body').animate({
+            scrollTop: $("#holyMass").offset().top - $("#header").outerHeight()
+        }, 1000, 'easeInOutExpo');
     },
 
     showUnderMaintanence: function () {
@@ -106,7 +113,6 @@ var csService = {
 
             $(tabContent).children(".loadingContent").fadeOut(500, function () {
                 $(this).remove();
-
                 $.each(days, function (index, day) {
                     var langDayId = (day.name + language).replace(' ', '-');
                     $(dom).append(
@@ -124,12 +130,9 @@ var csService = {
                             </div>
                         </div>`
                     );
-                })
+                });
             });
-
-
         });
-
     },
 
     displaySchedule: function (data, tabId) {
