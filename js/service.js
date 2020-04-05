@@ -142,7 +142,7 @@ var csService = {
                 var description = row.description ? `<p>${row.description}</p>` : "";
                 $(tabId).append(
                     `<div class="row schedule-item wow fadeInUp">
-                        <div class="col-md-3 py-1"><time>${row.prettyTime}</time></div>
+                        <div class="col-md-3 py-1 text-danger"><time>${row.prettyTime}</time></div>
                         <div class="col-md-7 py-1">
                             <h4>${row.name}</h4>
                             ${description}
