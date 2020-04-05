@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
 });
 
 var csService = {
-    url: 'http://catholicstreamlive-env.eba-mh2niqse.ap-south-1.elasticbeanstalk.com',
+    url: 'https://catholicstreamlive-env.eba-mh2niqse.ap-south-1.elasticbeanstalk.com',
 
     init: function (params) {
         csService.getLanguanges();
