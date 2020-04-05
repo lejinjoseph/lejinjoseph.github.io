@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.PublicKey;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 
 @org.springframework.web.bind.annotation.RestController
@@ -24,6 +25,8 @@ public class RestController {
 
     @Autowired
     private DaysRepo daysRepo;
+
+    List<String> normalDays= Arrays.asList("sun","mon","tue","wed","thu","fri","sat");
 
     @GetMapping("/clear")
     @CacheEvict(value = "language", allEntries = true)
@@ -55,6 +58,7 @@ public class RestController {
     public List<Mass> getSchedule(@PathVariable String language,@PathVariable String day) {
         List<Mass> massList=massRepo.findAllByLanguageEquals(language,day);
         massList.removeIf(e->e.getTime()==null);
+        massList.removeIf(e->!normalDays.contains(day)&&e.getDay().equalsIgnoreCase("Everyday"));
         for (Mass mass : massList) {
             if (null != mass.getTime()) {
                 try {
