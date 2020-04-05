@@ -17,7 +17,7 @@ var csService = {
             if ($(tabId).children(".schedule-item").length < 1) {
                 var day = aLink.attr("data-day-id");
                 var language = aLink.parents(".tab-pane").attr("data-mass-lang");
-                csService.getSchedule(language, day, tabId);
+                csService.getSchedule(language, day, tabId, true);
             }
             csService.scrollToHolyMass();
         });
@@ -61,9 +61,9 @@ var csService = {
             });
     },
 
-    getSchedule: function (language, day, tabId) {
+    getSchedule: function (language, day, tabId, addWow) {
         $.get(csService.url + `/getSchedule/${language}/${day}`, function (data) {
-            csService.displaySchedule(data, tabId)
+            csService.displaySchedule(data, tabId, addWow)
         })
             .fail(function () {
                 console.log('failed to get schedule!');
@@ -114,27 +114,28 @@ var csService = {
             csService.getDays();
         });
 
-
-
     },
 
     displayDays: function (days) {
         $.each($("ul.daySelection"), function (index, dom) {
-            var language = $(dom).parents(".tab-pane").attr("id");
+            var language = $(dom).parents(".tab-pane").attr("data-mass-lang");
             var tabContent = $(dom).siblings("div.tab-content");
 
             $(tabContent).children(".loadingContent").fadeOut(500, function () {
                 $(this).remove();
+
+                var firstItem = true;
                 $.each(days, function (index, day) {
-                    var langDayId = (day.name + language).replace(' ', '-');
+                    var activeClass = firstItem ? "show active" : "";
+                    var langDayId = (day.name + csService.capitalizeString(language) + "Mass").replace(' ', '-');
                     $(dom).append(
                         `<li class="nav-item lej-padding">
-                            <a class="nav-link" href="#${langDayId}" data-day-id="${day.name}" role="tab" data-toggle="tab">${csService.capitalizeString(day.displayName)}</a>
+                            <a class="nav-link ${activeClass}" href="#${langDayId}" data-day-id="${day.name}" role="tab" data-toggle="tab">${csService.capitalizeString(day.displayName)}</a>
                         </li>`
                     );
 
                     $(tabContent).append(
-                        `<div  role="tabpanel" class="col-lg-9  tab-pane fade" id="${langDayId}">
+                        `<div  role="tabpanel" class="col-lg-9  tab-pane fade ${activeClass}" id="${langDayId}">
                             <div class="d-flex justify-content-center m-3 loadingContent">
                                 <div class="spinner-grow text-warning" role="status">
                                     <span class="sr-only">Loading...</span>
@@ -142,18 +143,26 @@ var csService = {
                             </div>
                         </div>`
                     );
+
+                    if (firstItem) {
+                        var addWow = $(dom).is(":visible");
+                        csService.getSchedule(language, day.name, `#${langDayId}`, addWow);
+                    }
+
+                    firstItem = false;
                 });
             });
         });
     },
 
-    displaySchedule: function (data, tabId) {
+    displaySchedule: function (data, tabId, addWow) {
         $(tabId).children(".loadingContent").fadeOut(500, function () {
             $(this).remove();
             $.each(data, function (index, row) {
+                var wowClass = addWow ? "wow fadeInUp" : "";
                 var description = row.description ? `<p>${row.description}</p>` : "";
                 $(tabId).append(
-                    `<div class="row schedule-item wow fadeInUp">
+                    `<div class="row schedule-item ${wowClass}">
                         <div class="col-md-3 py-1 text-danger"><time>${row.prettyTime}</time></div>
                         <div class="col-md-7 py-1">
                             <h4>${row.name}</h4>
