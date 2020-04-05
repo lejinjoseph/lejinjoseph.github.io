@@ -47,7 +47,6 @@ var csService = {
         $.get(csService.url + '/getLanguages', function (data) {
             csService.showGuidelineModal();
             csService.displayLanguages(data);
-            csService.getDays();
         })
             .fail(function () {
                 console.log('failed to get languages!');
@@ -111,6 +110,8 @@ var csService = {
 
                 firstItem = false;
             })
+
+            csService.getDays();
         });
 
 
