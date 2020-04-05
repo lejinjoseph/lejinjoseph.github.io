@@ -828,7 +828,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin: auto;
   /* display: block; */
   border-bottom: 0;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 }
 
 #schedule .nav-tabs li {
