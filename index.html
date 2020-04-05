@@ -27,10 +27,15 @@
 
   <!-- Main Stylesheet File -->
   <link href="css/style.css" rel="stylesheet">
-
+  <script>
+    if (location.protocol == 'https:') {
+    location.replace(`http:${location.href.substring(location.protocol.length)}?v=1`);
+}
+  </script>
 </head>
 
 <body>
+
 
   <!--==========================
     Header
