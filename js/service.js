@@ -72,19 +72,21 @@ var csService = {
     },
 
     displayLanguages: function (data) {
+        var firstItem = true;
         $.each(data, function (index, orginalLang) {
-            language = csService.capitalizeString(orginalLang);
+            var language = csService.capitalizeString(orginalLang);
+            var activeClass = firstItem ? "show active" : "";
             // add language button
             $("#langSelection").append(
                 `<li class="nav-item lej-padding">
-                    <a class="nav-link" href="#${language}Mass" role="tab" data-toggle="tab"
-                        aria-selected="true">${language}</a>
+                    <a class="nav-link ${activeClass}" href="#${language}Mass" role="tab" data-toggle="tab"
+                        aria-selected="${firstItem}">${language}</a>
                  </li>`
             );
 
             //add schedule tab panel
             $("#holyMass").append(
-                `<div id="${language}Mass" data-mass-lang="${orginalLang}" role="tabpanel" class="tab-pane fade">
+                `<div id="${language}Mass" data-mass-lang="${orginalLang}" role="tabpanel" class="tab-pane fade ${activeClass}">
                     <h3 class="text-center text-capitalize font-weight-bold text-danger">${language} Holy Mass</h3>
                     <p class="mb-2 mb-sm-3 mb-md-4">All timings are in IST (GMT+5.30).
                         <span class="instructions badge badge-info badge-pill my-1">
@@ -102,6 +104,8 @@ var csService = {
                     </div>
                 </div>`
             );
+
+            firstItem = false;
         })
 
     },
