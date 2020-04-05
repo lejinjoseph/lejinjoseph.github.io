@@ -9,6 +9,8 @@ var csService = {
     init: function (params) {
         csService.getLanguanges();
 
+        $("body").on("click", ".badge.instructions", csService.showGuidelineModal);
+
         $("body").on('shown.bs.tab', '.daySelection a[data-toggle="tab"]', function ($event) {
             var aLink = $($event.target);
             var tabId = aLink.attr("href");
@@ -78,8 +80,9 @@ var csService = {
                 `<div id="${language}Mass" data-mass-lang="${orginalLang}" role="tabpanel" class="tab-pane fade">
                     <h3 class="text-center text-capitalize font-weight-bold text-danger">${language} Holy Mass</h3>
                     <p class="mb-2 mb-sm-3 mb-md-4">All timings are in IST (GMT+5.30).
-                        <span class="instructions badge badge-info badge-pill my-1" onclick="openModal()"><i
-                            class="fa fa-book pr-1"></i>Guidelines</span>
+                        <span class="instructions badge badge-info badge-pill my-1">
+                            <i class="fa fa-book pr-1"></i>Guidelines
+                        </span>
                     </p>
                     <ul class="daySelection nav nav-tabs nav-fill" role="tablist">
                     </ul>
