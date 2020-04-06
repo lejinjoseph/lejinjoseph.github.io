@@ -1702,6 +1702,11 @@ span.badge.instructions {
   #subscribe button {
     margin-top: 10px;
   }
+
+  .daySelection .nav-item.wide {
+    flex-basis: auto;
+    flex-grow: 2;
+  }
 }
 
 @media (min-height: 650px) {
