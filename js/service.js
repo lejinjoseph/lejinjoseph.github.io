@@ -126,8 +126,9 @@ var csService = {
 
                 var firstItem = true;
                 $.each(days, function (index, day) {
+                    var normalDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+                    var wideBtnClass = !normalDays.includes(day.name) ? "wide" : "";
                     var activeClass = firstItem ? "show active" : "";
-                    var wideBtnClass = firstItem ? "wide" : "";
                     var langDayId = (day.name + csService.capitalizeString(language) + "Mass").replace(' ', '-');
                     $(dom).append(
                         `<li class="nav-item lej-padding ${wideBtnClass}">

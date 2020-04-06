@@ -1595,7 +1595,7 @@ span.badge.instructions {
   }
 
   .daySelection .nav-item.wide {
-    flex-basis: 40%;
+    flex-basis: 30%;
   }
 }
 
@@ -1682,7 +1682,7 @@ span.badge.instructions {
   }
 
   .daySelection .nav-item.wide {
-    flex-basis: 80%;
+    flex-basis: 40%;
   }
 }
 
