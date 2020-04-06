@@ -1694,3 +1694,9 @@ span.badge.instructions {
     margin-top: 10px;
   }
 }
+
+@media (min-height: 650px) {
+  #holyMass {
+    min-height: calc(100vh - 146px);
+  }
+}
