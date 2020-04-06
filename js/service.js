@@ -127,9 +127,10 @@ var csService = {
                 var firstItem = true;
                 $.each(days, function (index, day) {
                     var activeClass = firstItem ? "show active" : "";
+                    var wideBtnClass = firstItem ? "wide" : "";
                     var langDayId = (day.name + csService.capitalizeString(language) + "Mass").replace(' ', '-');
                     $(dom).append(
-                        `<li class="nav-item lej-padding">
+                        `<li class="nav-item lej-padding ${wideBtnClass}">
                             <a class="nav-link ${activeClass}" href="#${langDayId}" data-day-id="${day.name}" role="tab" data-toggle="tab">${csService.capitalizeString(day.displayName)}</a>
                         </li>`
                     );

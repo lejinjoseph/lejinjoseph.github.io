@@ -59,7 +59,7 @@ h6 {
   font-size: 80%;
 }
 
-#holyMass > .tab-pane > p {
+#holyMass>.tab-pane>p {
   text-align: center;
   color: #9195a2;
 }
@@ -667,7 +667,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin-right: auto;
 }
 
-#introImage img{
+#introImage img {
   max-height: 60vh;
 }
 
@@ -820,7 +820,8 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #holyMass {
   /* padding: 40px 0; */
-  min-height: calc(100vh - 70px); /*dijo - full height schedule*/
+  min-height: calc(100vh - 70px);
+  /*dijo - full height schedule*/
 }
 
 #schedule .nav-tabs {
@@ -1592,6 +1593,10 @@ span.badge.instructions {
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
   }
+
+  .daySelection .nav-item.wide {
+    flex-basis: 40%;
+  }
 }
 
 @media (min-width: 991px) {
@@ -1674,6 +1679,10 @@ span.badge.instructions {
 @media (max-width: 767px) {
   #schedule .nav-tabs a {
     padding: 5px 15px;
+  }
+
+  .daySelection .nav-item.wide {
+    flex-basis: 80%;
   }
 }
 
