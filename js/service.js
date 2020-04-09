@@ -16,8 +16,9 @@ var csService = {
             var tabId = aLink.attr("href");
             if ($(tabId).children(".schedule-item").length < 1) {
                 var day = aLink.attr("data-day-id");
+                var date = aLink.attr("data-day-date");
                 var language = aLink.parents(".tab-pane").attr("data-mass-lang");
-                csService.getSchedule(language, day, tabId, true);
+                csService.getSchedule(language, day, tabId, date, true);
             }
             csService.scrollToHolyMass();
         });
@@ -55,15 +56,18 @@ var csService = {
     },
 
     getDays: function () {
-        $.get(csService.url + '/getDays', csService.displayDays)
+        $.get(csService.url + '/getDays', function (data) {
+            days = csTimeZone.addDatesToDays(data);
+            csService.displayDays(days)
+        } )
             .fail(function () {
                 console.log('failed to get days!');
             });
     },
 
-    getSchedule: function (language, day, tabId, addWow) {
+    getSchedule: function (language, day, tabId, date, addWow) {
         $.get(csService.url + `/getSchedule/${language}/${day}`, function (data) {
-            csService.displaySchedule(data, tabId, addWow)
+            csService.displaySchedule(data, tabId, date, addWow)
         })
             .fail(function () {
                 console.log('failed to get schedule!');
@@ -135,7 +139,10 @@ var csService = {
                     var langDayId = (day.name + csService.capitalizeString(language) + "Mass").replace(' ', '-');
                     $(dom).append(
                         `<li class="nav-item lej-padding ${wideBtnClass}">
-                            <a class="nav-link ${activeClass}" href="#${langDayId}" data-day-id="${day.name}" role="tab" data-toggle="tab">${csService.capitalizeString(day.displayName)}</a>
+                            <a class="nav-link ${activeClass}" href="#${langDayId}" 
+                                data-day-id="${day.name}" data-day-date="${day.date}" role="tab" data-toggle="tab">
+                                ${csService.capitalizeString(day.displayName)}
+                            </a>
                         </li>`
                     );
 
@@ -151,7 +158,7 @@ var csService = {
 
                     if (firstItem) {
                         var addWow = $(dom).is(":visible");
-                        csService.getSchedule(language, day.name, `#${langDayId}`, addWow);
+                        csService.getSchedule(language, day.name, `#${langDayId}`, day.date, addWow);
                     }
 
                     firstItem = false;
@@ -160,15 +167,19 @@ var csService = {
         });
     },
 
-    displaySchedule: function (data, tabId, addWow) {
+    displaySchedule: function (data, tabId, date, addWow) {
         $(tabId).children(".loadingContent").fadeOut(500, function () {
             $(this).remove();
             $.each(data, function (index, row) {
                 var wowClass = addWow ? "wow fadeInUp" : "";
                 var description = row.description ? `<p>${row.description}</p>` : "";
+                var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
                 $(tabId).append(
-                    `<div class="row schedule-item ${wowClass}">
-                        <div class="col-md-3 py-1 text-danger"><time>${row.prettyTime} IST</time></div>
+                    `<div class="row schedule-item ${wowClass}" data-ist-date="${scheduleTime}">
+                        <div class="col-md-3 py-1 text-danger">
+                            <time>${row.prettyTime} IST</time>
+                            <time class="userTzTime text-warning d-block"></time>
+                        </div>
                         <div class="col-md-7 py-1">
                             <h4>${row.name}</h4>
                             ${description}
