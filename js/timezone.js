@@ -40,14 +40,15 @@ var csTimeZone = {
         });
     },
 
-    updateDom: function (userTzDate, target) {
+    updateDom: function (userTzDate, targetDom) {
         if (userTzDate.day) {
             var tzText = userTzDate.day + ", " + userTzDate.time;
-            target.removeClass("text-secondary").addClass("text-warning").text(tzText);
+            targetDom.removeClass("text-secondary").addClass("text-warning").text(tzText);
         }
         else {
-            target.removeClass("text-warning").addClass("text-secondary").text(userTzDate.time);
+            targetDom.removeClass("text-warning").addClass("text-secondary").text(userTzDate.time);
         }
+        return targetDom;
     },
 
     addDatesToDays: function (days) {

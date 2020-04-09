@@ -174,11 +174,16 @@ var csService = {
                 var wowClass = addWow ? "wow fadeInUp" : "";
                 var description = row.description ? `<p>${row.description}</p>` : "";
                 var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
+                $target = $('<time class="userTzTime d-block"></time>');
+                if(csTimeZone.defaultTz()) {
+                    var userTzDate = csTimeZone.convertIstToSelected(scheduleTime, csTimeZone.defaultTz());
+                    $target = csTimeZone.updateDom(userTzDate, $target);
+                }
                 $(tabId).append(
                     `<div class="row schedule-item ${wowClass}" data-ist-date="${scheduleTime}">
                         <div class="col-md-3 py-1 text-danger">
                             <time>${row.prettyTime} IST</time>
-                            <time class="userTzTime text-warning d-block"></time>
+                            ${$target[0].outerHTML}
                         </div>
                         <div class="col-md-7 py-1">
                             <h4>${row.name}</h4>
