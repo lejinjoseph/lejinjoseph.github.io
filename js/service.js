@@ -91,7 +91,9 @@ var csService = {
                 $("#holyMass").append(
                     `<div id="${language}Mass" data-mass-lang="${orginalLang}" role="tabpanel" class="tab-pane fade ${activeClass}">
                         <h3 class="text-center text-capitalize font-weight-bold text-danger">${language} Holy Mass</h3>
-                        <p class="mb-2 mb-sm-3 mb-md-4">All timings are in IST (GMT+5.30).
+                        <p class="mb-2 mb-sm-3 mb-md-4">
+                            All timings are in Indian Standard Time (GMT+5.30).
+                            <span class="timeZones d-block">You can see time converted to your timezone </span>
                             <span class="instructions badge badge-info badge-pill my-1">
                                 <i class="fa fa-book pr-1"></i>Guidelines
                             </span>
@@ -111,6 +113,7 @@ var csService = {
                 firstItem = false;
             })
 
+            csTimeZone.createDropDown('.timeZones');
             csService.getDays();
         });
 
@@ -165,7 +168,7 @@ var csService = {
                 var description = row.description ? `<p>${row.description}</p>` : "";
                 $(tabId).append(
                     `<div class="row schedule-item ${wowClass}">
-                        <div class="col-md-3 py-1 text-danger"><time>${row.prettyTime}</time></div>
+                        <div class="col-md-3 py-1 text-danger"><time>${row.prettyTime} IST</time></div>
                         <div class="col-md-7 py-1">
                             <h4>${row.name}</h4>
                             ${description}
