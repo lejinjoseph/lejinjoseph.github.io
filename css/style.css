@@ -154,6 +154,18 @@ h6 {
   margin: 2px;
 }
 
+ul#langSelection li a.nav-link {
+  border-radius: 0;
+}
+
+ul#langSelection li.nav-item {
+  margin: 0px;
+}
+
+ul#langSelection li.nav-item+li.nav-item {
+  margin-left: 1px
+}
+
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
