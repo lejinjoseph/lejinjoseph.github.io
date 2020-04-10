@@ -21,6 +21,12 @@ public class Day {
     @Column
     private boolean active;
 
+    @Column(name = "sort_order")
+    private int order;
+
+    @Column
+    private String date;
+
     public int getId() {
         return id;
     }
@@ -51,5 +57,21 @@ public class Day {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

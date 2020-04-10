@@ -13,7 +13,7 @@ public interface MassRepo extends CrudRepository<Mass,Integer> {
     @Query(value = "SELECT * FROM mass WHERE  day is not null ORDER BY time_ist asc",nativeQuery = true)
     List<Mass> getAll();
 
-    @Query(value = "select distinct `language` from mass where `language` is not NULL and day is not NULL and time_ist is not null",nativeQuery = true)
+    @Query(value = "select distinct `language` from mass where `language` is not NULL and day is not NULL and time_ist is not null order by language desc",nativeQuery = true)
     List<String> getLanguages();
 
     @Query(value = "SELECT * FROM mass WHERE language=?1 and (day=?2 or day like '%very%') ORDER BY time_ist asc",nativeQuery = true)
