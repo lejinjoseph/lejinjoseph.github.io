@@ -919,8 +919,23 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin: 4px;
 }
 
-span.badge.instructions {
+#instructions {
   cursor: pointer;
+}
+
+#csTzSelect+.btn.dropdown-toggle,
+#csTzSelect+.btn.dropdown-toggle:focus,
+#csTzSelect+.btn.dropdown-toggle:link,
+#csTzSelect+.btn.dropdown-toggle:visited,
+#csTzSelect+.btn.dropdown-toggle:hover,
+#csTzSelect+.btn.dropdown-toggle:active {
+  border: none;
+  outline: none !important;
+  box-shadow: none;
+}
+
+.far, .fas {
+  vertical-align: middle;
 }
 
 /*--------------------------------------------------------------

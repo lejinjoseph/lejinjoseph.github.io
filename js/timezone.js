@@ -11,8 +11,9 @@ var csTimeZone = {
 
     createDropDown: function (domSelector) {
         var defaultTz = csTimeZone.defaultTz();
-        var tzSelect = `<select class="csTzSelect show-tick" data-container=".container" data-width="fit"
-                                data-live-search="true" data-live-search-placeholder="search timezone">
+        var tzSelect = `<select id="csTzSelect" class="show-tick" data-container="#schedule" data-width="fit"
+                                data-live-search="true" data-live-search-placeholder="search timezone"
+                                data-style="btn-outline-warning">
                             <option value="">select timezone
                         </option>`;
         var tzArr = moment.tz.names();
@@ -23,11 +24,11 @@ var csTimeZone = {
         tzSelect += '</select>';
 
         $(domSelector).append(tzSelect);
-        $('.csTzSelect').selectpicker();
+        $('#csTzSelect').selectpicker();
     },
 
     registerEvents: function (params) {
-        $("body").on("change", ".csTzSelect", function ($e) {
+        $("body").on("changed.bs.select", "#csTzSelect", function ($e) {
             if ($(this).val()) {
                 localStorage.setItem("csUserTimeZone", $(this).val());
                 csTimeZone.convertAllScheduleRows($(this).val());

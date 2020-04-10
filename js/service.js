@@ -9,7 +9,7 @@ var csService = {
     init: function (params) {
         csService.getLanguanges();
 
-        $("body").on("click", ".badge.instructions", csService.showGuidelineModal);
+        $("body").on("click", "#instructions", csService.showGuidelineModal);
 
         $("body").on('shown.bs.tab', '.daySelection a[data-toggle="tab"]', function ($event) {
             var aLink = $($event.target);
@@ -110,7 +110,7 @@ var csService = {
 
                 firstItem = false;
             })
-            
+
             csService.getDays();
         });
 
