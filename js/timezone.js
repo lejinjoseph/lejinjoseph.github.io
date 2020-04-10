@@ -1,5 +1,6 @@
 jQuery(document).ready(function ($) {
     csTimeZone.registerEvents();
+    csTimeZone.createDropDown('#timeZones');
 });
 
 var csTimeZone = {
