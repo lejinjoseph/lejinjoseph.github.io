@@ -10,7 +10,10 @@ var csTimeZone = {
 
     createDropDown: function (domSelector) {
         var defaultTz = csTimeZone.defaultTz();
-        var tzSelect = '<select class="csTzSelect" data-live-search="true"><option value="">select timezone</option>';
+        var tzSelect = `<select class="csTzSelect show-tick" data-container=".container" data-width="fit"
+                                data-live-search="true" data-live-search-placeholder="search timezone">
+                            <option value="">select timezone
+                        </option>`;
         var tzArr = moment.tz.names();
         tzArr.forEach(function (tz) {
             var selected = defaultTz === tz ? "selected" : "";

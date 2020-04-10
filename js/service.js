@@ -97,7 +97,7 @@ var csService = {
                         <h3 class="text-center text-capitalize font-weight-bold text-danger">${language} Holy Mass</h3>
                         <p class="mb-2 mb-sm-3 mb-md-4">
                             All timings are in Indian Standard Time (GMT+5.30).
-                            <span class="timeZones d-block">You can see time converted to your timezone </span>
+                            <span class="timeZones d-block">You can see time converted to your local timezone </span>
                             <span class="instructions badge badge-info badge-pill my-1">
                                 <i class="fa fa-book pr-1"></i>Guidelines
                             </span>
