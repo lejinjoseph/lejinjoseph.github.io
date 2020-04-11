@@ -865,6 +865,11 @@ body.mobile-nav-active #mobile-nav-toggle {
   padding: 10px 30px;
 }
 
+#schedule .nav-tabs li.icon {
+  flex-grow: 0;
+  flex-shrink: 0;  
+}
+
 #schedule .nav-tabs a.active {
   background-color: #d29e02;
   color: #fff;

@@ -97,6 +97,9 @@ var csService = {
                         <h3 class="text-center text-capitalize font-weight-bold text-danger">${language} Holy Mass</h3>
                         
                         <ul class="daySelection nav nav-tabs nav-fill" role="tablist">
+                            <li class="nav-item lej-padding icon">
+                                <a class="nav-link" data-toggle="tooltip" data-placement="top" title="select day to view timing"><i class="far fa-calendar-alt"></i></a>
+                            </li>
                         </ul>
                         <div class="tab-content row justify-content-center m-3">
                             <div class="d-flex justify-content-center loadingContent">
@@ -110,6 +113,8 @@ var csService = {
 
                 firstItem = false;
             })
+
+            $('[data-toggle="tooltip"]').tooltip();
 
             csService.getDays();
         });

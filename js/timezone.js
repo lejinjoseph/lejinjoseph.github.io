@@ -13,7 +13,7 @@ var csTimeZone = {
         var defaultTz = csTimeZone.defaultTz();
         var tzSelect = `<select id="csTzSelect" class="show-tick" data-container="#schedule" data-width="fit"
                                 data-live-search="true" data-live-search-placeholder="search timezone"
-                                data-style="btn-outline-warning">
+                                data-style="btn-outline-info">
                             <option value="">select timezone
                         </option>`;
         var tzArr = moment.tz.names();
