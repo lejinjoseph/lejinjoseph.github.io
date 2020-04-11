@@ -830,6 +830,12 @@ body.mobile-nav-active #mobile-nav-toggle {
 # Schedule Section
 --------------------------------------------------------------*/
 
+#features i {
+  width: 80px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
 #holyMass {
   /* padding: 40px 0; */
   min-height: calc(100vh - 70px);
