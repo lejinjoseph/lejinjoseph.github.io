@@ -12,7 +12,9 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800"
     rel="stylesheet">
   <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/v4-shims.min.css" integrity="sha256-wN7QJaqAwQ03kgUhyN4EU2phRdDkLrQYbFe0EvpQ60U=" crossorigin="anonymous" />
   <link href="lib/animate/animate.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/css/bootstrap-select.min.css" integrity="sha256-l3FykDBm9+58ZcJJtzcFvWjBZNJO40HmvebhpHXEhC0=" crossorigin="anonymous" />
   <link href="css/style.css" rel="stylesheet">
@@ -26,7 +28,7 @@
 <body>
   <header id="header">
     <div class="container">
-      <div id="logo" class="pull-left">
+      <div id="logo" class="float-left">
         <h1><a href="index.html#intro">Catholic <span>S</span>tream</a></h1>
       </div>
       <nav id="nav-menu-container">
@@ -46,11 +48,54 @@
     </div>
   </section>
 
+  <section id="features" class="p-2 p-md-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4 my-2 my-md-3 text-left d-flex align-items-center">
+          <i class="fa-2x d-block p-3 text-center d-flex-item fas fa-globe-americas"></i>
+          <span class="d-flex-item">Live Holy Masses from all around the World</span>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 my-2 my-md-3 text-left d-flex align-items-center">
+          <i class="fa-2x d-block p-3 text-center d-flex-item far fa-calendar-alt"></i>
+          <span class="d-flex-item">Holy Mass timings for Weekdays and Special days</span>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 my-2 my-md-3 text-left d-flex align-items-center">
+          <i class="fa-2x d-block p-3 text-center d-flex-item fas fa-language"></i>
+          <span class="d-flex-item">Holy Masses in multiple languages</span>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 my-2 my-md-3 text-left d-flex align-items-center">
+          <i class="fa-2x d-block p-3 text-center d-flex-item fas fa-bible"></i>
+          <span class="d-flex-item">Guidelines for attending Holy Mass online</span>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 my-2 my-md-3 text-left d-flex align-items-center">
+          <i class="fa-2x d-block p-3 text-center d-flex-item fas fa-clock"></i>
+          <span class="d-flex-item">All timings are in Indian Standard Time (IST GMT+05.30 Asia/Kolkata)</span>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 my-2 my-md-3 text-left d-flex align-items-center">
+          <i class="fa-2x d-block p-3 text-center d-flex-item fas fa-user-clock"></i>
+          <span class="d-flex-item">View timing in any timezone around the World</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
   <main id="main">
-    <section id="schedule" class="section-with-bg pt-3 pt-md-5">
+    <section id="schedule" class="section-with-bg pt-3 pt-md-4">
       <div class="container wow fadeInUp">
-        <div class="section-header">
-          <h4 class="text-center">Holy Masses from all around the world.</h4>
+        <div class="section-header">       
+          <!-- <h2 class="text-center">Live Holy Masses from all around the world.</h2> -->
+          <p class="mb-2 mb-sm-3 mb-md-4">
+            <!-- All timings are in Indian Standard Time (IST GMT+5.30 Asia/Kolkata).
+            Additionally you can see timing in your local timezone.
+            <br/> -->
+            <span id="timeZones" class="btn btn-outline-info p-0 m-2">
+              <i class="fas fa-user-clock pl-2"></i>
+            </span>
+            <span id="instructions" class="btn btn-outline-info m-2">
+              <i class="fas fa-bible pr-3"></i>Guidelines
+            </span>
+          </p>
 
           <div class="d-flex justify-content-center loadingContent">
             <div class="spinner-grow text-warning" role="status">
@@ -59,6 +104,9 @@
           </div>
           
           <ul id="langSelection" class="nav nav-tabs nav-fill pb-1" role="tablist">
+            <li class="nav-item lej-padding icon">
+              <a class="nav-link" data-toggle="tooltip" data-placement="top" title="select Holy Mass language"><i class="fas fa-language"></i></a>
+           </li>
           </ul>
         </div>
         <div id="holyMass" class="tab-content  pt-3 pt-md-4 pb-3 pb-md-5">

@@ -1,5 +1,6 @@
 jQuery(document).ready(function ($) {
     csTimeZone.registerEvents();
+    csTimeZone.createDropDown('#timeZones');
 });
 
 var csTimeZone = {
@@ -10,7 +11,11 @@ var csTimeZone = {
 
     createDropDown: function (domSelector) {
         var defaultTz = csTimeZone.defaultTz();
-        var tzSelect = '<select class="csTzSelect" data-live-search="true"><option value="">select timezone</option>';
+        var tzSelect = `<select id="csTzSelect" class="show-tick" data-container="#schedule" data-width="fit"
+                                data-live-search="true" data-live-search-placeholder="search timezone"
+                                data-style="btn-outline-info">
+                            <option value="">select timezone
+                        </option>`;
         var tzArr = moment.tz.names();
         tzArr.forEach(function (tz) {
             var selected = defaultTz === tz ? "selected" : "";
@@ -19,11 +24,11 @@ var csTimeZone = {
         tzSelect += '</select>';
 
         $(domSelector).append(tzSelect);
-        $('.csTzSelect').selectpicker();
+        $('#csTzSelect').selectpicker();
     },
 
     registerEvents: function (params) {
-        $("body").on("change", ".csTzSelect", function ($e) {
+        $("body").on("changed.bs.select", "#csTzSelect", function ($e) {
             if ($(this).val()) {
                 localStorage.setItem("csUserTimeZone", $(this).val());
                 csTimeZone.convertAllScheduleRows($(this).val());

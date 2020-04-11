@@ -154,6 +154,18 @@ h6 {
   margin: 2px;
 }
 
+ul#langSelection li a.nav-link {
+  border-radius: 0;
+}
+
+ul#langSelection li.nav-item {
+  margin: 0px;
+}
+
+ul#langSelection li.nav-item+li.nav-item {
+  margin-left: 1px
+}
+
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
@@ -817,6 +829,16 @@ body.mobile-nav-active #mobile-nav-toggle {
 /*--------------------------------------------------------------
 # Schedule Section
 --------------------------------------------------------------*/
+#features {
+  color: #0e1b4d;
+  background: #f6f7fd;
+}
+
+#features i {
+  width: 80px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
 
 #holyMass {
   /* padding: 40px 0; */
@@ -845,6 +867,11 @@ body.mobile-nav-active #mobile-nav-toggle {
   background-color: #0e1b4d;
   color: #fff;
   padding: 10px 30px;
+}
+
+#schedule .nav-tabs li.icon {
+  flex-grow: 0;
+  flex-shrink: 0;  
 }
 
 #schedule .nav-tabs a.active {
@@ -919,8 +946,23 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin: 4px;
 }
 
-span.badge.instructions {
+#instructions {
   cursor: pointer;
+}
+
+#csTzSelect+.btn.dropdown-toggle,
+#csTzSelect+.btn.dropdown-toggle:focus,
+#csTzSelect+.btn.dropdown-toggle:link,
+#csTzSelect+.btn.dropdown-toggle:visited,
+#csTzSelect+.btn.dropdown-toggle:hover,
+#csTzSelect+.btn.dropdown-toggle:active {
+  border: none;
+  outline: none !important;
+  box-shadow: none;
+}
+
+.far, .fas {
+  vertical-align: middle;
 }
 
 /*--------------------------------------------------------------

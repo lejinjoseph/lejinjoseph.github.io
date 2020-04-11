@@ -1,5 +1,7 @@
 jQuery(document).ready(function( $ ) {
 
+  $('[data-toggle="tooltip"]').tooltip();
+
   // Back to top button
   $(window).scroll(function() {
     if ($(this).scrollTop() > 100) {
