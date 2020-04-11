@@ -829,6 +829,10 @@ body.mobile-nav-active #mobile-nav-toggle {
 /*--------------------------------------------------------------
 # Schedule Section
 --------------------------------------------------------------*/
+#features {
+  color: #0e1b4d;
+  background: #f6f7fd;
+}
 
 #features i {
   width: 80px;
