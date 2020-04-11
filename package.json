@@ -1,0 +1,34 @@
+{
+  "name": "catholicstreams",
+  "version": "4.0.0",
+  "description": "Live Online Holy Masses from around the World",
+  "main": "index.html",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lejinjoseph/lejinjoseph.github.io.git"
+  },
+  "author": "Dijo Davis, Lejin Joseph",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lejinjoseph/lejinjoseph.github.io/issues"
+  },
+  "homepage": "https://github.com/lejinjoseph/lejinjoseph.github.io#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "animate.css": "^3.7.2",
+    "bootstrap": "^4.4.1",
+    "bootstrap-select": "^1.13.12",
+    "gulp": "^4.0.2",
+    "jquery": "^3.5.0",
+    "jquery.easing": "^1.4.1",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.28",
+    "wowjs": "^1.1.3"
+  }
+}
