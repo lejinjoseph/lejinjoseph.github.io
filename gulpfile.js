@@ -1,61 +1,47 @@
-"use strict";
+var gulp = require('gulp');
+var csso = require('gulp-csso');
+var concat = require('gulp-concat');
+var del = require('del');
 
-// Load plugins
-const browsersync = require("browser-sync").create();
-const del = require("del");
-const gulp = require("gulp");
-const merge = require("merge-stream");
+/**
+ * CSS minification and concatination tasks
+ */
 
-// BrowserSync
-function browserSync(done) {
-  browsersync.init({
-    server: {
-      baseDir: "./"
-    },
-    port: 3000
-  });
-  done();
-}
+var vendorCssLibs = [
+  'node_modules/bootstrap/dist/css/bootstrap.min.css',
+  'node_modules/@fortawesome/fontawesome-free/css/all.min.css',
+  'node_modules/@fortawesome/fontawesome-free/css/v4-shims.min.css',
+  'node_modules/animate.css/animate.min.css',
+  'node_modules/bootstrap-select/dist/css/bootstrap-select.min.css'
+];
 
-// BrowserSync reload
-function browserSyncReload(done) {
-  browsersync.reload();
-  done();
-}
+var myCssFiles = ['src/css/*.css'];
 
-// Clean vendor
-function clean() {
-  return del(["./vendor/"]);
-}
+gulp.task('cleanCss', function () {
+  return del('dist/css');
+});
 
-// Bring third party dependencies from node_modules into vendor directory
-function modules() {
-  // Bootstrap
-  var bootstrap = gulp.src('./node_modules/bootstrap/dist/**/*')
-    .pipe(gulp.dest('./vendor/bootstrap'));
-  // jQuery
-  var jquery = gulp.src([
-      './node_modules/jquery/dist/*',
-      '!./node_modules/jquery/dist/core.js'
-    ])
-    .pipe(gulp.dest('./vendor/jquery'));
-  return merge(bootstrap, jquery);
-}
+gulp.task('concatVendorCssLibs', function () {
+  return gulp.src(vendorCssLibs)
+    .pipe(concat('vendor.min.css'))
+    .pipe(gulp.dest('dist/css/'));
+});
 
-// Watch files
-function watchFiles() {
-  gulp.watch("./**/*.css", browserSyncReload);
-  gulp.watch("./**/*.html", browserSyncReload);
-}
+gulp.task('minifyMyCss', function () {
+  return gulp.src(myCssFiles)
+    .pipe(csso())
+    .pipe(concat('my.min.css'))
+    .pipe(gulp.dest('dist/css/'));
+});
 
-// Define complex tasks
-const vendor = gulp.series(clean, modules);
-const build = gulp.series(vendor);
-const watch = gulp.series(build, gulp.parallel(watchFiles, browserSync));
+gulp.task('concatCss', function () {
+  return gulp.src(['dist/css/vendor.min.css', 'dist/css/my.min.css'])
+    .pipe(concat('app.min.css'))
+    .pipe(gulp.dest('dist/css/'));
+});
 
-// Export tasks
-exports.clean = clean;
-exports.vendor = vendor;
-exports.build = build;
-exports.watch = watch;
-exports.default = build;
+gulp.task('buildCss', gulp.series('cleanCss', gulp.parallel('concatVendorCssLibs', 'minifyMyCss'), 'concatCss'));
+
+/**
+ * JS minification and concatination tasks
+ */
