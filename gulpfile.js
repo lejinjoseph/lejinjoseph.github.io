@@ -91,3 +91,25 @@ gulp.task('concatJs', function () {
 });
 
 gulp.task('buildJs', gulp.series('cleanJs', gulp.parallel('concatVendorJsFiles', 'minifyMyJs'), 'concatJs'));
+
+/**
+ * one time copy tasks
+ */
+gulp.task('copy-fa', function () {
+  return gulp.src('node_modules/@fortawesome/fontawesome-free/webfonts/*')
+    .pipe(gulp.dest('dist/webfonts/'));
+});
+
+gulp.task('oneTime', gulp.parallel('copy-fa'));
+
+/**
+ * watch files and build automatically
+ */
+exports.watch = function () {
+  gulp.watch(['src/scss/*.scss'], gulp.series('buildCss'));
+  gulp.watch(['src/js/*.js'], gulp.series('minifyMyJs'));
+}
+/**
+ * default task
+ */
+exports.default = gulp.parallel('oneTime', 'buildCss', 'buildJs');
