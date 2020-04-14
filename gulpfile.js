@@ -106,8 +106,8 @@ gulp.task('oneTime', gulp.parallel('copy-fa'));
  * watch files and build automatically
  */
 exports.watch = function () {
-  gulp.watch(['src/scss/*.scss'], gulp.series('buildCss'));
-  gulp.watch(['src/js/*.js'], gulp.series('minifyMyJs'));
+  gulp.watch(['src/css/*.css'], gulp.series('buildCss'));
+  gulp.watch(['src/js/*.js'], gulp.series('buildJs'));
 }
 /**
  * default task
