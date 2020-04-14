@@ -1,8 +1,9 @@
 var gulp = require('gulp');
 var csso = require('gulp-csso');
-const minify = require('gulp-minify');
+var minify = require('gulp-minify');
 var concat = require('gulp-concat');
 var del = require('del');
+var htmlmin = require('gulp-htmlmin');
 
 /**
  * CSS minification and concatination tasks
@@ -109,7 +110,21 @@ exports.watch = function () {
   gulp.watch(['src/css/*.css'], gulp.series('buildCss'));
   gulp.watch(['src/js/*.js'], gulp.series('buildJs'));
 }
+
+/**
+ * Minify HTML files
+ */
+gulp.task('minifyHtml', () => {
+  return gulp.src('src/*.html')
+    .pipe(htmlmin({
+      collapseWhitespace: true,
+      caseSensitive: true,
+      removeComments: true
+    }))
+    .pipe(gulp.dest('./'));
+});
+
 /**
  * default task
  */
-exports.default = gulp.parallel('oneTime', 'buildCss', 'buildJs');
+exports.default = gulp.parallel('oneTime', 'buildCss', 'buildJs', 'minifyHtml');
