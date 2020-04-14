@@ -4,11 +4,13 @@ var minify = require('gulp-minify');
 var concat = require('gulp-concat');
 var del = require('del');
 var htmlmin = require('gulp-htmlmin');
+var rev = require('gulp-rev');
+var revRewrite = require('gulp-rev-rewrite');
+var revDel = require('rev-del');
 
 /**
- * CSS minification and concatination tasks
+ * List of CSS and JS files to be merged and minified
  */
-
 var vendorCssFiles = [
   'node_modules/bootstrap/dist/css/bootstrap.min.css',
   'node_modules/@fortawesome/fontawesome-free/css/all.min.css',
@@ -17,11 +19,34 @@ var vendorCssFiles = [
   'node_modules/bootstrap-select/dist/css/bootstrap-select.min.css'
 ];
 
+var vendorJsFiles = [
+  'node_modules/jquery/dist/jquery.min.js',
+  'node_modules/jquery.easing/jquery.easing.min.js',
+  'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
+  'node_modules/wowjs/dist/wow.min.js',
+  'node_modules/bootstrap-select/dist/js/bootstrap-select.min.js',
+  'node_modules/moment/min/moment.min.js',
+  'node_modules/moment-timezone/builds/moment-timezone-with-data-1970-2030.min.js'
+];
+
 var myCssFiles = ['src/css/*.css'];
 
-gulp.task('cleanCss', function () {
-  return del('dist/css');
+var myJsFiles = [
+  'src/js/timezone.js',
+  'src/js/service.js',
+  'src/js/main.js'
+];
+
+/**
+ * Remove all build files
+ */
+gulp.task('cleanBuild', function () {
+  return del(['dist/css', 'dist/js', './index.html']);
 });
+
+/**
+ * CSS minification and concatination tasks
+ */
 
 gulp.task('concatVendorCssFiles', function () {
   return gulp.src(vendorCssFiles)
@@ -42,32 +67,9 @@ gulp.task('concatCss', function () {
     .pipe(gulp.dest('dist/css/'));
 });
 
-gulp.task('buildCss', gulp.series('cleanCss', gulp.parallel('concatVendorCssFiles', 'minifyMyCss'), 'concatCss'));
-
 /**
  * JS minification and concatination tasks
  */
-
-var vendorJsFiles = [
-  'node_modules/jquery/dist/jquery.min.js',
-  'node_modules/jquery.easing/jquery.easing.min.js',
-  'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
-  'node_modules/wowjs/dist/wow.min.js',
-  'node_modules/bootstrap-select/dist/js/bootstrap-select.min.js',
-  'node_modules/moment/min/moment.min.js',
-  'node_modules/moment-timezone/builds/moment-timezone-with-data-1970-2030.min.js'
-];
-
-var myJsFiles = [
-  'src/js/timezone.js',
-  'src/js/service.js',
-  'src/js/main.js'
-];
-
-gulp.task('cleanJs', function () {
-  return del('dist/js');
-});
-
 gulp.task('concatVendorJsFiles', function () {
   return gulp.src(vendorJsFiles)
     .pipe(concat('vendor.min.js'))
@@ -91,7 +93,48 @@ gulp.task('concatJs', function () {
     .pipe(gulp.dest('dist/js/'));
 });
 
-gulp.task('buildJs', gulp.series('cleanJs', gulp.parallel('concatVendorJsFiles', 'minifyMyJs'), 'concatJs'));
+/**
+ * Version CSS and JS file imports & Minify HTML
+ */
+// Step 1
+gulp.task('revision', function () {
+  return gulp.src('dist/**/*.{css,js}')
+    .pipe(rev())
+    .pipe(gulp.dest('dist'))
+    .pipe(rev.manifest({ merge: false }))
+    .pipe(revDel({ dest: 'dist' }))
+    .pipe(gulp.dest('dist'));
+});
+
+// Step 2
+gulp.task('rewrite', function () {
+  const manifest = gulp.src('dist/rev-manifest.json');
+
+  return gulp.src('src/*.html')
+    .pipe(revRewrite({ manifest }))
+    .pipe(htmlmin({
+      collapseWhitespace: true,
+      caseSensitive: true,
+      removeComments: true
+    }))
+    .pipe(gulp.dest('./'));
+});
+
+gulp.task("versioning", gulp.series('revision', 'rewrite'));
+
+/**
+ * watch files and build automatically
+ */
+gulp.task('buildCssJs', gulp.series(
+  gulp.parallel('cleanBuild'),
+  gulp.parallel('concatVendorCssFiles', 'minifyMyCss', 'concatVendorJsFiles', 'minifyMyJs'),
+  gulp.parallel('concatCss', 'concatJs'),
+  'versioning'
+));
+
+exports.watch = function () {
+  gulp.watch(['src/css/*.css', 'src/js/*.js'], gulp.series('buildCssJs'));
+}
 
 /**
  * one time copy tasks
@@ -104,27 +147,6 @@ gulp.task('copy-fa', function () {
 gulp.task('oneTime', gulp.parallel('copy-fa'));
 
 /**
- * watch files and build automatically
- */
-exports.watch = function () {
-  gulp.watch(['src/css/*.css'], gulp.series('buildCss'));
-  gulp.watch(['src/js/*.js'], gulp.series('buildJs'));
-}
-
-/**
- * Minify HTML files
- */
-gulp.task('minifyHtml', () => {
-  return gulp.src('src/*.html')
-    .pipe(htmlmin({
-      collapseWhitespace: true,
-      caseSensitive: true,
-      removeComments: true
-    }))
-    .pipe(gulp.dest('./'));
-});
-
-/**
  * default task
  */
-exports.default = gulp.parallel('oneTime', 'buildCss', 'buildJs', 'minifyHtml');
+exports.default = gulp.series(gulp.parallel('oneTime', 'buildCssJs'));

@@ -25,7 +25,7 @@
     "bootstrap": "^4.4.1",
     "bootstrap-select": "^1.13.12",
     "gulp": "^4.0.2",
-    "jquery": "^3.5.0",
+    "jquery": "~3.4.0",
     "jquery.easing": "^1.4.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
@@ -36,6 +36,10 @@
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-csso": "^4.0.1",
-    "gulp-minify": "^3.1.0"
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-minify": "^3.1.0",
+    "gulp-rev": "^9.0.0",
+    "gulp-rev-rewrite": "^3.0.3",
+    "rev-del": "^2.0.0"
   }
 }
