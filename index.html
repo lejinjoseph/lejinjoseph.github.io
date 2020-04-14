@@ -8,20 +8,15 @@
   <meta name="author" content="Jesus Youth Infopark">
   <meta content="Catholic,Holy Mass,Live,Online,Schedule,India,Kerala,Malayalam,English,Hindi" keywords">
   <meta content="Live Online Holy Masses from all around the World" name="description">
+  <script>
+    if (location.protocol == 'https:') {
+      location.replace(`http:${location.href.substring(location.protocol.length)}?v=4.0`);
+    }
+  </script>
   <link href="favicon.ico" rel="icon">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800"
     rel="stylesheet">
-  <!-- <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/v4-shims.min.css" integrity="sha256-wN7QJaqAwQ03kgUhyN4EU2phRdDkLrQYbFe0EvpQ60U=" crossorigin="anonymous" />
-  <link href="lib/animate/animate.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/css/bootstrap-select.min.css" integrity="sha256-l3FykDBm9+58ZcJJtzcFvWjBZNJO40HmvebhpHXEhC0=" crossorigin="anonymous" /> -->
   <link href="dist/css/app.min.css" rel="stylesheet">
-  <script>
-    if (location.protocol == 'https:') {
-      location.replace(`http:${location.href.substring(location.protocol.length)}?version=3.0`);
-    }
-  </script>
 </head>
 
 <body>
@@ -82,12 +77,8 @@
   <main id="main">
     <section id="schedule" class="section-with-bg pt-3 pt-md-4">
       <div class="container wow fadeInUp">
-        <div class="section-header">       
-          <!-- <h2 class="text-center">Live Holy Masses from all around the world.</h2> -->
+        <div class="section-header">
           <p class="mb-2 mb-sm-3 mb-md-4">
-            <!-- All timings are in Indian Standard Time (IST GMT+5.30 Asia/Kolkata).
-            Additionally you can see timing in your local timezone.
-            <br/> -->
             <span id="timeZones" class="btn btn-outline-info p-0 m-2">
               <i class="fas fa-user-clock pl-2"></i>
             </span>
@@ -101,11 +92,12 @@
               <span class="sr-only">Loading...</span>
             </div>
           </div>
-          
+
           <ul id="langSelection" class="nav nav-tabs nav-fill pb-1" role="tablist">
             <li class="nav-item lej-padding icon">
-              <a class="nav-link" data-toggle="tooltip" data-placement="top" title="select Holy Mass language"><i class="fas fa-language"></i></a>
-           </li>
+              <a class="nav-link" data-toggle="tooltip" data-placement="top" title="select Holy Mass language"><i
+                  class="fas fa-language"></i></a>
+            </li>
           </ul>
         </div>
         <div id="holyMass" class="tab-content  pt-3 pt-md-4 pb-3 pb-md-5">
@@ -199,15 +191,6 @@
 
   <a href="index.html#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
 
-  <!-- <script src="lib/jquery/jquery.min.js"></script>
-  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="lib/easing/easing.min.js"></script>
-  <script src="lib/wow/wow.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/js/bootstrap-select.min.js" integrity="sha256-+o/X+QCcfTkES5MroTdNL5zrLNGb3i4dYdWPWuq6whY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.28/moment-timezone-with-data-1970-2030.min.js" integrity="sha256-ob9GYTF6HJFUyVtlWivU47nga6eeRR3Lti9VfUeFhBI=" crossorigin="anonymous"></script>
-  <script src="js/timezone.js"></script>
-  <script src="js/service.js"></script> -->
   <script src="dist/js/app.min.js"></script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161546265-1"></script>
