@@ -30,14 +30,14 @@ gulp.task('concatVendorCssFiles', function () {
 
 gulp.task('minifyMyCss', function () {
   return gulp.src(myCssFiles)
-    .pipe(concat('my.min.css'))
+    .pipe(concat('app.min.css'))
     .pipe(csso())
     .pipe(gulp.dest('dist/css/'));
 });
 
 gulp.task('concatCss', function () {
-  return gulp.src(['dist/css/vendor.min.css', 'dist/css/my.min.css'])
-    .pipe(concat('app.min.css'))
+  return gulp.src(['dist/css/vendor.min.css', 'dist/css/app.min.css'])
+    .pipe(concat('bundle.min.css'))
     .pipe(gulp.dest('dist/css/'));
 });
 
@@ -75,7 +75,7 @@ gulp.task('concatVendorJsFiles', function () {
 
 gulp.task('minifyMyJs', function () {
   return gulp.src(myJsFiles)
-    .pipe(concat('my.js'))
+    .pipe(concat('app.js'))
     .pipe(minify({
       ext: {
         min: '.min.js'
@@ -85,8 +85,8 @@ gulp.task('minifyMyJs', function () {
 });
 
 gulp.task('concatJs', function () {
-  return gulp.src(['dist/js/vendor.min.js', 'dist/js/my.min.js'])
-    .pipe(concat('app.min.js'))
+  return gulp.src(['dist/js/vendor.min.js', 'dist/js/app.min.js'])
+    .pipe(concat('bundle.min.js'))
     .pipe(gulp.dest('dist/js/'));
 });
 
