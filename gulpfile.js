@@ -54,6 +54,12 @@ gulp.task('concatVendorCssFiles', function () {
     .pipe(gulp.dest('dist/css/'));
 });
 
+gulp.task('concatMyCss:dev', function () {
+  return gulp.src(myCssFiles)
+    .pipe(concat('app.css'))
+    .pipe(gulp.dest('dist/css/'));
+});
+
 gulp.task('minifyMyCss', function () {
   return gulp.src(myCssFiles)
     .pipe(concat('app.min.css'))
@@ -62,7 +68,7 @@ gulp.task('minifyMyCss', function () {
 });
 
 gulp.task('concatCss', function () {
-  return gulp.src(['dist/css/vendor.min.css', 'dist/css/app.min.css'])
+  return gulp.src(['dist/css/vendor.min.css', 'dist/css/*.css'])
     .pipe(concat('bundle.min.css'))
     .pipe(gulp.dest('dist/css/'));
 });
@@ -73,6 +79,12 @@ gulp.task('concatCss', function () {
 gulp.task('concatVendorJsFiles', function () {
   return gulp.src(vendorJsFiles)
     .pipe(concat('vendor.min.js'))
+    .pipe(gulp.dest('dist/js/'));
+});
+
+gulp.task('concatMyJs:dev', function () {
+  return gulp.src(myJsFiles)
+    .pipe(concat('app.js'))
     .pipe(gulp.dest('dist/js/'));
 });
 
@@ -87,8 +99,12 @@ gulp.task('minifyMyJs', function () {
     .pipe(gulp.dest('dist/js/'));
 });
 
+gulp.task("delMyJs:prod", function () {
+  return del('dist/js/app.js');
+});
+
 gulp.task('concatJs', function () {
-  return gulp.src(['dist/js/vendor.min.js', 'dist/js/app.min.js'])
+  return gulp.src(['dist/js/vendor.min.js', 'dist/js/*.js'])
     .pipe(concat('bundle.min.js'))
     .pipe(gulp.dest('dist/js/'));
 });
@@ -120,21 +136,17 @@ gulp.task('rewrite', function () {
     .pipe(gulp.dest('./'));
 });
 
+gulp.task('minifyHTML:dev', function () {
+  return gulp.src('src/*.html')
+    .pipe(htmlmin({
+      collapseWhitespace: true,
+      caseSensitive: true,
+      removeComments: true
+    }))
+    .pipe(gulp.dest('./'));
+})
+
 gulp.task("versioning", gulp.series('revision', 'rewrite'));
-
-/**
- * watch files and build automatically
- */
-gulp.task('buildCssJs', gulp.series(
-  gulp.parallel('cleanBuild'),
-  gulp.parallel('concatVendorCssFiles', 'minifyMyCss', 'concatVendorJsFiles', 'minifyMyJs'),
-  gulp.parallel('concatCss', 'concatJs'),
-  'versioning'
-));
-
-exports.watch = function () {
-  gulp.watch(['src/css/*.css', 'src/js/*.js'], gulp.series('buildCssJs'));
-}
 
 /**
  * one time copy tasks
@@ -147,6 +159,37 @@ gulp.task('copy-fa', function () {
 gulp.task('oneTime', gulp.parallel('copy-fa'));
 
 /**
+ * Prod build flow
+ */
+
+gulp.task('build:prod', gulp.series(
+  gulp.parallel('cleanBuild'),
+  gulp.parallel('concatVendorCssFiles', 'minifyMyCss', 'concatVendorJsFiles', 'minifyMyJs'),
+  'delMyJs:prod',
+  gulp.parallel('concatCss', 'concatJs'),
+  'versioning'
+));
+
+/**
+ * Dev build flow - no minification and versioning
+ */
+
+gulp.task('build:dev', gulp.series(
+  gulp.parallel('cleanBuild'),
+  gulp.parallel('concatVendorCssFiles', 'concatMyCss:dev', 'concatVendorJsFiles', 'concatMyJs:dev'),
+  gulp.parallel('concatCss', 'concatJs'),
+  'minifyHTML:dev'
+));
+
+/**
+ * watch files and build automatically - dev only
+ */
+
+exports.watch = function () {
+  gulp.watch(['src/css/*.css', 'src/js/*.js'], gulp.series('build:dev'));
+}
+
+/**
  * default task
  */
-exports.default = gulp.series(gulp.parallel('oneTime', 'buildCssJs'));
+exports.default = gulp.series(gulp.parallel('oneTime', 'build:prod'));
