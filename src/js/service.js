@@ -188,8 +188,11 @@ var csService = {
                             ${description}
                         </div>
                         <div class="col-md-2 py-1">
-                            <a href="${row.link}" target="_blank"><button class="btn btn-sm btn-warning"><i
-                                class="fa fa-television pr-1"></i>Watch</button> </a>
+                            <button class="btn btn-sm btn-warning watchStream" 
+                                data-video-url="${row.link}"
+                                data-video-title="${row.name}">
+                                <i class="fa fa-television pr-1"></i>Watch
+                            </button>
                         </div>
                     </div>`
                 );
