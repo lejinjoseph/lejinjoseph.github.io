@@ -34,6 +34,7 @@ var myCssFiles = ['src/css/*.css'];
 var myJsFiles = [
   'src/js/timezone.js',
   'src/js/service.js',
+  'src/js/video.js',
   'src/js/main.js'
 ];
 
@@ -41,7 +42,7 @@ var myJsFiles = [
  * Remove all build files
  */
 gulp.task('cleanBuild', function () {
-  return del(['dist/css', 'dist/js', './index.html']);
+  return del(['dist/css', 'dist/js']);
 });
 
 /**
@@ -187,6 +188,7 @@ gulp.task('build:dev', gulp.series(
 
 exports.watch = function () {
   gulp.watch(['src/css/*.css', 'src/js/*.js'], gulp.series('build:dev'));
+  gulp.watch(['src/*.html'], gulp.series('minifyHTML:dev'));
 }
 
 /**
