@@ -27,20 +27,21 @@ var csVideo = {
         return path.substr(path.lastIndexOf('/') + 1);
     },
 
-    getYoutubeLiveStreamUrl: function (videoUrl, videoTitle) {
+    getYoutubeLiveStreamUrl: function (videoUrl, success, fail) {
         var channel = csVideo.getYoutubeChannelName(videoUrl);
+        var liveStreamUrl = null;
         if (channel.length) {
+            console.log("Youtube API to fetch Live stream url from: " + channel);
             /**
              * Youtube API implementation - to do
-             * on succes: openYoutubeModal(newEmbedUrl, videoTitle)
-             * on fail: openLinkNewTab(videoUrl)
              */
-            console.log("Youtube API to fetch Live stream url from: " + videoTitle + " : " + channel);
-            // for now
-            csVideo.openLinkNewTab(videoUrl);
-        }
-        else {
-            csVideo.openLinkNewTab(videoUrl);
+            liveStreamUrl = 'https://www.youtube.com/embed/YE7VzlLtp-4';
+            if (liveStreamUrl) {
+                csVideo.loadLiveStream(liveStreamUrl)
+            }
+            else {
+                csVideo.showChannelBtn(videoUrl);
+            }
         }
     },
 
@@ -48,20 +49,28 @@ var csVideo = {
         var videoUrl = $(this).attr("data-video-url");
         var videoTitle = $(this).attr("data-video-title");
         if (csVideo.parseUrl(videoUrl).hostname.includes('youtube.com')) {
-            csVideo.getYoutubeLiveStreamUrl(videoUrl, videoTitle);
+            csVideo.openYoutubeModal(videoUrl, videoTitle);
         }
         else {
-            csVideo.openLinkNewTab(videoUrl);
+            window.open(videoUrl, "_blank");
         }
     },
 
-    openLinkNewTab: function (url) {
-        console.log("open url in new tab: " + url);
+    loadLiveStream: function (liveStreamUrl) {
+        $("#videoSpinner").removeClass('d-flex').hide();
+        $("#ytPlayer").attr("src", liveStreamUrl);
+    },
+
+    showChannelBtn: function (videoUrl) {
+        $("#videoSpinner").removeClass('d-flex').hide();
+        $("#ytPlayer").hide();
+        alert("Youtube Channel: " + videoUrl);
+
     },
 
     openYoutubeModal: function (url, title) {
-        console.log(url);
-        $("#ytPlayer").attr("src", url);
+        csVideo.videoModal.find("#videoModalLabel").text(title);
         csVideo.videoModal.modal("show");
+        csVideo.getYoutubeLiveStreamUrl(url);
     }
 };
