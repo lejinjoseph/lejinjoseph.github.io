@@ -53,7 +53,7 @@ var csVideo = {
                 if (json.items.length) {
                     var videoId = json.items[0].id.videoId;
                     console.log("Live Video Id: ", videoUrl);
-                    var liveStreamUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                    var liveStreamUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1`;
                     csVideo.loadLiveStream(liveStreamUrl)
                 }
                 else {
