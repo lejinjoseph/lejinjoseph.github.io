@@ -33,14 +33,15 @@ var csVideo = {
     getYoutubeChannelId: function (videoUrl) {
         var path = csVideo.parseUrl(videoUrl).pathname;
         var urlId = path.substr(path.lastIndexOf('/') + 1);
+        //testing
+        return csVideo.testChannelId;
         if (urlId.match(/^(UC|HC)[A-Za-z0-9]+$/i)) {
             return urlId;
         }
         else {
             console.log("Custom Channel Name or User Name: ", urlId);
             //to do: get channelId from channel custom name or user name
-            return csVideo.testChannelId;
-            //return null;
+            return null;
         }
     },
 
@@ -84,6 +85,7 @@ var csVideo = {
 
     loadLiveStream: function (liveStreamUrl) {
         $("#videoSpinner").removeClass('d-flex').hide(700, function () {
+            $("#videoModal .modal-content").addClass('darkMode');
             $("#videoModal .modal-body").append(`
                 <iframe id="ytPlayer" src="${liveStreamUrl}" type="text/html" width="100%" height="320px" frameborder="0" allowfullscreen>
             `);
@@ -98,6 +100,7 @@ var csVideo = {
 
     resetYoutubeModal: function () {
         $("#videoModal #ytPlayer").remove();
+        $("#videoModal .modal-content").removeClass('darkMode');
         $("#videoModal #visitChannel").hide();
         $("#videoModal #videoModalLabel, #videoModal #visitChannelName").text('');
         $("#videoModal #visitChannelLink").removeAttr('href');

@@ -964,6 +964,26 @@ body.mobile-nav-active #mobile-nav-toggle {
   vertical-align: middle;
 }
 
+#videoModal .modal-header .modal-title {
+  margin: 0 auto;
+}
+
+#videoModal .modal-header .close {
+  margin-left: 0;
+  text-shadow: none;
+  opacity: 1;
+  color: red;
+  font-size: 2em;
+}
+
+#videoModal .darkMode {
+  background: black;
+}
+
+#videoModal .darkMode .modal-header {
+  border: none;
+}
+
 /*--------------------------------------------------------------
 # Venue Section
 --------------------------------------------------------------*/
