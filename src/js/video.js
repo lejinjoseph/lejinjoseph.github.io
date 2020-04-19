@@ -33,14 +33,11 @@ var csVideo = {
     getYoutubeChannelId: function (videoUrl) {
         var path = csVideo.parseUrl(videoUrl).pathname;
         var urlId = path.substr(path.lastIndexOf('/') + 1);
-        //testing
-        return csVideo.testChannelId;
         if (urlId.match(/^(UC|HC)[A-Za-z0-9]+$/i)) {
             return urlId;
         }
         else {
-            console.log("Custom Channel Name or User Name: ", urlId);
-            //to do: get channelId from channel custom name or user name
+            console.log("Invalid Channel Id: ", urlId);
             return null;
         }
     },
