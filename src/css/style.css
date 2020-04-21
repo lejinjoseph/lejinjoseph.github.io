@@ -964,6 +964,10 @@ body.mobile-nav-active #mobile-nav-toggle {
   vertical-align: middle;
 }
 
+#videoModal #videoSpinner {
+  display: flex;
+}
+
 #videoModal .modal-header .modal-title {
   margin: 0 auto;
 }

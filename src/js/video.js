@@ -51,7 +51,7 @@ var csVideo = {
                 if (json.items.length) {
                     var videoId = json.items[0].id.videoId;
                     console.log("Live Video Id: ", videoUrl);
-                    var liveStreamUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1`;
+                    var liveStreamUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0`;
                     csVideo.loadLiveStream(liveStreamUrl)
                 }
                 else {
@@ -81,7 +81,7 @@ var csVideo = {
     },
 
     loadLiveStream: function (liveStreamUrl) {
-        $("#videoSpinner").removeClass('d-flex').hide(700, function () {
+        $("#videoSpinner").fadeOut(700, function () {
             $("#videoModal .modal-content").addClass('darkMode');
             $("#videoModal .modal-body").append(`
                 <iframe id="ytPlayer" src="${liveStreamUrl}" type="text/html" width="100%" height="320px" frameborder="0" allowfullscreen>
@@ -90,12 +90,13 @@ var csVideo = {
     },
 
     showChannelBtn: function (videoUrl) {
-        $("#videoSpinner").removeClass('d-flex').hide(700, function () {
-            $("#videoModal #visitChannel").show();
+        $("#videoSpinner").fadeOut(700, function () {
+            $("#videoModal #visitChannel").fadeIn(700);
         });
     },
 
     resetYoutubeModal: function () {
+        $("#videoSpinner").removeAttr("style");
         $("#videoModal #ytPlayer").remove();
         $("#videoModal .modal-content").removeClass('darkMode');
         $("#videoModal #visitChannel").hide();
