@@ -58,20 +58,47 @@ var csTimeZone = {
 
     addDatesToDays: function (days) {
         let knownDays = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+        let sortedDays = [];
 
         for (let day of days) {
             if (!day.date) {
                 let indexOfWeek = knownDays.indexOf(day.name);
                 if (indexOfWeek >= 0) {
-                    let date = moment().day(indexOfWeek);
+                    let todayIstDayIndex = moment.tz('Asia/Kolkata').day();
+                    indexOfWeek = indexOfWeek < todayIstDayIndex ? indexOfWeek + 7 : indexOfWeek;
+                    let date = moment().day(indexOfWeek).tz('Asia/Kolkata');
+
+                    day.sortIndex = indexOfWeek;
                     day.date = date.format("YYYY-MM-DD");
+                    day.view = {
+                        day: date.format("ddd"),
+                        date: date.format("DD"),
+                        ym: date.format("MMM, YYYY")
+                    };
                 } else {
                     day.date = "missing";
                 }
             }
+            else {
+                let date = moment(day.date, "YYYY-MM-DD").tz('Asia/Kolkata');
+                day.sortIndex = date.day();
+                day.view = {
+                    day: date.format("ddd"),
+                    date: date.format("DD"),
+                    ym: date.format("MMM, YYYY")
+                };
+            }
         }
 
+        csTimeZone.sortDays(days);
+
         return days;
+    },
+
+    sortDays: function (days) {
+        return days.sort(function (a, b) {
+            return a.sortIndex - b.sortIndex;
+        });
     },
 
     formatScheduleDateTime: function (date, istTime) {

@@ -59,7 +59,7 @@ var csService = {
         $.get(csService.url + '/getDays', function (data) {
             days = csTimeZone.addDatesToDays(data);
             csService.displayDays(days)
-        } )
+        })
             .fail(function () {
                 console.log('failed to get days!');
             });
@@ -97,9 +97,9 @@ var csService = {
                         <h3 class="text-center text-capitalize font-weight-bold text-danger">${language} Holy Mass</h3>
                         
                         <ul class="daySelection nav nav-tabs nav-fill" role="tablist">
-                            <li class="nav-item lej-padding icon">
+                            <!--li class="nav-item lej-padding icon">
                                 <a class="nav-link" data-toggle="tooltip" data-placement="top" title="select day to view timing"><i class="far fa-calendar-alt"></i></a>
-                            </li>
+                            </li-->
                         </ul>
                         <div class="tab-content row justify-content-center m-3">
                             <div class="d-flex justify-content-center loadingContent">
@@ -121,6 +121,21 @@ var csService = {
 
     },
 
+    dayViewHtml: function (day, fresh) {
+        if (fresh) {
+            return `
+                <div class="dayView">
+                    <div class="dayName">${day.view.day}</div>
+                    <div class="dayDate">${day.view.date}</div>
+                    <div class="dayMY">${day.view.ym}</div>
+                </div>
+            `;
+        }
+        else {
+            return day.displayName;
+        }
+    },
+
     displayDays: function (days) {
         $.each($("ul.daySelection"), function (index, dom) {
             var language = $(dom).parents(".tab-pane").attr("data-mass-lang");
@@ -131,15 +146,15 @@ var csService = {
 
                 var firstItem = true;
                 $.each(days, function (index, day) {
-                    var normalDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-                    var wideBtnClass = !normalDays.includes(day.name) ? "wide" : "";
+                    // var normalDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+                    // var wideBtnClass = !normalDays.includes(day.name) ? "wide" : "";
                     var activeClass = firstItem ? "show active" : "";
                     var langDayId = (day.name + csService.capitalizeString(language) + "Mass").replace(' ', '-');
                     $(dom).append(
-                        `<li class="nav-item lej-padding ${wideBtnClass}">
+                        `<li class="nav-item lej-padding">
                             <a class="nav-link ${activeClass}" href="#${langDayId}" 
                                 data-day-id="${day.name}" data-day-date="${day.date}" role="tab" data-toggle="tab">
-                                ${csService.capitalizeString(day.displayName)}
+                                ${csService.dayViewHtml(day, true)}
                             </a>
                         </li>`
                     );
@@ -173,7 +188,7 @@ var csService = {
                 var description = row.description ? `<p>${row.description}</p>` : "";
                 var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
                 $target = $('<time class="userTzTime d-block"></time>');
-                if(csTimeZone.defaultTz()) {
+                if (csTimeZone.defaultTz()) {
                     var userTzDate = csTimeZone.convertIstToSelected(scheduleTime, csTimeZone.defaultTz());
                     $target = csTimeZone.updateDom(userTzDate, $target);
                 }
