@@ -101,7 +101,7 @@ var csService = {
                                 <a class="nav-link" data-toggle="tooltip" data-placement="top" title="select day to view timing"><i class="far fa-calendar-alt"></i></a>
                             </li-->
                         </ul>
-                        <div class="tab-content row justify-content-center m-3">
+                        <div class="tab-content row justify-content-center my-3">
                             <div class="d-flex justify-content-center loadingContent">
                                 <div class="spinner-grow text-warning" role="status">
                                     <span class="sr-only">Loading...</span>
@@ -167,7 +167,7 @@ var csService = {
                     );
 
                     $(tabContent).append(
-                        `<div  role="tabpanel" class="col-lg-9  tab-pane fade ${activeClass}" id="${langDayId}">
+                        `<div  role="tabpanel" class="col-lg-10  tab-pane fade ${activeClass}" id="${langDayId}">
                             <div class="d-flex justify-content-center m-3 loadingContent">
                                 <div class="spinner-grow text-warning" role="status">
                                     <span class="sr-only">Loading...</span>
@@ -194,7 +194,7 @@ var csService = {
                 var wowClass = addWow ? "wow fadeInUp" : "";
                 var description = row.description ? `<p>${row.description}</p>` : "";
                 var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
-                $target = $('<time class="userTzTime d-block"></time>');
+                $target = $('<time class="userTzTime d-inline-block d-md-block float-right float-md-none"></time>');
                 if (csTimeZone.defaultTz()) {
                     var userTzDate = csTimeZone.convertIstToSelected(scheduleTime, csTimeZone.defaultTz());
                     $target = csTimeZone.updateDom(userTzDate, $target);

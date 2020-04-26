@@ -892,8 +892,8 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #schedule .schedule-item {
   border-bottom: 1px solid #cad4f6;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   transition: background-color ease-in-out 0.3s;
 }
 
