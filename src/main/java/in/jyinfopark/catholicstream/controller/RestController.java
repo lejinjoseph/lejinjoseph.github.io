@@ -1,21 +1,28 @@
 package in.jyinfopark.catholicstream.controller;
 
 import in.jyinfopark.catholicstream.dto.DayLang;
+import in.jyinfopark.catholicstream.entity.Channel;
 import in.jyinfopark.catholicstream.entity.Day;
 import in.jyinfopark.catholicstream.entity.Mass;
+import in.jyinfopark.catholicstream.repo.ChannelRepo;
 import in.jyinfopark.catholicstream.repo.DaysRepo;
 import in.jyinfopark.catholicstream.repo.MassRepo;
 import in.jyinfopark.catholicstream.service.MassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.PublicKey;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
@@ -25,6 +32,9 @@ public class RestController {
 
     @Autowired
     private DaysRepo daysRepo;
+
+    @Autowired
+    private ChannelRepo channelRepo;
 
     List<String> normalDays= Arrays.asList("sun","mon","tue","wed","thu","fri","sat");
 
@@ -93,4 +103,19 @@ public class RestController {
         return massList;
 
     }
+    @GetMapping("/liveStreamCache")
+    public Iterable<Channel> getAllChannels(){
+        return channelRepo.findAll();
+    }
+
+    @PostMapping("/liveStreamCache")
+    public Channel updatetable(@RequestBody Channel channel){
+        LocalDateTime today = LocalDateTime.now();
+
+        ZoneId id = ZoneId.of("Asia/Kolkata");
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(today, id);
+        channel.setTimestamp(zonedDateTime);
+        return channelRepo.save(channel);
+    }
+
 }
