@@ -123,9 +123,18 @@ var csService = {
 
     dayViewHtml: function (day, fresh) {
         if (fresh) {
+            let dayName, splClass, normalDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+            if (!normalDays.includes(day.name)) {
+                dayName = day.displayName;
+                splClass = "text-danger";
+            }
+            else {
+                dayName = day.view.day;
+                splClass = "";
+            }
             return `
                 <div class="dayView">
-                    <div class="dayName">${day.view.day}</div>
+                    <div class="dayName ${splClass}">${dayName}</div>
                     <div class="dayDate">${day.view.date}</div>
                     <div class="dayMY">${day.view.ym}</div>
                 </div>
@@ -145,9 +154,7 @@ var csService = {
                 $(this).remove();
 
                 var firstItem = true;
-                $.each(days, function (index, day) {
-                    // var normalDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-                    // var wideBtnClass = !normalDays.includes(day.name) ? "wide" : "";
+                $.each(days, function (index, day) {                    
                     var activeClass = firstItem ? "show active" : "";
                     var langDayId = (day.name + csService.capitalizeString(language) + "Mass").replace(' ', '-');
                     $(dom).append(
