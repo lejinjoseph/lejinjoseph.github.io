@@ -23,6 +23,22 @@ var csVideo = {
         $('#videoModal').on('hidden.bs.modal', csVideo.resetYoutubeModal)
     },
 
+    videoWatchIcon: function (videoUrl) {
+        var hostname = csVideo.parseUrl(videoUrl).hostname;
+        if (hostname.includes('youtube.com')) {
+            return { btn: "btn-outline-danger", icon: "fab fa-youtube" };
+        }
+        else if (hostname.includes('facebook.com')) {
+            return { btn: "btn-outline-primary", icon: "fab fa-facebook-square" };
+        }
+        else if (hostname.includes('instagram.com')) {
+            return { btn: "btn-outline-success", icon: "fab fa-instagram" };
+        }
+        else {
+            return { btn: "btn-outline-warning", icon: "fas fa-tv" };
+        }
+    },
+
     getLiveStreamCache: function () {
         $.get(csService.url + `/liveStreamCache`, function (data) {
             if (data) {

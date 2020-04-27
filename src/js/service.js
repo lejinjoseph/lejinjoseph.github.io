@@ -67,7 +67,7 @@ var csService = {
             });
     },
 
-    getSchedule: function (language, day, tabId, date, addWow) {        
+    getSchedule: function (language, day, tabId, date, addWow) {
         $.get(csService.url + `/getSchedule/${language}/${day}`, function (data) {
             csService.displaySchedule(data, tabId, date, addWow)
         })
@@ -158,7 +158,7 @@ var csService = {
                 $(this).remove();
 
                 var firstItem = true;
-                $.each(days, function (index, day) {                    
+                $.each(days, function (index, day) {
                     var activeClass = firstItem ? "show active" : "";
                     var langDayId = (day.name + csService.capitalizeString(language) + "Mass").replace(' ', '-');
                     $(dom).append(
@@ -203,6 +203,7 @@ var csService = {
         $(tabId).children(".loadingContent").fadeOut(500, function () {
             $(this).remove();
             $.each(data, function (index, row) {
+                var videoIconClass = csVideo.videoWatchIcon(row.link);
                 var wowClass = addWow ? "wow fadeInUp" : "";
                 var description = row.description ? `<p>${row.description}</p>` : "";
                 var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
@@ -222,10 +223,10 @@ var csService = {
                             ${description}
                         </div>
                         <div class="col-md-2 py-1">
-                            <button class="btn btn-sm btn-warning watchStream" 
+                            <button class="btn btn-sm ${videoIconClass.btn} watchStream" 
                                 data-video-url="${row.link}"
                                 data-video-title="${row.name}">
-                                <i class="fa fa-television pr-1"></i>Watch
+                                <i class="${videoIconClass.icon} pr-2"></i>LIVE
                             </button>
                         </div>
                     </div>`

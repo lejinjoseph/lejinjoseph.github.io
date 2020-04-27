@@ -962,8 +962,13 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .far,
-.fas {
+.fas,
+.fab {
   vertical-align: middle;
+}
+
+.watchStream i {
+  font-size: 20px;
 }
 
 #videoModal #videoSpinner {
