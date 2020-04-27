@@ -1,5 +1,6 @@
 jQuery(document).ready(function ($) {
     csVideo.registerEvents();
+    csVideo.getLiveStreamCache();
 });
 
 var csVideo = {
@@ -8,9 +9,11 @@ var csVideo = {
 
     youtubeApiUrl: "https://www.googleapis.com/youtube/v3/",
 
-    apiKey: "AIzaSyAvcxy7qbSPvZhVn8ueAqM_oMijj08SAmY",
+    apiKey: "removedFromHereForSecurityReasons",
 
     videoModal: null,
+
+    serverCacheDuration: 30,
 
     registerEvents: function () {
 
@@ -18,6 +21,50 @@ var csVideo = {
 
         $("body").on("click", "button.watchStream", csVideo.onWatch);
         $('#videoModal').on('hidden.bs.modal', csVideo.resetYoutubeModal)
+    },
+
+    getLiveStreamCache: function () {
+        $.get(csService.url + `/liveStreamCache`, function (data) {
+            if (data) {
+                csVideo.validateAndSaveStreams(data);
+            }
+            else {
+                console.log("No live stream cache found!");
+            }
+        })
+            .fail(function () {
+                console.log('failed to get live stream cache!');
+            });
+    },
+
+    refreshLiveStream: function (channelId, videoUrl) {
+        $.get(csService.url + `/liveStreamRefresh/${channelId}`, function (data) {
+            if (data.channelId && data.streamId) {
+                sessionStorage.setItem(data.channelId, data.streamId);
+                csVideo.showYoutubeLive(data.streamId);
+            }
+            else {
+                console.log("No Live Streams found!");
+                csVideo.showChannelBtn(videoUrl);
+            }
+        })
+            .fail(function () {
+                console.log('failed to get refresh stream!');
+            });
+    },
+
+    validateAndSaveStreams: function (data) {
+        $.each(data, function (index, cache) {
+            var cachedAt = moment.utc(cache.timestamp);
+            var now = moment.utc();
+            var cachedMins = now.diff(cachedAt, "minutes");
+            if (cachedMins < csVideo.serverCacheDuration && cache.streamId) {
+                sessionStorage.setItem(cache.channelId, cache.streamId);
+            }
+            else {
+                sessionStorage.removeItem(cache.channelId);
+            }
+        });
     },
 
     parseUrl: function (url) {
@@ -33,7 +80,7 @@ var csVideo = {
     getYoutubeChannelId: function (videoUrl) {
         var path = csVideo.parseUrl(videoUrl).pathname;
         var urlId = path.substr(path.lastIndexOf('/') + 1);
-        if (urlId.match(/^(UC|HC)[A-Za-z0-9]+$/i)) {
+        if (urlId.match(/^(UC|HC)[A-Za-z0-9_]+$/i)) {
             return urlId;
         }
         else {
@@ -42,6 +89,7 @@ var csVideo = {
         }
     },
 
+    // Deprecated in favour of server api
     getYoutubeLiveStreamUrl: function (videoUrl, success, fail) {
         var channelId = csVideo.getYoutubeChannelId(videoUrl);
         if (channelId) {
@@ -67,6 +115,27 @@ var csVideo = {
             csVideo.showChannelBtn(videoUrl);
         }
 
+    },
+
+    showYoutubeLive: function (videoId) {
+        var liveStreamUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0`;
+        csVideo.loadLiveStream(liveStreamUrl)
+    },
+
+    checkYoutubeLive: function (videoUrl) {
+        var channelId = csVideo.getYoutubeChannelId(videoUrl);
+        if (channelId) {
+            var cacheStreamId = sessionStorage.getItem(channelId);
+            if (cacheStreamId) {
+                csVideo.showYoutubeLive(cacheStreamId);
+            }
+            else {
+                csVideo.refreshLiveStream(channelId, videoUrl);
+            }
+        }
+        else {
+            csVideo.showChannelBtn(videoUrl);
+        }
     },
 
     onWatch: function ($e) {
@@ -110,6 +179,7 @@ var csVideo = {
         $("#videoModal #visitChannelLink").attr('href', url);
         $("#videoModal #visitChannel").hide();
         csVideo.videoModal.modal("show");
-        csVideo.getYoutubeLiveStreamUrl(url);
+        //csVideo.getYoutubeLiveStreamUrl(url);
+        csVideo.checkYoutubeLive(url);
     }
 };

@@ -22,6 +22,7 @@ var csService = {
             }
             csService.showTitleDate(date, tabId);
             csService.scrollToHolyMass();
+            csVideo.getLiveStreamCache();
         });
 
     },
