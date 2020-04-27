@@ -27,7 +27,7 @@ var csService = {
 
     scrollToHolyMass: function () {
         $('html, body').animate({
-            scrollTop: $("#holyMass").offset().top - $("#header").outerHeight()
+            scrollTop: $(".langDateUserTitle:visible").offset().top - $("#header").outerHeight()
         }, 1000, 'easeInOutExpo');
     },
 
@@ -94,20 +94,18 @@ var csService = {
                 //add schedule tab panel
                 $("#holyMass").append(
                     `<div id="${language}Mass" data-mass-lang="${orginalLang}" role="tabpanel" class="tab-pane fade ${activeClass}">
-                        <h3 class="text-center text-capitalize font-weight-bold text-danger">${language} Holy Mass</h3>
-                        
                         <ul class="daySelection nav nav-tabs nav-fill" role="tablist">
-                            <!--li class="nav-item lej-padding icon">
-                                <a class="nav-link" data-toggle="tooltip" data-placement="top" title="select day to view timing"><i class="far fa-calendar-alt"></i></a>
-                            </li-->
                         </ul>
-                        <div class="tab-content row justify-content-center my-3">
-                            <div class="d-flex justify-content-center loadingContent">
-                                <div class="spinner-grow text-warning" role="status">
-                                    <span class="sr-only">Loading...</span>
+                        <div class="fullHeight">
+                            <h3 class="langDateUserTitle my-1 pt-4 pb-2 text-center font-weight-bold text-danger">${language} Holy Mass</h3>
+                            <div class="tab-content row justify-content-center my-3">
+                                <div class="d-flex justify-content-center loadingContent">
+                                    <div class="spinner-grow text-warning" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
                     </div>`
                 );
 
@@ -148,7 +146,7 @@ var csService = {
     displayDays: function (days) {
         $.each($("ul.daySelection"), function (index, dom) {
             var language = $(dom).parents(".tab-pane").attr("data-mass-lang");
-            var tabContent = $(dom).siblings("div.tab-content");
+            var tabContent = $(dom).siblings(".fullHeight").find("div.tab-content");
 
             $(tabContent).children(".loadingContent").fadeOut(500, function () {
                 $(this).remove();

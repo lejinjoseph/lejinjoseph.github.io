@@ -840,7 +840,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   flex-shrink: 0;
 }
 
-#holyMass {
+#holyMass .fullHeight{
   /* padding: 40px 0; */
   min-height: calc(100vh - 70px);
   /*dijo - full height schedule*/
@@ -1793,7 +1793,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 @media (min-height: 650px) {
-  #holyMass {
+  #holyMass .fullHeight{
     min-height: calc(100vh - 146px);
   }
 }
