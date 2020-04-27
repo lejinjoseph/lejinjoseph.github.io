@@ -1006,6 +1006,10 @@ body.mobile-nav-active #mobile-nav-toggle {
   font-size: 0.65em;
 }
 
+.langDateUserTitle {
+  font-family: 'Open Sans';
+}
+
 /*--------------------------------------------------------------
 # Venue Section
 --------------------------------------------------------------*/

@@ -14,12 +14,13 @@ var csService = {
         $("body").on('shown.bs.tab', '.daySelection a[data-toggle="tab"]', function ($event) {
             var aLink = $($event.target);
             var tabId = aLink.attr("href");
+            var date = aLink.attr("data-day-date");
             if ($(tabId).children(".schedule-item").length < 1) {
                 var day = aLink.attr("data-day-id");
-                var date = aLink.attr("data-day-date");
                 var language = aLink.parents(".tab-pane").attr("data-mass-lang");
                 csService.getSchedule(language, day, tabId, date, true);
             }
+            csService.showTitleDate(date, tabId);
             csService.scrollToHolyMass();
         });
 
@@ -65,7 +66,7 @@ var csService = {
             });
     },
 
-    getSchedule: function (language, day, tabId, date, addWow) {
+    getSchedule: function (language, day, tabId, date, addWow) {        
         $.get(csService.url + `/getSchedule/${language}/${day}`, function (data) {
             csService.displaySchedule(data, tabId, date, addWow)
         })
@@ -97,7 +98,11 @@ var csService = {
                         <ul class="daySelection nav nav-tabs nav-fill" role="tablist">
                         </ul>
                         <div class="fullHeight">
-                            <h3 class="langDateUserTitle my-1 pt-4 pb-2 text-center font-weight-bold text-danger">${language} Holy Mass</h3>
+                            <h3 class="langDateUserTitle my-1 pt-4 pb-3 text-center font-weight-bold text-danger">
+                                ${language} Holy Mass
+                                <span class="d-none d-md-inline-block px-md-2">-</span>
+                                <span class="scheduleDate d-block d-md-inline-block"></span>                              
+                            </h3>
                             <div class="tab-content row justify-content-center my-3">
                                 <div class="d-flex justify-content-center loadingContent">
                                     <div class="spinner-grow text-warning" role="status">
@@ -177,11 +182,19 @@ var csService = {
                     if (firstItem) {
                         var addWow = $(dom).is(":visible");
                         csService.getSchedule(language, day.name, `#${langDayId}`, day.date, addWow);
+                        csService.showTitleDate(day.date, `#${langDayId}`);
                     }
 
                     firstItem = false;
                 });
             });
+        });
+    },
+
+    showTitleDate: function (date, tabId) {
+        var formatted = moment(date).format("ddd, DD MMM YYYY");
+        $(tabId).parents(".fullHeight").find("span.scheduleDate").fadeOut(500, function () {
+            $(this).html(formatted).fadeIn(500);
         });
     },
 
