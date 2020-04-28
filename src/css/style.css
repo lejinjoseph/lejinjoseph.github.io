@@ -840,7 +840,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   flex-shrink: 0;
 }
 
-#holyMass .fullHeight{
+#holyMass .fullHeight {
   /* padding: 40px 0; */
   min-height: calc(100vh - 70px);
   /*dijo - full height schedule*/
@@ -979,7 +979,8 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin: 0 auto;
 }
 
-#videoModal .modal-header .close {
+#videoModal .modal-header .close,
+#videoModal .modal-body .close {
   margin-left: 0;
   text-shadow: none;
   opacity: 1;
@@ -991,8 +992,37 @@ body.mobile-nav-active #mobile-nav-toggle {
   background: black;
 }
 
+#videoModal .darkMode .modal-body {
+  position: relative;
+  /* overflow: hidden; */
+  width: 100%;
+  padding: 0px;
+  padding-top: 56.25%;
+}
+
+#videoModal .modal-body .close {
+  display: none;
+}
+
+#videoModal .darkMode .modal-body .close {
+  display: inline-block;
+  position: absolute;
+  top: -28px;
+  right: -15px;
+}
+
+#videoModal .darkMode .modal-body iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
 #videoModal .darkMode .modal-header {
-  border: none;
+  display: none;
 }
 
 #schedule .daySelection a.nav-link {
@@ -1802,7 +1832,13 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 @media (min-height: 650px) {
-  #holyMass .fullHeight{
+  #holyMass .fullHeight {
     min-height: calc(100vh - 146px);
+  }
+}
+
+@media (max-width: 575.98px) {
+  #videoModal .modal-dialog {
+    margin: 1.25rem;
   }
 }

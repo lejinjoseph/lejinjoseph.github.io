@@ -169,7 +169,7 @@ var csVideo = {
         $("#videoSpinner").fadeOut(700, function () {
             $("#videoModal .modal-content").addClass('darkMode');
             $("#videoModal .modal-body").append(`
-                <iframe id="ytPlayer" src="${liveStreamUrl}" type="text/html" width="100%" height="320px" frameborder="0" allowfullscreen>
+                <iframe id="ytPlayer" src="${liveStreamUrl}" type="text/html" frameborder="0" allowfullscreen>
             `);
         });
     },
