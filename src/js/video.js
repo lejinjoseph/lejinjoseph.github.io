@@ -185,12 +185,11 @@ var csVideo = {
         $("#videoModal #ytPlayer").remove();
         $("#videoModal .modal-content").removeClass('darkMode');
         $("#videoModal #visitChannel").hide();
-        $("#videoModal #videoModalLabel, #videoModal #visitChannelName").text('');
+        $("#videoModal #visitChannelName").text('');
         $("#videoModal #visitChannelLink").removeAttr('href');
     },
 
     openYoutubeModal: function (url, title) {
-        csVideo.videoModal.find("#videoModalLabel").text(title);
         $("#videoModal #visitChannelName").text(title);
         $("#videoModal #visitChannelLink").attr('href', url);
         $("#videoModal #visitChannel").hide();

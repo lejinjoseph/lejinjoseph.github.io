@@ -975,11 +975,14 @@ body.mobile-nav-active #mobile-nav-toggle {
   display: flex;
 }
 
+.modal-backdrop.show {
+  opacity: 0.75;
+}
+
 #videoModal .modal-header .modal-title {
   margin: 0 auto;
 }
 
-#videoModal .modal-header .close,
 #videoModal .modal-body .close {
   margin-left: 0;
   text-shadow: none;
@@ -1001,10 +1004,6 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #videoModal .modal-body .close {
-  display: none;
-}
-
-#videoModal .darkMode .modal-body .close {
   display: inline-block;
   position: absolute;
   top: -28px;
@@ -1019,6 +1018,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   right: 0;
   width: 100%;
   height: 100%;
+  padding: 2px;
 }
 
 #videoModal .darkMode .modal-header {
