@@ -13,7 +13,7 @@ var csTimeZone = {
         var defaultTz = csTimeZone.defaultTz();
         var tzSelect = `<select id="csTzSelect" class="show-tick" data-container="#schedule" data-width="fit"
                                 data-live-search="true" data-live-search-placeholder="search timezone"
-                                data-style="btn-outline-info">
+                                data-style="btn-outline-cs-blue">
                             <option value="">select timezone
                         </option>`;
         var tzArr = moment.tz.names();
@@ -48,10 +48,10 @@ var csTimeZone = {
     updateDom: function (userTzDate, targetDom) {
         if (userTzDate.day) {
             var tzText = userTzDate.day + ", " + userTzDate.time;
-            targetDom.removeClass("text-secondary").addClass("text-warning").text(tzText);
+            targetDom.removeClass("noDayChange").addClass("hasDayChange").text(tzText);
         }
         else {
-            targetDom.removeClass("text-warning").addClass("text-secondary").text(userTzDate.time);
+            targetDom.removeClass("hasDayChange").addClass("noDayChange").text(userTzDate.time);
         }
         return targetDom;
     },

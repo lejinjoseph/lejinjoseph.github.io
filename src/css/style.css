@@ -902,8 +902,22 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #schedule .schedule-item time {
-  padding-bottom: 5px;
+  /* padding-bottom: 5px; */
   display: inline-block;
+  font-weight: 600;
+}
+
+#schedule .schedule-item time.userTzTime {
+  color: #d29e02;
+  font-weight: normal;
+}
+
+#schedule .schedule-item time.userTzTime.hasDayChange {
+  color: #d29e02;
+}
+
+#schedule .schedule-item time.userTzTime.noDayChange {
+  color: #6c757d;
 }
 
 #schedule .schedule-item .speaker {
@@ -950,6 +964,20 @@ body.mobile-nav-active #mobile-nav-toggle {
   cursor: pointer;
 }
 
+.btn-outline-cs-blue {
+  color: #0e1b4d;
+  border-color: #0e1b4d;
+}
+
+.btn-outline-cs-blue:focus,
+.btn-outline-cs-blue:hover,
+.btn-outline-cs-blue:active {
+  color: white;
+  background: #d29e02;
+  border-color: #d29e02;
+  box-shadow: none;
+}
+
 #csTzSelect+.btn.dropdown-toggle,
 #csTzSelect+.btn.dropdown-toggle:focus,
 #csTzSelect+.btn.dropdown-toggle:link,
@@ -959,6 +987,11 @@ body.mobile-nav-active #mobile-nav-toggle {
   border: none;
   outline: none !important;
   box-shadow: none;
+}
+
+#schedule .dropdown-item.active,
+#schedule .dropdown-item:active {
+  background: #d29e02;
 }
 
 .far,
