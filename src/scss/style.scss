@@ -842,16 +842,16 @@ body.mobile-nav-active {
             color: #d29e02;
 
             &.userTzTime {
-                color: #d29e02;
+                color: #6c757d;
                 font-weight: normal;
 
-                &.hasDayChange {
-                    color: #d29e02;
-                }
+                // &.hasDayChange {
+                //     color: #0e1b4d;
+                // }
 
-                &.noDayChange {
-                    color: #6c757d;
-                }
+                // &.noDayChange {
+                //     color: #6c757d;
+                // }
             }
         }
 
