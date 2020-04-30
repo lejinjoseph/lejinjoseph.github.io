@@ -116,6 +116,23 @@ var csTimeZone = {
         }
         return ret;
 
+    },
+
+    minutesDiffFromNow: function (inputTime, timezone) {
+        if (typeof timezone !== "undefined" && timezone === "utc") {
+            var inputUtc = moment.utc(inputTime);
+            var nowUtc = moment.utc();
+            return nowUtc.diff(inputUtc, "minutes");
+        }
+        else {
+            var inputLocalTz = moment(inputTime);
+            var nowLocalTz = moment();
+            //testing
+            nowLocalTz.add(2, 'hours').add(41, "minutes");
+            console.log(nowLocalTz.format("LTZ"));
+            //test end
+            return nowLocalTz.diff(inputLocalTz, "minutes");
+        }
     }
 
 };

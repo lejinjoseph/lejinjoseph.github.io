@@ -723,6 +723,14 @@ body.mobile-nav-active {
 }
 
 #schedule {
+    .dropdown-item {
+
+        &.active,
+        &:active {
+            background: #d29e02;
+        }
+    }
+
     .nav-tabs {
         text-align: center;
         margin: auto;
@@ -779,10 +787,59 @@ body.mobile-nav-active {
             background-color: #fff;
         }
 
+        small {
+            display: block;
+            padding-top: 10px;
+        }
+
+        &.finishedOrLate {
+            filter: grayscale(1);
+            opacity: 0.5;
+
+            &:hover {
+                filter: grayscale(0);
+            }
+        }
+
+        &.inProgress {
+
+            time {
+                color: #dc3545;
+            }
+
+            small {
+                color: #dc3545;
+            }
+
+        }
+
+        &.justStarted {
+
+            time {
+                color: #fd7e14;
+            }
+
+            small {
+                color: #fd7e14;
+            }
+        }
+
+        &.startingSoon {
+
+            time {
+                color: #28a745;
+            }
+
+            small {
+                color: #28a745;
+            }
+        }
+
         time {
             /* padding-bottom: 5px; */
             display: inline-block;
             font-weight: 600;
+            color: #d29e02;
 
             &.userTzTime {
                 color: #d29e02;
@@ -795,23 +852,6 @@ body.mobile-nav-active {
                 &.noDayChange {
                     color: #6c757d;
                 }
-            }
-        }
-
-        .speaker {
-            width: 60px;
-            height: 60px;
-            overflow: hidden;
-            border-radius: 50%;
-            float: left;
-            margin: 0 10px 10px 0;
-
-            img {
-                height: 100%;
-                -webkit-transform: translateX(-50%);
-                transform: translateX(-50%);
-                margin-left: 50%;
-                transition: all ease-in-out 0.3s;
             }
         }
 
@@ -871,14 +911,6 @@ body.mobile-nav-active {
         border: none;
         outline: none !important;
         box-shadow: none;
-    }
-}
-
-#schedule .dropdown-item {
-
-    &.active,
-    &:active {
-        background: #d29e02;
     }
 }
 

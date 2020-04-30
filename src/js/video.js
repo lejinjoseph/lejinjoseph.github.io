@@ -71,9 +71,7 @@ var csVideo = {
 
     validateAndSaveStreams: function (data) {
         $.each(data, function (index, cache) {
-            var cachedAt = moment.utc(cache.timestamp);
-            var now = moment.utc();
-            var cachedMins = now.diff(cachedAt, "minutes");
+            var cachedMins = csTimeZone.minutesDiffFromNow(cache.timestamp, "utc");
             if (cachedMins < csVideo.serverCacheDuration && cache.streamId) {
                 sessionStorage.setItem(cache.channelId, cache.streamId);
             }

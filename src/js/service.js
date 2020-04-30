@@ -199,6 +199,25 @@ var csService = {
         });
     },
 
+    getScheduleStatusClass: function (scheduleTime) {
+        var mDif = csTimeZone.minutesDiffFromNow(scheduleTime);
+        if (mDif < -10) {
+            return { class: "upComing", title: null };
+        }
+        else if (mDif >= -10 && mDif < 0) {
+            return { class: "startingSoon", title: `starting in ${Math.abs(mDif)} mins` };
+        }
+        else if (mDif >= 0 && mDif <= 5) {
+            return { class: "justStarted", title: "just started" };
+        }
+        else if (mDif > 5 && mDif <= 30) {
+            return { class: "inProgress", title: `started ${Math.abs(mDif)} mins ago` };
+        }
+        else {
+            return { class: "finishedOrLate", title: null };
+        }
+    },
+
     displaySchedule: function (data, tabId, date, addWow) {
         $(tabId).children(".loadingContent").fadeOut(500, function () {
             $(this).remove();
@@ -207,27 +226,30 @@ var csService = {
                 var wowClass = addWow ? "wow fadeInUp" : "";
                 var description = row.description ? `<p>${row.description}</p>` : "";
                 var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
-                $target = $('<time class="userTzTime d-inline-block d-md-block float-right float-md-none"></time>');
+                var statusObj = csService.getScheduleStatusClass(scheduleTime);
+                var statusText = statusObj.title ? `<small class="float-right float-md-none">${statusObj.title}</small>` : '';
+                var $target = $('<time class="userTzTime d-inline-block d-md-block float-right float-md-none"></time>');
                 if (csTimeZone.defaultTz()) {
                     var userTzDate = csTimeZone.convertIstToSelected(scheduleTime, csTimeZone.defaultTz());
                     $target = csTimeZone.updateDom(userTzDate, $target);
                 }
                 $(tabId).append(
-                    `<div class="row schedule-item ${wowClass}" data-ist-date="${scheduleTime}">
-                        <div class="col-md-3 py-1 text-danger">
+                    `<div class="row schedule-item ${wowClass} ${statusObj.class}" data-ist-date="${scheduleTime}">
+                        <div class="col-md-3 py-1">
                             <time>${row.prettyTime} IST</time>
                             ${$target[0].outerHTML}
                         </div>
-                        <div class="col-md-7 py-1">
+                        <div class="col-md-6 py-1">
                             <h4>${row.name}</h4>
                             ${description}
                         </div>
-                        <div class="col-md-2 py-1">
+                        <div class="col-md-3 py-1">
                             <button class="btn btn-sm ${videoIconClass.btn} watchStream" 
                                 data-video-url="${row.link}"
                                 data-video-title="${row.name}">
                                 <i class="${videoIconClass.icon} pr-2"></i>LIVE
                             </button>
+                            ${statusText}
                         </div>
                     </div>`
                 );
