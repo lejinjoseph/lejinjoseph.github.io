@@ -127,10 +127,10 @@ var csTimeZone = {
         else {
             var inputLocalTz = moment(inputTime);
             var nowLocalTz = moment();
-            //testing
-            nowLocalTz.add(2, 'hours').add(41, "minutes");
-            console.log(nowLocalTz.format("LTZ"));
-            //test end
+            // testing
+            // nowLocalTz.add(2, 'hours').add(41, "minutes");
+            // console.log(nowLocalTz.format("LTZ"));
+            // test end
             return nowLocalTz.diff(inputLocalTz, "minutes");
         }
     }
