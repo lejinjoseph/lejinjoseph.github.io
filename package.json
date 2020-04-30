@@ -40,6 +40,8 @@
     "gulp-minify": "^3.1.0",
     "gulp-rev": "^9.0.0",
     "gulp-rev-rewrite": "^3.0.3",
+    "gulp-sass": "^4.1.0",
+    "node-sass": "^4.14.0",
     "rev-del": "^2.0.0"
   }
 }

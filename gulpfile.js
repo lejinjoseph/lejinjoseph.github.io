@@ -7,6 +7,8 @@ var htmlmin = require('gulp-htmlmin');
 var rev = require('gulp-rev');
 var revRewrite = require('gulp-rev-rewrite');
 var revDel = require('rev-del');
+var sass = require('gulp-sass');
+sass.compiler = require('node-sass');
 
 /**
  * List of CSS and JS files to be merged and minified
@@ -29,7 +31,7 @@ var vendorJsFiles = [
   'node_modules/moment-timezone/builds/moment-timezone-with-data-1970-2030.min.js'
 ];
 
-var myCssFiles = ['src/css/*.css'];
+var myCssFiles = ['src/scss/*.scss'];
 
 var myJsFiles = [
   'src/js/timezone.js',
@@ -57,12 +59,14 @@ gulp.task('concatVendorCssFiles', function () {
 
 gulp.task('concatMyCss:dev', function () {
   return gulp.src(myCssFiles)
+    .pipe(sass().on('error', sass.logError))
     .pipe(concat('app.css'))
     .pipe(gulp.dest('dist/css/'));
 });
 
 gulp.task('minifyMyCss', function () {
   return gulp.src(myCssFiles)
+    .pipe(sass().on('error', sass.logError))
     .pipe(concat('app.min.css'))
     .pipe(csso())
     .pipe(gulp.dest('dist/css/'));
@@ -187,7 +191,7 @@ gulp.task('build:dev', gulp.series(
  */
 
 exports.watch = function () {
-  gulp.watch(['src/css/*.css', 'src/js/*.js'], gulp.series('build:dev'));
+  gulp.watch(['src/scss/*.scss', 'src/js/*.js'], gulp.series('build:dev'));
   gulp.watch(['src/*.html'], gulp.series('minifyHTML:dev'));
 }
 
