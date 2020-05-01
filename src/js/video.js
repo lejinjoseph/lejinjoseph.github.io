@@ -121,7 +121,7 @@ var csVideo = {
     getYoutubeChannelId: function (videoUrl) {
         var path = csVideo.parseUrl(videoUrl).pathname;
         var urlId = path.substr(path.lastIndexOf('/') + 1);
-        if (urlId.match(/^(UC|HC)[A-Za-z0-9_]+$/i)) {
+        if (urlId.match(/^(UC|HC)[A-Za-z0-9_\-]+$/i)) {
             return urlId;
         }
         else {
