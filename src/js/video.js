@@ -13,7 +13,9 @@ var csVideo = {
 
     videoModal: null,
 
-    serverCacheDuration: 30,
+    serverCacheDuration: 30, //minutes
+
+    channelsToBeCached: [], //in progress and soon starting live channel Ids
 
     registerEvents: function () {
 
@@ -23,19 +25,44 @@ var csVideo = {
         $('#videoModal').on('hidden.bs.modal', csVideo.resetYoutubeModal)
     },
 
-    videoWatchIcon: function (videoUrl) {
+    getVideoType: function (videoUrl) {
         var hostname = csVideo.parseUrl(videoUrl).hostname;
         if (hostname.includes('youtube.com')) {
-            return { btn: "btn-outline-danger", icon: "fab fa-youtube" };
+            return { type: "youtube", btn: "btn-outline-danger", icon: "fab fa-youtube" };
         }
         else if (hostname.includes('facebook.com')) {
-            return { btn: "btn-outline-primary", icon: "fab fa-facebook-square" };
+            return { type: "facebook", btn: "btn-outline-primary", icon: "fab fa-facebook-square" };
         }
         else if (hostname.includes('instagram.com')) {
-            return { btn: "btn-outline-success", icon: "fab fa-instagram" };
+            return { type: "instagram", btn: "btn-outline-success", icon: "fab fa-instagram" };
         }
         else {
-            return { btn: "btn-outline-warning", icon: "fas fa-tv" };
+            return { type: "unknown", btn: "btn-outline-warning", icon: "fas fa-tv" };
+        }
+    },
+
+    getScheduleStatusClass: function (scheduleTime, videoType, videoUrl) {
+        var mDif = csTimeZone.minutesDiffFromNow(scheduleTime);
+
+        if (mDif > -10 && mDif <= 30 && videoType === "youtube") {
+            var channelId = csVideo.getYoutubeChannelId(videoUrl);
+            csVideo.channelsToBeCached.push(channelId);
+        }
+
+        if (mDif < -10) {
+            return { class: "upComing", title: null };
+        }
+        else if (mDif >= -10 && mDif < 0) {
+            return { class: "startingSoon", title: `starting in ${Math.abs(mDif)} mins` };
+        }
+        else if (mDif >= 0 && mDif <= 5) {
+            return { class: "justStarted", title: "just started" };
+        }
+        else if (mDif > 5 && mDif <= 30) {
+            return { class: "inProgress", title: `started ${Math.abs(mDif)} mins ago` };
+        }
+        else {
+            return { class: "finishedOrLate", title: null };
         }
     },
 
@@ -152,11 +179,15 @@ var csVideo = {
         }
     },
 
+    isYoutubeVideo: function (videoUrl) {
+        return csVideo.parseUrl(videoUrl).hostname.includes('youtube.com')
+    },
+
     onWatch: function ($e) {
         var videoUrl = $(this).attr("data-video-url");
-        var videoTitle = $(this).attr("data-video-title");
-        if (csVideo.parseUrl(videoUrl).hostname.includes('youtube.com')) {
-            csVideo.openYoutubeModal(videoUrl, videoTitle);
+        var videoType = $(this).attr("data-video-type");
+        if (videoType === "youtube") {
+            csVideo.openYoutubeModal(videoUrl);
         }
         else {
             window.open(videoUrl, "_blank");

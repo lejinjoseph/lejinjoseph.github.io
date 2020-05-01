@@ -199,34 +199,16 @@ var csService = {
         });
     },
 
-    getScheduleStatusClass: function (scheduleTime) {
-        var mDif = csTimeZone.minutesDiffFromNow(scheduleTime);
-        if (mDif < -10) {
-            return { class: "upComing", title: null };
-        }
-        else if (mDif >= -10 && mDif < 0) {
-            return { class: "startingSoon", title: `starting in ${Math.abs(mDif)} mins` };
-        }
-        else if (mDif >= 0 && mDif <= 5) {
-            return { class: "justStarted", title: "just started" };
-        }
-        else if (mDif > 5 && mDif <= 30) {
-            return { class: "inProgress", title: `started ${Math.abs(mDif)} mins ago` };
-        }
-        else {
-            return { class: "finishedOrLate", title: null };
-        }
-    },
-
     displaySchedule: function (data, tabId, date, addWow) {
         $(tabId).children(".loadingContent").fadeOut(500, function () {
             $(this).remove();
             $.each(data, function (index, row) {
-                var videoIconClass = csVideo.videoWatchIcon(row.link);
+                var videoTypeObj = csVideo.getVideoType(row.link);
+                var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
+                var statusObj = csVideo.getScheduleStatusClass(scheduleTime, videoTypeObj.type, row.link);
+
                 var wowClass = addWow ? "wow fadeInUp" : "";
                 var description = row.description ? `<p>${row.description}</p>` : "";
-                var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
-                var statusObj = csService.getScheduleStatusClass(scheduleTime);
                 var statusText = statusObj.title ? `<small class="float-right float-md-none">${statusObj.title}</small>` : '';
                 var $target = $('<time class="userTzTime d-inline-block d-md-block float-right float-md-none"></time>');
                 if (csTimeZone.defaultTz()) {
@@ -244,10 +226,11 @@ var csService = {
                             ${description}
                         </div>
                         <div class="col-md-3 py-1">
-                            <button class="btn btn-sm ${videoIconClass.btn} watchStream" 
+                            <button class="btn btn-sm ${videoTypeObj.btn} watchStream" 
                                 data-video-url="${row.link}"
-                                data-video-title="${row.name}">
-                                <i class="${videoIconClass.icon} pr-2"></i>LIVE
+                                data-video-title="${row.name}"
+                                data-video-type=${videoTypeObj.type}>
+                                <i class="${videoTypeObj.icon} pr-2"></i>LIVE
                             </button>
                             ${statusText}
                         </div>
