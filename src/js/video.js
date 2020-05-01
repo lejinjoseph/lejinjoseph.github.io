@@ -13,9 +13,14 @@ var csVideo = {
 
     videoModal: null,
 
-    serverCacheDuration: 30, //minutes
+    liveVideoCache: {},
 
-    channelsToBeCached: [], //in progress and soon starting live channel Ids
+    serverCacheDuration: 45, //minutes
+
+    channelsToBeCached: { //in progress and soon starting live channel Ids
+        live: [],
+        upcoming: []
+    },
 
     registerEvents: function () {
 
@@ -44,15 +49,21 @@ var csVideo = {
     getScheduleStatusClass: function (scheduleTime, videoType, videoUrl) {
         var mDif = csTimeZone.minutesDiffFromNow(scheduleTime);
 
-        if (mDif > -10 && mDif <= 30 && videoType === "youtube") {
+        if (videoType === "youtube") {
             var channelId = csVideo.getYoutubeChannelId(videoUrl);
-            csVideo.channelsToBeCached.push(channelId);
+            if (mDif >= -15 && mDif < 0) {
+                csVideo.channelsToBeCached.upcoming.push(channelId);
+            }
+
+            if (mDif >= 0 && mDif <= 30) {
+                csVideo.channelsToBeCached.live.push(channelId);
+            }
         }
 
-        if (mDif < -10) {
+        if (mDif < -15) {
             return { class: "upComing", title: null };
         }
-        else if (mDif >= -10 && mDif < 0) {
+        else if (mDif >= -15 && mDif < 0) {
             return { class: "startingSoon", title: `starting in ${Math.abs(mDif)} mins` };
         }
         else if (mDif >= 0 && mDif <= 5) {
@@ -64,6 +75,20 @@ var csVideo = {
         else {
             return { class: "finishedOrLate", title: null };
         }
+    },
+
+    addToLiveCache: function (cacheObj) {
+        var channelId = cacheObj.channelId;
+        delete cacheObj.channelId;
+        csVideo.liveVideoCache[channelId] = cacheObj;
+    },
+
+    removeFromLiveCache: function (channelId) {
+        delete csVideo.liveVideoCache[channelId];
+    },
+
+    getStreamIdFromLiveCache: function (channelId) {
+        return csVideo.liveVideoCache[channelId] ? csVideo.liveVideoCache[channelId].streamId : null;
     },
 
     getLiveStreamCache: function () {
@@ -80,30 +105,29 @@ var csVideo = {
             });
     },
 
-    refreshLiveStream: function (channelId, videoUrl) {
-        $.get(csService.url + `/liveStreamRefresh/${channelId}`, function (data) {
-            if (data.channelId && data.streamId) {
-                sessionStorage.setItem(data.channelId, data.streamId);
-                csVideo.showYoutubeLive(data.streamId);
+    refreshLiveStream: function (channelId, eventType) {
+        return $.get(csService.url + `/liveStreamRefresh/${channelId}/${eventType}`);
+    },
+
+    processChannelIdsToBeCached: function () {
+        $.each(csVideo.channelsToBeCached, function (index, channelId) {
+            if (csVideo.getStreamIdFromLiveCache(channelId)) {
+                console.log("Live video cache already available for " + channelId);
             }
             else {
-                console.log("No Live Streams found!");
-                csVideo.showChannelBtn(videoUrl);
+                //todo refresh cache
             }
-        })
-            .fail(function () {
-                console.log('failed to get refresh stream!');
-            });
+        });
     },
 
     validateAndSaveStreams: function (data) {
         $.each(data, function (index, cache) {
             var cachedMins = csTimeZone.minutesDiffFromNow(cache.timestamp, "utc");
             if (cachedMins < csVideo.serverCacheDuration && cache.streamId) {
-                sessionStorage.setItem(cache.channelId, cache.streamId);
+                csVideo.addToLiveCache(cache);
             }
             else {
-                sessionStorage.removeItem(cache.channelId);
+                csVideo.removeFromLiveCache(cache.channelId);
             }
         });
     },
@@ -163,15 +187,33 @@ var csVideo = {
         csVideo.loadLiveStream(liveStreamUrl)
     },
 
-    checkYoutubeLive: function (videoUrl) {
+    checkYoutubeLive: function (channelId, videoUrl) {
+        csVideo.refreshLiveStream(channelId, "live")
+            .done(function (data) {
+                if (data.channelId && data.streamId) {
+                    csVideo.addToLiveCache(data);
+                    csVideo.showYoutubeLive(data.streamId);
+                }
+                else {
+                    console.log("No Live Streams found!");
+                    csVideo.showChannelBtn(videoUrl);
+                }
+            })
+            .fail(function () {
+                console.log('failed to get refresh stream!');
+                csVideo.showChannelBtn(videoUrl);
+            });
+    },
+
+    processYoutubeLive: function (videoUrl) {
         var channelId = csVideo.getYoutubeChannelId(videoUrl);
         if (channelId) {
-            var cacheStreamId = sessionStorage.getItem(channelId);
+            var cacheStreamId = csVideo.getStreamIdFromLiveCache(channelId);
             if (cacheStreamId) {
                 csVideo.showYoutubeLive(cacheStreamId);
             }
             else {
-                csVideo.refreshLiveStream(channelId, videoUrl);
+                csVideo.checkYoutubeLive(channelId, videoUrl);
             }
         }
         else {
@@ -185,9 +227,10 @@ var csVideo = {
 
     onWatch: function ($e) {
         var videoUrl = $(this).attr("data-video-url");
+        var videoTitle = $(this).attr("data-video-title");
         var videoType = $(this).attr("data-video-type");
         if (videoType === "youtube") {
-            csVideo.openYoutubeModal(videoUrl);
+            csVideo.openYoutubeModal(videoUrl, videoTitle);
         }
         else {
             window.open(videoUrl, "_blank");
@@ -224,6 +267,6 @@ var csVideo = {
         $("#videoModal #visitChannel").hide();
         csVideo.videoModal.modal("show");
         //csVideo.getYoutubeLiveStreamUrl(url);
-        csVideo.checkYoutubeLive(url);
+        csVideo.processYoutubeLive(url);
     }
 };
