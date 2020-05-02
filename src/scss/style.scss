@@ -59,11 +59,6 @@ h6 {
     font-size: 80%;
 }
 
-#holyMass>.tab-pane>p {
-    text-align: center;
-    color: #9195a2;
-}
-
 /* Back to top button */
 
 .back-to-top {
@@ -94,6 +89,30 @@ h6 {
         background: #d29e02;
         color: #fff;
     }
+}
+
+.btn-outline-cs-blue {
+    color: #0e1b4d;
+    border-color: #0e1b4d;
+
+    &:focus,
+    &:hover,
+    &:active {
+        color: white;
+        background: #d29e02;
+        border-color: #d29e02;
+        box-shadow: none;
+    }
+}
+
+.far,
+.fas,
+.fab {
+    vertical-align: middle;
+}
+
+.modal-backdrop.show {
+    opacity: 0.75;
 }
 
 /* Sections Header
@@ -136,24 +155,6 @@ h6 {
 
 .section-with-bg {
     background-color: #f6f7fd;
-}
-
-#langSelection>li {
-    margin: 2px;
-}
-
-ul#langSelection li {
-    a.nav-link {
-        border-radius: 0;
-    }
-
-    &.nav-item {
-        margin: 0px;
-
-        +li.nav-item {
-            margin-left: 1px;
-        }
-    }
 }
 
 /*--------------------------------------------------------------
@@ -715,14 +716,59 @@ body.mobile-nav-active {
     }
 }
 
-#holyMass .fullHeight {
-    /* padding: 40px 0; */
-    min-height: calc(100vh - 70px);
+#holyMass {
 
-    /*dijo - full height schedule*/
+    &>.tab-pane>p {
+        text-align: center;
+        color: #9195a2;
+    }
+
+    .fullHeight {
+        /* padding: 40px 0; */
+        min-height: calc(100vh - 70px);
+
+        /*dijo - full height schedule*/
+    }
 }
 
 #schedule {
+
+    #csTzSelect+.btn.dropdown-toggle {
+        border: none;
+        outline: none !important;
+        box-shadow: none;
+
+        &:focus,
+        &:link,
+        &:visited,
+        &:hover,
+        &:active {
+            border: none;
+            outline: none !important;
+            box-shadow: none;
+        }
+    }
+
+    #langSelection {
+        &>li {
+            margin: 2px;
+        }
+
+        li {
+            a.nav-link {
+                border-radius: 0;
+            }
+
+            &.nav-item {
+                margin: 0px;
+
+                +li.nav-item {
+                    margin-left: 1px;
+                }
+            }
+        }
+    }
+
     .dropdown-item {
 
         &.active,
@@ -875,8 +921,36 @@ body.mobile-nav-active {
         }
     }
 
-    .daySelection>li {
-        margin: 4px;
+    .daySelection {
+
+        &>li {
+            margin: 4px;
+        }
+
+        a.nav-link {
+            border-radius: 4px;
+
+            .dayName {
+                font-size: 1em;
+            }
+
+            .dayDate {
+                font-size: 1.5em;
+            }
+
+            .dayMY {
+                font-size: 0.65em;
+            }
+        }
+
+    }
+
+    .langDateUserTitle {
+        font-family: 'Open Sans';
+    }
+
+    .watchStream i {
+        font-size: 20px;
     }
 }
 
@@ -884,55 +958,12 @@ body.mobile-nav-active {
     cursor: pointer;
 }
 
-.btn-outline-cs-blue {
-    color: #0e1b4d;
-    border-color: #0e1b4d;
-
-    &:focus,
-    &:hover,
-    &:active {
-        color: white;
-        background: #d29e02;
-        border-color: #d29e02;
-        box-shadow: none;
-    }
-}
-
-#csTzSelect+.btn.dropdown-toggle {
-    border: none;
-    outline: none !important;
-    box-shadow: none;
-
-    &:focus,
-    &:link,
-    &:visited,
-    &:hover,
-    &:active {
-        border: none;
-        outline: none !important;
-        box-shadow: none;
-    }
-}
-
-.far,
-.fas,
-.fab {
-    vertical-align: middle;
-}
-
-.watchStream i {
-    font-size: 20px;
-}
-
-#videoModal #videoSpinner {
-    display: flex;
-}
-
-.modal-backdrop.show {
-    opacity: 0.75;
-}
-
 #videoModal {
+
+    #videoSpinner {
+        display: flex;
+    }
+
     .modal-header .modal-title {
         margin: 0 auto;
     }
@@ -981,26 +1012,6 @@ body.mobile-nav-active {
             display: none;
         }
     }
-}
-
-#schedule .daySelection a.nav-link {
-    border-radius: 4px;
-
-    .dayName {
-        font-size: 1em;
-    }
-
-    .dayDate {
-        font-size: 1.5em;
-    }
-
-    .dayMY {
-        font-size: 0.65em;
-    }
-}
-
-.langDateUserTitle {
-    font-family: 'Open Sans';
 }
 
 /*--------------------------------------------------------------
