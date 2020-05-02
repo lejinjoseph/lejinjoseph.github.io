@@ -81,16 +81,29 @@ var csVideo = {
 
     addToLiveCache: function (cacheObj) {
         var channelId = cacheObj.channelId;
-        delete cacheObj.channelId;
-        csVideo.liveVideoCache[channelId] = cacheObj;
+        var streamId = cacheObj.streamId;
+        // delete cacheObj.channelId;
+        // delete cacheObj.streamId;
+        if (typeof csVideo.liveVideoCache[channelId] === "undefined") {
+            csVideo.liveVideoCache[channelId] = {};
+        }
+        csVideo.liveVideoCache[channelId][streamId] = cacheObj;
     },
 
-    removeFromLiveCache: function (channelId) {
-        delete csVideo.liveVideoCache[channelId];
+    removeFromLiveCache: function (channelId, streamId) {
+        if (csVideo.liveVideoCache[channelId] && csVideo.liveVideoCache[channelId][streamId]) {
+            delete csVideo.liveVideoCache[channelId][streamId];
+        }
     },
 
     getStreamIdFromLiveCache: function (channelId) {
-        return csVideo.liveVideoCache[channelId] ? csVideo.liveVideoCache[channelId].streamId : null;
+        if (csVideo.liveVideoCache[channelId]) {
+            for (const streamId in csVideo.liveVideoCache[channelId]) {
+                //need changes here based on the start/end time once available
+                return streamId;
+            }
+        }
+        return null;
     },
 
     getLiveStreamCache: function () {
@@ -137,7 +150,7 @@ var csVideo = {
                 csVideo.addToLiveCache(cache);
             }
             else {
-                csVideo.removeFromLiveCache(cache.channelId);
+                csVideo.removeFromLiveCache(cache.channelId, cache.streamId);
             }
         });
     },
