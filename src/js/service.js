@@ -69,7 +69,8 @@ var csService = {
 
     getSchedule: function (language, day, tabId, date, addWow) {
         $.get(csService.url + `/getSchedule/${language}/${day}`, function (data) {
-            csService.displaySchedule(data, tabId, date, addWow)
+            csService.displaySchedule(data, tabId, date, addWow);
+            csVideo.processChannelIdsToBeCached();
         })
             .fail(function () {
                 console.log('failed to get schedule!');

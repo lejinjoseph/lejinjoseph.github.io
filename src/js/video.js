@@ -110,14 +110,22 @@ var csVideo = {
     },
 
     processChannelIdsToBeCached: function () {
-        $.each(csVideo.channelsToBeCached, function (index, channelId) {
-            if (csVideo.getStreamIdFromLiveCache(channelId)) {
-                console.log("Live video cache already available for " + channelId);
-            }
-            else {
-                //todo refresh cache
-            }
-        });
+        for (const eventType in csVideo.channelsToBeCached) {
+            $.each(csVideo.channelsToBeCached[eventType], function (index, channelId) {
+                if (csVideo.getStreamIdFromLiveCache(channelId)) {
+                    console.log("Live video cache already available for " + channelId);
+                }
+                else {
+                    csVideo.refreshLiveStream(channelId, eventType)
+                        .done(function (data) {
+                            csVideo.addToLiveCache(data);
+                        })
+                        .fail(function () {
+                            console.log("Cache refresh failed for " + channelId);
+                        });
+                }
+            });
+        }
     },
 
     validateAndSaveStreams: function (data) {
