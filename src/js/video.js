@@ -52,7 +52,9 @@ var csVideo = {
         if (videoType === "youtube") {
             var channelId = csVideo.getYoutubeChannelId(videoUrl);
             if (mDif >= -15 && mDif < 0) {
-                csVideo.channelsToBeCached.upcoming.push(channelId);
+
+                // Turn Off Upcoming Live fetching for now
+                // csVideo.channelsToBeCached.upcoming.push(channelId);
             }
 
             if (mDif >= 0 && mDif <= 30) {
