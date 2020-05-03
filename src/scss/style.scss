@@ -947,19 +947,20 @@ body.mobile-nav-active {
 
     .langDateUserTitle {
         font-family: 'Open Sans';
+        background: #d29e02;
+        color: white;
+        padding: 10px 5px;
+        margin-top: 5px;
+        font-size: 1.2rem;
 
         &.fixed-top {
             position: fixed;
-            top: 66px;
+            top: 70px;
             left: 0px;
             width: 100%;
             text-align: center;
-            background: #d29e02;
-            color: white !important;
             margin: 0px;
-            padding: 0px;
             z-index: 100;
-            padding: 10px 5px !important;
             font-size: 1rem;
             transition: all 0.5s;
 
@@ -1299,6 +1300,10 @@ body.mobile-nav-active {
 
     .daySelection .nav-item.wide {
         flex-basis: 40%;
+    }
+
+    .scheduleItemContainer {
+        padding: 0px;
     }
 }
 

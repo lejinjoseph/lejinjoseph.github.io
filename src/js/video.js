@@ -66,13 +66,13 @@ var csVideo = {
             return { class: "upComing", title: null };
         }
         else if (mDif >= -15 && mDif < 0) {
-            return { class: "startingSoon", title: `starting in ${Math.abs(mDif)} mins` };
+            return { class: "startingSoon", title: `${Math.abs(mDif)} mins to go` };
         }
         else if (mDif >= 0 && mDif <= 5) {
             return { class: "justStarted", title: "just started" };
         }
         else if (mDif > 5 && mDif <= 30) {
-            return { class: "inProgress", title: `started ${Math.abs(mDif)} mins ago` };
+            return { class: "inProgress", title: `${Math.abs(mDif)} mins ago` };
         }
         else {
             return { class: "finishedOrLate", title: null };

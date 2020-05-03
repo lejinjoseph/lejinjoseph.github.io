@@ -100,13 +100,13 @@ var csService = {
                     `<div id="${language}Mass" data-mass-lang="${orginalLang}" role="tabpanel" class="tab-pane fade ${activeClass}">
                         <ul class="daySelection nav nav-tabs nav-fill" role="tablist">
                         </ul>
-                        <div class="fullHeight">
-                            <h3 class="langDateUserTitle my-1 pt-4 pb-3 text-center font-weight-bold text-danger">
+                        <div class="fullHeight pt-3 pt-md-4">
+                            <h4 class="langDateUserTitle text-center font-weight-bold">
                                 ${language} Holy Mass
                                 <span class="d-none d-md-inline-block px-md-2">-</span>
                                 <span class="scheduleDate d-block d-md-inline-block"></span>                              
-                            </h3>
-                            <div class="schedule-item-container tab-content row justify-content-center my-3">
+                            </h4>
+                            <div class="tab-content justify-content-center my-3">
                                 <div class="d-flex justify-content-center loadingContent">
                                     <div class="spinner-grow text-warning" role="status">
                                         <span class="sr-only">Loading...</span>
@@ -173,7 +173,7 @@ var csService = {
                     );
 
                     $(tabContent).append(
-                        `<div  role="tabpanel" class="col-lg-10  tab-pane fade ${activeClass}" id="${langDayId}">
+                        `<div  role="tabpanel" class="tab-pane fade scheduleItemContainer container ${activeClass}" id="${langDayId}">
                             <div class="d-flex justify-content-center m-3 loadingContent">
                                 <div class="spinner-grow text-warning" role="status">
                                     <span class="sr-only">Loading...</span>
@@ -223,11 +223,11 @@ var csService = {
                             <time>${row.prettyTime} IST</time>
                             ${$target[0].outerHTML}
                         </div>
-                        <div class="col-md-6 py-1">
+                        <div class="col-md-7 py-1">
                             <h4>${row.name}</h4>
                             ${description}
                         </div>
-                        <div class="col-md-3 py-1">
+                        <div class="col-md-2 py-1 text-md-right">
                             <button class="btn btn-sm ${videoTypeObj.btn} watchStream" 
                                 data-video-url="${row.link}"
                                 data-video-title="${row.name}"
