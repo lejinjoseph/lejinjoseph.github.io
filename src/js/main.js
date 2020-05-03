@@ -125,14 +125,12 @@ $('#' + day + '-link').attr('aria-selected', 'true');
 // Schedule Title fixed on scroll
 function registerFixedHolyMassTitle() {
   $(window).scroll(function () {
-    if ($(window).height() < $('.fullHeight:visible').height()) {
-      var $title = $('.langDateUserTitle:visible');
-      var offset = $('.fullHeight:visible').offset();
-      if ($(this).scrollTop() >= offset.top) {
-        $title.addClass('fixed-top');
-      } else {
-        $title.removeClass('fixed-top');
-      }
+    var $title = $('.langDateUserTitle:visible');
+    var offset = $('.fullHeight:visible').offset();
+    if ((offset.top - $(this).scrollTop()) < 75) {
+      $title.addClass('fixed-top');
+    } else {
+      $title.removeClass('fixed-top');
     }
   });
 }

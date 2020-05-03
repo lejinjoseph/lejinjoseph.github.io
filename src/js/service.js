@@ -29,7 +29,7 @@ var csService = {
 
     scrollToHolyMass: function () {
         $('html, body').animate({
-            scrollTop: $(".langDateUserTitle:visible").offset().top - $("#header").outerHeight()
+            scrollTop: $(".fullHeight:visible").offset().top - $("#header").outerHeight()
         }, 1000, 'easeInOutExpo');
     },
 
@@ -174,8 +174,8 @@ var csService = {
 
                     $(tabContent).append(
                         `<div  role="tabpanel" class="tab-pane fade scheduleItemContainer container ${activeClass}" id="${langDayId}">
-                            <div class="d-flex justify-content-center m-3 loadingContent">
-                                <div class="spinner-grow text-warning" role="status">
+                            <div class="d-flex justify-content-center m-5 loadingContent">
+                                <div class="spinner-grow text-danger" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>
                             </div>

@@ -950,7 +950,7 @@ body.mobile-nav-active {
         background: #d29e02;
         color: white;
         padding: 10px 5px;
-        margin-top: 5px;
+        margin: 0px;
         font-size: 1.2rem;
 
         &.fixed-top {
@@ -959,7 +959,6 @@ body.mobile-nav-active {
             left: 0px;
             width: 100%;
             text-align: center;
-            margin: 0px;
             z-index: 100;
             font-size: 1rem;
             transition: all 0.5s;
