@@ -967,6 +967,10 @@ body.mobile-nav-active {
             font-size: 1rem;
             transition: all 0.5s;
 
+            @media (max-width: 575px) {
+                font-size: 0.75rem;
+            }
+
             span {
                 display: inline-block !important;
             }
