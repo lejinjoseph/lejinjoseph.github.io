@@ -50,6 +50,7 @@ var csService = {
         $.get(csService.url + '/getLanguages', function (data) {
             csService.showGuidelineModal();
             csService.displayLanguages(data);
+            registerFixedHolyMassTitle();
         })
             .fail(function () {
                 console.log('failed to get languages!');
@@ -105,7 +106,7 @@ var csService = {
                                 <span class="d-none d-md-inline-block px-md-2">-</span>
                                 <span class="scheduleDate d-block d-md-inline-block"></span>                              
                             </h3>
-                            <div class="tab-content row justify-content-center my-3">
+                            <div class="schedule-item-container tab-content row justify-content-center my-3">
                                 <div class="d-flex justify-content-center loadingContent">
                                     <div class="spinner-grow text-warning" role="status">
                                         <span class="sr-only">Loading...</span>

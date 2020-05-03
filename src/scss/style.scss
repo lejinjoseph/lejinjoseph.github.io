@@ -947,6 +947,26 @@ body.mobile-nav-active {
 
     .langDateUserTitle {
         font-family: 'Open Sans';
+
+        &.fixed-top {
+            position: fixed;
+            top: 66px;
+            left: 0px;
+            width: 100%;
+            text-align: center;
+            background: #d29e02;
+            color: white !important;
+            margin: 0px;
+            padding: 0px;
+            z-index: 100;
+            padding: 10px 5px !important;
+            font-size: 1rem;
+            transition: all 0.5s;
+
+            span {
+                display: inline-block !important;
+            }
+        }
     }
 
     .watchStream i {

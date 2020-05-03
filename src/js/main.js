@@ -121,3 +121,18 @@ $('#' + day).addClass('show');
 $('#' + day + '-link').addClass('active');
 $('#' + day + '-link').addClass('show');
 $('#' + day + '-link').attr('aria-selected', 'true');
+
+// Schedule Title fixed on scroll
+function registerFixedHolyMassTitle() {
+  $(window).scroll(function () {
+    if ($(window).height() < $('.fullHeight:visible').height()) {
+      var $title = $('.langDateUserTitle:visible');
+      var offset = $('.fullHeight:visible').offset();
+      if ($(this).scrollTop() >= offset.top) {
+        $title.addClass('fixed-top');
+      } else {
+        $title.removeClass('fixed-top');
+      }
+    }
+  });
+}
