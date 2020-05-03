@@ -204,6 +204,18 @@ var csService = {
     displaySchedule: function (data, tabId, date, addWow) {
         $(tabId).children(".loadingContent").fadeOut(500, function () {
             $(this).remove();
+            if (data.length < 1) {
+                $(tabId).append(
+                    `<div class="row schedule-item noSchedulesFound">
+                        <div class="col-12 offset-md-2 col-md-8 py-1">
+                            <h4 class="text-danger">Sorry! We could not find any Holy Mass schedules</h4>
+                            <small>Please <a href="http://jyinfopark.in" target="_blank">contact us</a> to add new Holy Mass schedules here.</small>
+                        </div>
+                    </div>`);
+
+                return false;
+            }
+
             $.each(data, function (index, row) {
                 var videoTypeObj = csVideo.getVideoType(row.link);
                 var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
