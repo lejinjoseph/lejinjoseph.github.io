@@ -11,11 +11,31 @@ var csService = {
 
         $("body").on("click", "#instructions", csService.showGuidelineModal);
 
+        $("#holyMass").on("click", ".showPrevSchedule", function () {
+            var showBtn = $(this);
+            var hideBtn = $(this).siblings(".hidePrevSchedule");
+            $(".scheduleItemContainer:visible .schedule-item.finishedOrLate").fadeIn(500, function () {
+                showBtn.fadeOut(500, function () {
+                    hideBtn.fadeIn(500);
+                });
+            });
+        });
+
+        $("#holyMass").on("click", ".hidePrevSchedule", function () {
+            var hideBtn = $(this);
+            var showBtn = $(this).siblings(".showPrevSchedule");
+            $(".scheduleItemContainer:visible .schedule-item.finishedOrLate").fadeOut(500, function () {
+                hideBtn.fadeOut(500, function () {
+                    showBtn.fadeIn(500);
+                });
+            });
+        });
+
         $("body").on('shown.bs.tab', '.daySelection a[data-toggle="tab"]', function ($event) {
             var aLink = $($event.target);
             var tabId = aLink.attr("href");
             var date = aLink.attr("data-day-date");
-            if ($(tabId).children(".schedule-item").length < 1) {
+            if ($(tabId).children(".schedule-item:not(.showHide)").length < 1) {
                 var day = aLink.attr("data-day-id");
                 var language = aLink.parents(".tab-pane").attr("data-mass-lang");
                 csService.getSchedule(language, day, tabId, date, true);
@@ -179,6 +199,18 @@ var csService = {
                                     <span class="sr-only">Loading...</span>
                                 </div>
                             </div>
+                            <div class="row schedule-item showHide text-info">
+                                <div class="col-12 offset-md-3 col-md-6 text-center">
+                                    <a class="showPrevSchedule">
+                                        <i class="fas fa-eye"></i>
+                                        Show Finished Holy Masses
+                                    </a>
+                                    <a class="hidePrevSchedule">
+                                        <i class="fas fa-eye-slash"></i>
+                                        Hide Finished Holy Masses
+                                    </a>
+                                </div>
+                            </div>
                         </div>`
                     );
 
@@ -216,12 +248,15 @@ var csService = {
                 return false;
             }
 
+            var finishedOrLateCount = 0;
+
             $.each(data, function (index, row) {
                 var videoTypeObj = csVideo.getVideoType(row.link);
                 var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
                 var statusObj = csVideo.getScheduleStatusClass(scheduleTime, videoTypeObj.type, row.link);
 
-                var wowClass = addWow ? "wow fadeInUp" : "";
+                finishedOrLateCount += statusObj.class === "finishedOrLate" ? 1 : 0;
+                var wowClass = addWow && statusObj.class !== "finishedOrLate" ? "wow fadeInUp" : "";
                 var description = row.description ? `<p>${row.description}</p>` : "";
                 var statusText = statusObj.title ? `<small class="float-right float-md-none">${statusObj.title}</small>` : '';
                 var $target = $('<time class="userTzTime d-inline-block d-md-block float-right float-md-none"></time>');
@@ -252,6 +287,11 @@ var csService = {
                 );
 
             })
+
+            if (finishedOrLateCount > 0) {
+                $(tabId).find(".hidePrevSchedule").fadeIn();
+                $(tabId).find(".schedule-item").removeClass("wow");
+            }
         });
 
     }
