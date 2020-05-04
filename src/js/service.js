@@ -255,6 +255,7 @@ var csService = {
                 var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
                 var statusObj = csVideo.getScheduleStatusClass(scheduleTime, videoTypeObj.type, row.link);
 
+                var videoBtnText = ['justStarted', 'inProgress'].includes(statusObj.class) ? "LIVE" : "Video";
                 finishedOrLateCount += statusObj.class === "finishedOrLate" ? 1 : 0;
                 var wowClass = addWow && statusObj.class !== "finishedOrLate" ? "wow fadeInUp" : "";
                 var description = row.description ? `<p>${row.description}</p>` : "";
@@ -278,8 +279,9 @@ var csService = {
                             <button class="btn btn-sm ${videoTypeObj.btn} watchStream" 
                                 data-video-url="${row.link}"
                                 data-video-title="${row.name}"
-                                data-video-type=${videoTypeObj.type}>
-                                <i class="${videoTypeObj.icon} pr-2"></i>LIVE
+                                data-video-type=${videoTypeObj.type}
+                                data-video-status=${videoBtnText}>
+                                <i class="${videoTypeObj.icon} pr-2"></i>${videoBtnText}
                             </button>
                             ${statusText}
                         </div>

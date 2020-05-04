@@ -252,7 +252,8 @@ var csVideo = {
         var videoUrl = $(this).attr("data-video-url");
         var videoTitle = $(this).attr("data-video-title");
         var videoType = $(this).attr("data-video-type");
-        if (videoType === "youtube") {
+        var videoStatus = $(this).attr("data-video-status");
+        if (videoType === "youtube" && videoStatus === "LIVE") {
             csVideo.openYoutubeModal(videoUrl, videoTitle);
         }
         else {
