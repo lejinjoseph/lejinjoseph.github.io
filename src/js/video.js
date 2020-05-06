@@ -48,13 +48,14 @@ var csVideo = {
 
     getScheduleStatusClass: function (scheduleTime, videoType, videoUrl) {
         var mDif = csTimeZone.minutesDiffFromNow(scheduleTime);
+        var statusObj = {
+            scheduleTimestamp: moment(scheduleTime).tz('Asia/Kolkata').unix()
+        };
 
         if (videoType === "youtube") {
             var channelId = csVideo.getYoutubeChannelId(videoUrl);
             if (mDif >= -15 && mDif < 0) {
-
-                // Turn Off Upcoming Live fetching for now
-                // csVideo.channelsToBeCached.upcoming.push(channelId);
+                csVideo.channelsToBeCached.upcoming.push(channelId);
             }
 
             if (mDif >= 0 && mDif <= 30) {
@@ -63,20 +64,26 @@ var csVideo = {
         }
 
         if (mDif < -15) {
-            return { class: "upComing", title: null };
+            $.extend(statusObj, { class: "upComing", title: null });
         }
         else if (mDif >= -15 && mDif < 0) {
-            return { class: "startingSoon", title: `${Math.abs(mDif)} mins to go` };
+            $.extend(statusObj, { class: "startingSoon", title: `${Math.abs(mDif)} mins to go` });
         }
         else if (mDif >= 0 && mDif <= 5) {
-            return { class: "justStarted", title: "just started" };
+            $.extend(statusObj, { class: "justStarted", title: "just started" });
         }
         else if (mDif > 5 && mDif <= 30) {
-            return { class: "inProgress", title: `${Math.abs(mDif)} mins ago` };
+            $.extend(statusObj, { class: "inProgress", title: `${Math.abs(mDif)} mins ago` });
         }
         else {
-            return { class: "finishedOrLate", title: null };
+            $.extend(statusObj, { class: "finishedOrLate", title: null });
         }
+
+        return statusObj;
+    },
+
+    getCacheLastUpdated: function (channelId) {
+        return csVideo.liveVideoCache[channelId] ? csVideo.liveVideoCache[channelId]["metadata"]["lastUpdated"] : 0;
     },
 
     addToLiveCache: function (cacheObj) {
@@ -90,10 +97,10 @@ var csVideo = {
         }
 
         if (typeof csVideo.liveVideoCache[channelId]["metadata"] === "undefined") {
-            csVideo.liveVideoCache[channelId]["metadata"] = { lastUpdated: videoUpdated}
+            csVideo.liveVideoCache[channelId]["metadata"] = { lastUpdated: videoUpdated }
         }
 
-        if(cacheObj.timestamp && videoUpdated > csVideo.liveVideoCache[channelId]["metadata"]["lastUpdated"]) {
+        if (cacheObj.timestamp && videoUpdated > csVideo.liveVideoCache[channelId]["metadata"]["lastUpdated"]) {
             csVideo.liveVideoCache[channelId]["metadata"]["lastUpdated"] = videoUpdated;
         }
 
@@ -110,9 +117,12 @@ var csVideo = {
 
     getStreamIdFromLiveCache: function (channelId) {
         if (csVideo.liveVideoCache[channelId]) {
-            for (const streamId in csVideo.liveVideoCache[channelId]) {
+            for (var streamId in csVideo.liveVideoCache[channelId]) {
+                console.log(streamId);
                 //need changes here based on the start/end time once available
-                return streamId;
+                if (streamId !== "metadata") {
+                    return streamId;
+                }
             }
         }
         return null;
@@ -225,8 +235,8 @@ var csVideo = {
     checkYoutubeLive: function (channelId, videoUrl) {
         csVideo.refreshLiveStream(channelId, "live")
             .done(function (data) {
+                csVideo.addToLiveCache(data);
                 if (data.channelId && data.streamId) {
-                    csVideo.addToLiveCache(data);
                     csVideo.showYoutubeLive(data.streamId);
                 }
                 else {
@@ -240,14 +250,20 @@ var csVideo = {
             });
     },
 
-    processYoutubeLive: function (videoUrl) {
+    processYoutubeLive: function (videoUrl, scheduleTimestamp) {
         var channelId = csVideo.getYoutubeChannelId(videoUrl);
         if (channelId) {
+            console.log(scheduleTimestamp, csVideo.getCacheLastUpdated(channelId) );
             var cacheStreamId = csVideo.getStreamIdFromLiveCache(channelId);
-            if (cacheStreamId) {
+            if (cacheStreamId !== null) {
                 csVideo.showYoutubeLive(cacheStreamId);
             }
+            else if (csVideo.getCacheLastUpdated(channelId) >= scheduleTimestamp) {
+                console.log('Channel cached after schedule start: ' + channelId);
+                csVideo.showChannelBtn(videoUrl);
+            }
             else {
+                console.log("REFRESHING Data.....!!!!");
                 csVideo.checkYoutubeLive(channelId, videoUrl);
             }
         }
@@ -265,8 +281,10 @@ var csVideo = {
         var videoTitle = $(this).attr("data-video-title");
         var videoType = $(this).attr("data-video-type");
         var videoStatus = $(this).attr("data-video-status");
+        var timestamp = $(this).attr("data-video-time");
         if (videoType === "youtube" && videoStatus === "LIVE") {
             csVideo.openYoutubeModal(videoUrl, videoTitle);
+            csVideo.processYoutubeLive(videoUrl, timestamp);
         }
         else {
             window.open(videoUrl, "_blank");
@@ -303,6 +321,5 @@ var csVideo = {
         $("#videoModal #visitChannel").hide();
         csVideo.videoModal.modal("show");
         //csVideo.getYoutubeLiveStreamUrl(url);
-        csVideo.processYoutubeLive(url);
     }
 };

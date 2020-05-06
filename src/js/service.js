@@ -91,7 +91,9 @@ var csService = {
     getSchedule: function (language, day, tabId, date, addWow) {
         $.get(csService.url + `/getSchedule/${language}/${day}`, function (data) {
             csService.displaySchedule(data, tabId, date, addWow);
-            csVideo.processChannelIdsToBeCached();
+            
+            // Disabling Pre Caching of Live Videos for Youtube API quota restriction
+            //csVideo.processChannelIdsToBeCached();
         })
             .fail(function () {
                 console.log('failed to get schedule!');
@@ -280,7 +282,8 @@ var csService = {
                                 data-video-url="${row.link}"
                                 data-video-title="${row.name}"
                                 data-video-type=${videoTypeObj.type}
-                                data-video-status=${videoBtnText}>
+                                data-video-status=${videoBtnText}
+                                data-video-time=${statusObj.scheduleTimestamp}>
                                 <i class="${videoTypeObj.icon} pr-2"></i>${videoBtnText}
                             </button>
                             ${statusText}
