@@ -988,8 +988,12 @@ body.mobile-nav-active {
         }
     }
 
-    .watchStream i {
-        font-size: 20px;
+    .watchStream {
+        font-size: 0.8rem;
+
+        i {
+            font-size: 20px;
+        }
     }
 }
 

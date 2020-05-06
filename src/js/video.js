@@ -82,12 +82,24 @@ var csVideo = {
     addToLiveCache: function (cacheObj) {
         var channelId = cacheObj.channelId;
         var streamId = cacheObj.streamId;
+        var videoUpdated = moment.utc(cacheObj.timestamp).unix();
         // delete cacheObj.channelId;
         // delete cacheObj.streamId;
         if (typeof csVideo.liveVideoCache[channelId] === "undefined") {
             csVideo.liveVideoCache[channelId] = {};
         }
-        csVideo.liveVideoCache[channelId][streamId] = cacheObj;
+
+        if (typeof csVideo.liveVideoCache[channelId]["metadata"] === "undefined") {
+            csVideo.liveVideoCache[channelId]["metadata"] = { lastUpdated: videoUpdated}
+        }
+
+        if(cacheObj.timestamp && videoUpdated > csVideo.liveVideoCache[channelId]["metadata"]["lastUpdated"]) {
+            csVideo.liveVideoCache[channelId]["metadata"]["lastUpdated"] = videoUpdated;
+        }
+
+        if (streamId) {
+            csVideo.liveVideoCache[channelId][streamId] = cacheObj;
+        }
     },
 
     removeFromLiveCache: function (channelId, streamId) {
@@ -146,7 +158,7 @@ var csVideo = {
     validateAndSaveStreams: function (data) {
         $.each(data, function (index, cache) {
             var cachedMins = csTimeZone.minutesDiffFromNow(cache.timestamp, "utc");
-            if (cachedMins < csVideo.serverCacheDuration && cache.streamId) {
+            if (cachedMins < csVideo.serverCacheDuration) {
                 csVideo.addToLiveCache(cache);
             }
             else {
