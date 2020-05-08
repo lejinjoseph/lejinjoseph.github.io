@@ -738,15 +738,20 @@ body.mobile-nav-active {
 #liveGallery {
     background: rgba(6, 12, 34, 0.98);
 
+    .container {
+        position: relative;
+    }
+
     #liveSlider {
         &>div {
             text-align: center;
 
             h5 {
                 text-align: center;
-                color: goldenrod;
+                color: #d29e02;
                 padding: 10px 2px;
                 font-size: 1.2rem;
+                margin: 0;
             }
         }
     }
@@ -755,17 +760,48 @@ body.mobile-nav-active {
         text-align: center;
 
         button {
-            color: white;
+            width: 9px;
+            height: 9px;
+            padding: 0;
+            margin: 0 5px;
             border-radius: 50%;
-            height: 20px;
-            width: 20px;
-            border: none;
-            margin: 5px;
+            background: #ddd;
+            border: 0;
 
             &.tns-nav-active {
-                color: goldenrod;
+                background: #d29e02;
             }
         }
+    }
+
+    .tns-controls {
+
+        &>button {
+            background: transparent;
+            color: ghostwhite;
+            margin: 0;
+            padding: 0 5px;
+            border: none;
+            font-size: 1.5rem;
+
+            &:focus {
+                outline: none;
+                border: none;
+            }
+
+            &[data-controls=prev] {
+                position: absolute;
+                top: 45%;
+                left: 0;
+            }
+
+            &[data-controls=next] {
+                position: absolute;
+                top: 45%;
+                right: 0;
+            }
+        }
+
     }
 }
 

@@ -18,7 +18,8 @@ var vendorCssFiles = [
   'node_modules/@fortawesome/fontawesome-free/css/all.min.css',
   'node_modules/@fortawesome/fontawesome-free/css/v4-shims.min.css',
   'node_modules/animate.css/animate.min.css',
-  'node_modules/bootstrap-select/dist/css/bootstrap-select.min.css'
+  'node_modules/bootstrap-select/dist/css/bootstrap-select.min.css',
+  'node_modules/tiny-slider/dist/tiny-slider.css'
 ];
 
 var vendorJsFiles = [
@@ -28,7 +29,8 @@ var vendorJsFiles = [
   'node_modules/wowjs/dist/wow.min.js',
   'node_modules/bootstrap-select/dist/js/bootstrap-select.min.js',
   'node_modules/moment/min/moment.min.js',
-  'node_modules/moment-timezone/builds/moment-timezone-with-data-1970-2030.min.js'
+  'node_modules/moment-timezone/builds/moment-timezone-with-data-1970-2030.min.js',
+  'node_modules/tiny-slider/dist/min/tiny-slider.js'
 ];
 
 var myCssFiles = ['src/scss/*.scss'];

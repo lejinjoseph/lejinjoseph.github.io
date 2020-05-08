@@ -4,20 +4,25 @@ jQuery(document).ready(function ($) {
     container: '#liveSlider',
     slideBy: 1,
     autoplay: true,
+    autoplayButtonOutput: false,
+    autoplayHoverPause: true,
     center: true,
     navPosition: "bottom",
     controlsPosition: "bottom",
+    controlsText: [
+      '<i class="fas fa-chevron-left"></i>',
+      '<i class="fas fa-chevron-right"></i>'
+    ],
     items: 1,
     responsive: {
-      576: {
+      768: {
+        center: false,
         edgePadding: 20,
         gutter: 20,
         items: 2
       },
-      768: {
-        gutter: 30,
-      },
-      992: {
+      1200: {
+        center: true,
         items: 3
       }
     }
