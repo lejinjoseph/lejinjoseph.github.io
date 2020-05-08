@@ -1,5 +1,28 @@
 jQuery(document).ready(function ($) {
 
+  var slider = tns({
+    container: '#liveSlider',
+    slideBy: 1,
+    autoplay: true,
+    center: true,
+    navPosition: "bottom",
+    controlsPosition: "bottom",
+    items: 1,
+    responsive: {
+      576: {
+        edgePadding: 20,
+        gutter: 20,
+        items: 2
+      },
+      768: {
+        gutter: 30,
+      },
+      992: {
+        items: 3
+      }
+    }
+  });
+
   $('[data-toggle="tooltip"]').tooltip();
 
   // Back to top button
