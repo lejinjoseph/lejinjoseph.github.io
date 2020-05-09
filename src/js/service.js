@@ -15,8 +15,8 @@ var csService = {
             var showBtn = $(this);
             var hideBtn = $(this).siblings(".hidePrevSchedule");
             $(".scheduleItemContainer:visible .schedule-item.finishedOrLate").fadeIn(500, function () {
-                showBtn.fadeOut(500, function () {
-                    hideBtn.fadeIn(500);
+                showBtn.fadeOut(100, function () {
+                    hideBtn.fadeIn(100);
                 });
             });
         });
@@ -25,8 +25,8 @@ var csService = {
             var hideBtn = $(this);
             var showBtn = $(this).siblings(".showPrevSchedule");
             $(".scheduleItemContainer:visible .schedule-item.finishedOrLate").fadeOut(500, function () {
-                hideBtn.fadeOut(500, function () {
-                    showBtn.fadeIn(500);
+                hideBtn.fadeOut(100, function () {
+                    showBtn.fadeIn(100);
                 });
             });
         });
@@ -91,7 +91,7 @@ var csService = {
     getSchedule: function (language, day, tabId, date, addWow) {
         $.get(csService.url + `/getSchedule/${language}/${day}`, function (data) {
             csService.displaySchedule(data, tabId, date, addWow);
-            
+
             // Disabling Pre Caching of Live Videos for Youtube API quota restriction
             //csVideo.processChannelIdsToBeCached();
         })
@@ -294,7 +294,8 @@ var csService = {
             })
 
             if (finishedOrLateCount > 0) {
-                $(tabId).find(".hidePrevSchedule").fadeIn();
+                $(tabId).find(".showPrevSchedule").fadeIn();
+                $(".scheduleItemContainer:visible .schedule-item.finishedOrLate").fadeOut();
                 $(tabId).find(".schedule-item").removeClass("wow");
             }
         });
