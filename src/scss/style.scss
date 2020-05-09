@@ -746,13 +746,54 @@ body.mobile-nav-active {
         &>div {
             text-align: center;
 
-            h5 {
-                text-align: center;
-                color: #d29e02;
-                padding: 10px 2px;
-                font-size: 1.2rem;
-                margin: 0;
+            div.thumb {
+                width: 340px;
+                margin: 0 auto;
+                padding: 10px;
+                border-radius: 5px;
+                background: #000;
+
+                h5 {
+                    text-align: center;
+                    color: #d29e02;
+                    padding-top: 15px;
+                    font-size: 1.2rem;
+                    margin: 0;
+                }
+
+                p {
+                    text-align: left;
+                    margin: 0;
+                    padding: 7px 2px;
+                    color: ghostwhite;
+                    font-size: .9rem;
+
+                    &.live {
+                        color: #dc3545;
+                        font-weight: bold;
+                    }
+
+                    &.upcoming {
+                        color: #28a745;
+                    }
+
+                    span {
+                        display: inline-block;
+
+                        &+span {
+                            margin-left: 20px;
+                        }
+
+                        .fas,
+                        .far,
+                        .fab {
+                            margin-right: 8px;
+                        }
+                    }
+                }
+
             }
+
         }
     }
 

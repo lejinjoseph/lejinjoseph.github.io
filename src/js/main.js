@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
   var slider = tns({
     container: '#liveSlider',
     slideBy: 1,
-    autoplay: true,
+    // autoplay: true,
     autoplayButtonOutput: false,
     autoplayHoverPause: true,
     center: true,
