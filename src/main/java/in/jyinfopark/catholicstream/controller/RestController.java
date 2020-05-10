@@ -1,6 +1,9 @@
 package in.jyinfopark.catholicstream.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import in.jyinfopark.catholicstream.dto.DayLang;
+import in.jyinfopark.catholicstream.dto.Youtube;
 import in.jyinfopark.catholicstream.entity.Channel;
 import in.jyinfopark.catholicstream.entity.Day;
 import in.jyinfopark.catholicstream.entity.Mass;
@@ -8,9 +11,11 @@ import in.jyinfopark.catholicstream.repo.ChannelRepo;
 import in.jyinfopark.catholicstream.repo.DaysRepo;
 import in.jyinfopark.catholicstream.repo.MassRepo;
 import in.jyinfopark.catholicstream.service.MassService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.security.PublicKey;
 import java.sql.Timestamp;
@@ -103,6 +108,26 @@ public class RestController {
         return massList;
 
     }
+    @GetMapping("/liveStreamRefresh/{channelId}/{eventType}")
+    public Channel getLive(@PathVariable String channelId,@PathVariable String eventType){
+        Channel channel=new Channel();
+        channel.setChannelId(channelId);
+        String uri="https://www.googleapis.com/youtube/v3/search?part=snippet&channelId="+channelId+"&type=video&eventType="+eventType+"&key=AIzaSyAvcxy7qbSPvZhVn8ueAqM_oMijj08SAmY";
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject(uri, String.class);
+        try {
+            Youtube youtube=new Gson().fromJson(result, Youtube.class);
+            String videoId = youtube.getItems().get(0).getId().getVideoId();
+            channel.setStreamId(videoId);
+            channel.setTitle(youtube.getItems().get(0).getSnippet().getTitle());
+            channel.setThumbnail(youtube.getItems().get(0).getSnippet().getThumbnails().getMedium().getUrl());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        channel.setTimestamp(LocalDateTime.now());
+        return channelRepo.save(channel);
+    }
+
     @GetMapping("/liveStreamCache")
     public Iterable<Channel> getAllChannels(){
         return channelRepo.findAll();
@@ -111,10 +136,7 @@ public class RestController {
     @PostMapping("/liveStreamCache")
     public Channel updatetable(@RequestBody Channel channel){
         LocalDateTime today = LocalDateTime.now();
-
-        ZoneId id = ZoneId.of("Asia/Kolkata");
-        ZonedDateTime zonedDateTime = ZonedDateTime.of(today, id);
-        channel.setTimestamp(zonedDateTime);
+        channel.setTimestamp(today);
         return channelRepo.save(channel);
     }
 

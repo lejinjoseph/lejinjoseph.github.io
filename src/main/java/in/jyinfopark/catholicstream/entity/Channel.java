@@ -2,6 +2,7 @@ package in.jyinfopark.catholicstream.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -17,8 +18,13 @@ public class Channel {
     private String streamId;
 
     @Column(name = "last_updated")
-    private ZonedDateTime timestamp;
+    private LocalDateTime timestamp;
 
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "thumbnail")
+    private String thumbnail;
 
 
     public String getChannelId() {
@@ -37,11 +43,27 @@ public class Channel {
         this.streamId = streamId;
     }
 
-    public ZonedDateTime getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(ZonedDateTime timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }
