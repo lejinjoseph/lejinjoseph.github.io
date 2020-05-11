@@ -66,7 +66,7 @@ var csTimeZone = {
                 if (indexOfWeek >= 0) {
                     let todayIstDayIndex = moment.tz('Asia/Kolkata').day();
                     indexOfWeek = indexOfWeek < todayIstDayIndex ? indexOfWeek + 7 : indexOfWeek;
-                    let date = moment().day(indexOfWeek).tz('Asia/Kolkata');
+                    let date = moment.tz('Asia/Kolkata').day(indexOfWeek);
 
                     day.sortIndex = indexOfWeek;
                     day.date = date.format("YYYY-MM-DD");

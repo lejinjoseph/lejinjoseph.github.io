@@ -1,8 +1,8 @@
 {
-  "css/app.min.css": "css/app-834974303e.min.css",
-  "css/bundle.min.css": "css/bundle-c99c8b3f18.min.css",
+  "css/app.min.css": "css/app-de5bb2276b.min.css",
+  "css/bundle.min.css": "css/bundle-bd9528ecf3.min.css",
   "css/vendor.min.css": "css/vendor-d2438a8d46.min.css",
-  "js/app.min.js": "js/app-7010b27233.min.js",
-  "js/bundle.min.js": "js/bundle-6a58a09687.min.js",
+  "js/app.min.js": "js/app-be689ee85a.min.js",
+  "js/bundle.min.js": "js/bundle-81fa522fcf.min.js",
   "js/vendor.min.js": "js/vendor-70b1b507ed.min.js"
 }
