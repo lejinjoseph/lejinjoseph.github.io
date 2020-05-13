@@ -1,7 +1,3 @@
-jQuery(document).ready(function ($) {
-    csService.init();
-});
-
 var csService = {
     url: 'http://catholicstreamlive-env.eba-mh2niqse.ap-south-1.elasticbeanstalk.com',
     //url: 'https://api.catholicstreams.live',
