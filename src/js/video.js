@@ -259,8 +259,8 @@ var csVideo = {
         csVideo.refreshLiveStream(channelId, "live")
             .done(function (data) {
                 csVideo.addToLiveCache(data.channels);
-                var streamObj = data.channels[0];
-                if (streamObj.channelId && streamObj.streamId) {
+                var streamObj = data.channels[0] || null;
+                if (streamObj && streamObj.channelId && streamObj.streamId) {
                     csVideo.showYoutubeLive(datstreamObja.streamId);
                 }
                 else {
