@@ -2,6 +2,8 @@ var csService = {
     url: 'http://catholicstreamlive-env.eba-mh2niqse.ap-south-1.elasticbeanstalk.com',
     //url: 'https://api.catholicstreams.live',
 
+    scheduleServiceCount: 0,
+
     init: function (params) {
         csService.getLanguanges();
 
@@ -85,13 +87,13 @@ var csService = {
     },
 
     getSchedule: function (language, day, tabId, date, addWow) {
+        ++csService.scheduleServiceCount;
         $.get(csService.url + `/getSchedule/${language}/${day}`, function (data) {
+            --csService.scheduleServiceCount;
             csService.displaySchedule(data, tabId, date, addWow);
-
-            // Disabling Pre Caching of Live Videos for Youtube API quota restriction
-            //csVideo.processChannelIdsToBeCached();
         })
             .fail(function () {
+                --csService.scheduleServiceCount;
                 console.log('failed to get schedule!');
             });
     },
@@ -294,7 +296,12 @@ var csService = {
                 $(".scheduleItemContainer:visible .schedule-item.finishedOrLate").fadeOut();
                 $(tabId).find(".schedule-item").removeClass("wow");
             }
-        });
 
+            console.log(csService.scheduleServiceCount);
+
+            if (csService.scheduleServiceCount === 0) {
+                csVideo.processChannelIdsToBeCached(); //process caching only after all schedules for the day.
+            }
+        });
     }
 }

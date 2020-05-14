@@ -48,11 +48,11 @@ var csVideo = {
         if (videoType === "youtube") {
             var channelId = csVideo.getYoutubeChannelId(videoUrl);
             if (mDif >= -15 && mDif < 0) {
-                csVideo.channelsToBeCached.upcoming.push(channelId);
+                // csVideo.channelsToBeCached.upcoming.push(channelId); -- disable fetching upcoming live for now
             }
 
             if (mDif >= 0 && mDif <= 30) {
-                csVideo.channelsToBeCached.live.push(channelId);
+                csVideo.channelsToBeCached.live.push({ channelId: channelId, scheduleTime: scheduleTime });
             }
         }
 
@@ -105,6 +105,39 @@ var csVideo = {
         }
     },
 
+    /**
+     * CHeck if we have valid cache entries for a channel at a scheduled time
+     */
+    isStreamCacheValid: function (channelId, scheduleTime) {
+        if (csVideo.liveVideoCache[channelId]) {
+            var validStreams = [];
+            var lastUpdated = csVideo.liveVideoCache[channelId]['metadata']['timestamp'];
+            for (var streamId in csVideo.liveVideoCache[channelId]) {
+                var streamObj = csVideo.liveVideoCache[channelId][streamId];
+                if (streamId !== 'metadata' && ['live', 'upcoming'].includes(cache.liveBroadcastContent)) {
+                    var startValid = streamObj.scheduledStartTime ? moment.tz(streamObj.scheduledStartTime, 'Asia/Kolkata').isSameOrBefore(scheduleTime) : true;
+                    var endValid = streamObj.scheduledEndTime ? moment.tz(streamObj.scheduledEndTime, 'Asia/Kolkata').isAfter(scheduleTime) : true;
+                    if (startValid && endValid) {
+                        validStreams.push(streamObj);
+                    }
+                }
+            }
+
+            if (validStreams.length) {
+                return validStreams;
+            }
+            else if (moment.tz(lastUpdated, 'Asia/Kolkata').isAfter(scheduleTime)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    },
+
     getStreamIdFromLiveCache: function (channelId) {
         if (csVideo.liveVideoCache[channelId]) {
             for (var streamId in csVideo.liveVideoCache[channelId]) {
@@ -138,12 +171,12 @@ var csVideo = {
 
     processChannelIdsToBeCached: function () {
         for (const eventType in csVideo.channelsToBeCached) {
-            $.each(csVideo.channelsToBeCached[eventType], function (index, channelId) {
-                if (csVideo.getStreamIdFromLiveCache(channelId)) {
-                    console.log("Live video cache already available for " + channelId);
+            $.each(csVideo.channelsToBeCached[eventType], function (index, obj) {
+                if (csVideo.isStreamCacheValid(obj.channelId, obj.scheduleTime)) {
+                    console.log("Live video cache already upto date for " + channelId);
                 }
                 else {
-                    csVideo.refreshLiveStream(channelId, eventType)
+                    csVideo.refreshLiveStream(obj.channelId, eventType)
                         .done(function (data) {
                             csVideo.addToLiveCache(data.channels);
                         })
