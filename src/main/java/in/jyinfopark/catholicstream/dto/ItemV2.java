@@ -12,20 +12,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "kind",
-    "etag",
-    "id",
-    "snippet",
+        "kind",
+        "etag",
+        "id",
+        "snippet",
         "liveStreamingDetails"
 })
-public class Item {
+public class ItemV2 {
 
     @JsonProperty("kind")
     private String kind;
     @JsonProperty("etag")
     private String etag;
     @JsonProperty("id")
-    private Id id;
+    private String id;
     @JsonProperty("snippet")
     private Snippet snippet;
     @JsonProperty("liveStreamingDetails")
@@ -54,12 +54,12 @@ public class Item {
     }
 
     @JsonProperty("id")
-    public Id getId() {
+    public String getId() {
         return id;
     }
 
     @JsonProperty("id")
-    public void setId(Id id) {
+    public void setId(String id) {
         this.id = id;
     }
 

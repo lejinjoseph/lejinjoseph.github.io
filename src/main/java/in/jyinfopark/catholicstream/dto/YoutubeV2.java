@@ -2,6 +2,7 @@
 package in.jyinfopark.catholicstream.dto;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -12,24 +13,24 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "kind",
-    "etag",
-    "id",
-    "snippet",
-        "liveStreamingDetails"
+        "kind",
+        "etag",
+        "regionCode",
+        "pageInfo",
+        "items"
 })
-public class Item {
+public class YoutubeV2 {
 
     @JsonProperty("kind")
     private String kind;
     @JsonProperty("etag")
     private String etag;
-    @JsonProperty("id")
-    private Id id;
-    @JsonProperty("snippet")
-    private Snippet snippet;
-    @JsonProperty("liveStreamingDetails")
-    private LiveStreamingDetails liveStreamingDetails;
+    @JsonProperty("regionCode")
+    private String regionCode;
+    @JsonProperty("pageInfo")
+    private PageInfo pageInfo;
+    @JsonProperty("items")
+    private List<ItemV2> items = null;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -53,24 +54,34 @@ public class Item {
         this.etag = etag;
     }
 
-    @JsonProperty("id")
-    public Id getId() {
-        return id;
+    @JsonProperty("regionCode")
+    public String getRegionCode() {
+        return regionCode;
     }
 
-    @JsonProperty("id")
-    public void setId(Id id) {
-        this.id = id;
+    @JsonProperty("regionCode")
+    public void setRegionCode(String regionCode) {
+        this.regionCode = regionCode;
     }
 
-    @JsonProperty("snippet")
-    public Snippet getSnippet() {
-        return snippet;
+    @JsonProperty("pageInfo")
+    public PageInfo getPageInfo() {
+        return pageInfo;
     }
 
-    @JsonProperty("snippet")
-    public void setSnippet(Snippet snippet) {
-        this.snippet = snippet;
+    @JsonProperty("pageInfo")
+    public void setPageInfo(PageInfo pageInfo) {
+        this.pageInfo = pageInfo;
+    }
+
+    @JsonProperty("items")
+    public List<ItemV2> getItems() {
+        return items;
+    }
+
+    @JsonProperty("items")
+    public void setItems(List<ItemV2> items) {
+        this.items = items;
     }
 
     @JsonAnyGetter
@@ -83,13 +94,4 @@ public class Item {
         this.additionalProperties.put(name, value);
     }
 
-    @JsonProperty("liveStreamingDetails")
-    public LiveStreamingDetails getLiveStreamingDetails() {
-        return liveStreamingDetails;
-    }
-
-    @JsonProperty("liveStreamingDetails")
-    public void setLiveStreamingDetails(LiveStreamingDetails liveStreamingDetails) {
-        this.liveStreamingDetails = liveStreamingDetails;
-    }
 }
