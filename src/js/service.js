@@ -291,7 +291,7 @@ var csService = {
 
             if (finishedOrLateCount > 0) {
                 $(tabId).find(".showPrevSchedule").fadeIn();
-                $(".scheduleItemContainer:visible .schedule-item.finishedOrLate").fadeOut();
+                $(".scheduleItemContainer .schedule-item.finishedOrLate").fadeOut();
                 $(tabId).find(".schedule-item").removeClass("wow");
             }
 
