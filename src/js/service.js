@@ -2,7 +2,9 @@ var csService = {
     url: 'http://catholicstreamlive-env.eba-mh2niqse.ap-south-1.elasticbeanstalk.com',
     //url: 'https://api.catholicstreams.live',
 
-    scheduleServiceCount: 0,
+    languageCount: 0,
+
+    scheduleSrvCompletedCount: 0,
 
     init: function (params) {
         csService.getLanguanges();
@@ -67,6 +69,7 @@ var csService = {
     getLanguanges: function () {
         $.get(csService.url + '/getLanguages', function (data) {
             csService.showGuidelineModal();
+            csService.languageCount = data.length;
             csService.displayLanguages(data);
             registerFixedHolyMassTitle();
         })
@@ -87,13 +90,10 @@ var csService = {
     },
 
     getSchedule: function (language, day, tabId, date, addWow) {
-        ++csService.scheduleServiceCount;
         $.get(csService.url + `/getSchedule/${language}/${day}`, function (data) {
-            --csService.scheduleServiceCount;
             csService.displaySchedule(data, tabId, date, addWow);
         })
             .fail(function () {
-                --csService.scheduleServiceCount;
                 console.log('failed to get schedule!');
             });
     },
@@ -236,6 +236,7 @@ var csService = {
     displaySchedule: function (data, tabId, date, addWow) {
         $(tabId).children(".loadingContent").fadeOut(500, function () {
             $(this).remove();
+            var finishedOrLateCount = 0;
             if (data.length < 1) {
                 $(tabId).append(
                     `<div class="row schedule-item noSchedulesFound">
@@ -244,52 +245,49 @@ var csService = {
                             <small>Please <a href="http://jyinfopark.in" target="_blank">contact us</a> to add new Holy Mass schedules here.</small>
                         </div>
                     </div>`);
-
-                return false;
             }
+            else {
+                $.each(data, function (index, row) {
+                    var videoTypeObj = csVideo.getVideoType(row.link);
+                    var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
+                    var statusObj = csVideo.getScheduleStatusClass(scheduleTime, videoTypeObj.type, row.link);
 
-            var finishedOrLateCount = 0;
+                    var videoBtnText = ['justStarted', 'inProgress'].includes(statusObj.class) ? "LIVE" : "Video";
+                    finishedOrLateCount += statusObj.class === "finishedOrLate" ? 1 : 0;
+                    var wowClass = addWow && statusObj.class !== "finishedOrLate" ? "wow fadeInUp" : "";
+                    var description = row.description ? `<p>${row.description}</p>` : "";
+                    var statusText = statusObj.title ? `<small class="float-right float-md-none">${statusObj.title}</small>` : '';
+                    var $target = $('<time class="userTzTime d-inline-block d-md-block float-right float-md-none"></time>');
+                    if (csTimeZone.defaultTz()) {
+                        var userTzDate = csTimeZone.convertIstToSelected(scheduleTime, csTimeZone.defaultTz());
+                        $target = csTimeZone.updateDom(userTzDate, $target);
+                    }
+                    $(tabId).append(
+                        `<div class="row schedule-item ${wowClass} ${statusObj.class}" data-ist-date="${scheduleTime}">
+                            <div class="col-md-3 py-1">
+                                <time>${row.prettyTime} IST</time>
+                                ${$target[0].outerHTML}
+                            </div>
+                            <div class="col-md-7 py-1">
+                                <h4>${row.name}</h4>
+                                ${description}
+                            </div>
+                            <div class="col-md-2 py-1 text-md-right">
+                                <button class="btn btn-sm ${videoTypeObj.btn} watchStream" 
+                                    data-video-url="${row.link}"
+                                    data-video-title="${row.name}"
+                                    data-video-type=${videoTypeObj.type}
+                                    data-video-status=${videoBtnText}
+                                    data-video-time=${statusObj.scheduleTimestamp}>
+                                    <i class="${videoTypeObj.icon} pr-2"></i>${videoBtnText}
+                                </button>
+                                ${statusText}
+                            </div>
+                        </div>`
+                    );
 
-            $.each(data, function (index, row) {
-                var videoTypeObj = csVideo.getVideoType(row.link);
-                var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
-                var statusObj = csVideo.getScheduleStatusClass(scheduleTime, videoTypeObj.type, row.link);
-
-                var videoBtnText = ['justStarted', 'inProgress'].includes(statusObj.class) ? "LIVE" : "Video";
-                finishedOrLateCount += statusObj.class === "finishedOrLate" ? 1 : 0;
-                var wowClass = addWow && statusObj.class !== "finishedOrLate" ? "wow fadeInUp" : "";
-                var description = row.description ? `<p>${row.description}</p>` : "";
-                var statusText = statusObj.title ? `<small class="float-right float-md-none">${statusObj.title}</small>` : '';
-                var $target = $('<time class="userTzTime d-inline-block d-md-block float-right float-md-none"></time>');
-                if (csTimeZone.defaultTz()) {
-                    var userTzDate = csTimeZone.convertIstToSelected(scheduleTime, csTimeZone.defaultTz());
-                    $target = csTimeZone.updateDom(userTzDate, $target);
-                }
-                $(tabId).append(
-                    `<div class="row schedule-item ${wowClass} ${statusObj.class}" data-ist-date="${scheduleTime}">
-                        <div class="col-md-3 py-1">
-                            <time>${row.prettyTime} IST</time>
-                            ${$target[0].outerHTML}
-                        </div>
-                        <div class="col-md-7 py-1">
-                            <h4>${row.name}</h4>
-                            ${description}
-                        </div>
-                        <div class="col-md-2 py-1 text-md-right">
-                            <button class="btn btn-sm ${videoTypeObj.btn} watchStream" 
-                                data-video-url="${row.link}"
-                                data-video-title="${row.name}"
-                                data-video-type=${videoTypeObj.type}
-                                data-video-status=${videoBtnText}
-                                data-video-time=${statusObj.scheduleTimestamp}>
-                                <i class="${videoTypeObj.icon} pr-2"></i>${videoBtnText}
-                            </button>
-                            ${statusText}
-                        </div>
-                    </div>`
-                );
-
-            })
+                })
+            }
 
             if (finishedOrLateCount > 0) {
                 $(tabId).find(".showPrevSchedule").fadeIn();
@@ -297,10 +295,11 @@ var csService = {
                 $(tabId).find(".schedule-item").removeClass("wow");
             }
 
-            console.log(csService.scheduleServiceCount);
-
-            if (csService.scheduleServiceCount === 0) {
-                csVideo.processChannelIdsToBeCached(); //process caching only after all schedules for the day.
+            ++csService.scheduleSrvCompletedCount;
+            console.log(csService.languageCount, csService.scheduleSrvCompletedCount);
+            if (csService.scheduleSrvCompletedCount === csService.languageCount) {
+                console.log("Processing cache - diabled for now");
+                //csVideo.processChannelIdsToBeCached(); //process caching only after all schedules for the day.
             }
         });
     }
