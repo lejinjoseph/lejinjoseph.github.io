@@ -76,8 +76,8 @@ var csVideo = {
     },
 
     addToLiveCache: function (cacheObj) {
-        var channelId = cacheObj.channelId;
-        var streamId = cacheObj.streamId;
+        var channelId = cacheObj.channelKey.channelId;
+        var streamId = cacheObj.channelKey.streamId;
         // cacheObj.timestamp = moment.utc(cacheObj.timestamp).unix();
         // delete cacheObj.channelId;
         // delete cacheObj.streamId;
@@ -126,7 +126,7 @@ var csVideo = {
                 console.log("Error: missing metadata");
                 return true; //assume as cache valid to avoid repeated Youtube API calls
             }
-            else if (metadata && moment.tz(metadata.lastUpdated, 'Asia/Kolkata').isAfter(scheduleTime)) {
+            else if (metadata && moment.tz(metadata.timestamp, 'Asia/Kolkata').isAfter(scheduleTime)) {
                 return true;
             }
             else {
@@ -178,7 +178,7 @@ var csVideo = {
                 else {
                     csVideo.refreshLiveStream(obj.channelId, eventType)
                         .done(function (data) {
-                            csVideo.addToLiveCache(data.channels);
+                            csVideo.validateAndSaveStreams(data.channels);
                         })
                         .fail(function () {
                             console.log("Cache refresh failed for " + obj.channelId);
@@ -191,11 +191,11 @@ var csVideo = {
     validateAndSaveStreams: function (data) {
         $.each(data, function (index, cache) {
             if (['live', 'upcoming'].includes(cache.liveBroadcastContent)
-                || cache.streamId === 'metadata') {
+                || cache.channelKey.streamId === 'metadata') {
                 csVideo.addToLiveCache(cache);
             }
             else {
-                csVideo.removeFromLiveCache(cache.channelId, cache.streamId);
+                csVideo.removeFromLiveCache(cache.channelKey.channelId, cache.channelKey.streamId);
             }
         });
     },
@@ -255,18 +255,11 @@ var csVideo = {
         csVideo.loadLiveStream(liveStreamUrl)
     },
 
-    checkYoutubeLive: function (channelId, videoUrl) {
+    refreshYoutubeLive: function (videoUrl, channelId, scheduleTimestamp) {
         csVideo.refreshLiveStream(channelId, "live")
             .done(function (data) {
-                csVideo.addToLiveCache(data.channels);
-                var streamObj = data.channels[0] || null;
-                if (streamObj && streamObj.channelId && streamObj.streamId) {
-                    csVideo.showYoutubeLive(datstreamObja.streamId);
-                }
-                else {
-                    console.log("No Live Streams found!");
-                    csVideo.showChannelBtn(videoUrl);
-                }
+                csVideo.validateAndSaveStreams(data.channels);
+                csVideo.checkYoutubeLive(videoUrl, channelId, scheduleTimestamp, true);
             })
             .fail(function () {
                 console.log('failed to get refresh stream!');
@@ -274,27 +267,25 @@ var csVideo = {
             });
     },
 
-    processYoutubeLive: function (videoUrl, scheduleTimestamp) {
-        var channelId = csVideo.getYoutubeChannelId(videoUrl);
-        if (channelId) {
-            var cacheStreamsValid = csVideo.isStreamCacheValid(channelId, scheduleTimestamp);
-            if (cacheStreamsValid) {
-                if (typeof cacheStreamsValid === "boolean") {
-                    console.log("cache valid but no streams");
-                    csVideo.showChannelBtn(videoUrl);
-                } else {
-                    console.log("cache valid and have streams");
-                    var cacheStreamId = cacheStreamsValid[0].streamId;
-                    csVideo.showYoutubeLive(cacheStreamId);
-                }
-            }
-            else {
-                console.log("REFRESHING Data.....!!!!");
-                csVideo.checkYoutubeLive(channelId, videoUrl);
+    checkYoutubeLive: function (videoUrl, channelId, scheduleTimestamp, refreshed) {
+        var cacheStreamsValid = csVideo.isStreamCacheValid(channelId, scheduleTimestamp);
+        if (cacheStreamsValid) {
+            if (typeof cacheStreamsValid === "boolean") {
+                console.log("cache valid but no streams");
+                csVideo.showChannelBtn(videoUrl);
+            } else {
+                console.log("cache valid and have streams");
+                var cacheStreamId = cacheStreamsValid[0].channelKey.streamId;
+                csVideo.showYoutubeLive(cacheStreamId);
             }
         }
-        else {
+        else if (refreshed) {
+            console.log("Live not found after Refresh!!!");
             csVideo.showChannelBtn(videoUrl);
+        }
+        else {
+            console.log("REFRESHING Data.....!!!!");
+            csVideo.refreshYoutubeLive(videoUrl, channelId, scheduleTimestamp);
         }
     },
 
@@ -310,7 +301,13 @@ var csVideo = {
         var timestamp = $(this).attr("data-video-time");
         if (videoType === "youtube" && videoStatus === "LIVE") {
             csVideo.openYoutubeModal(videoUrl, videoTitle);
-            csVideo.processYoutubeLive(videoUrl, timestamp);
+            var channelId = csVideo.getYoutubeChannelId(videoUrl);
+            if (channelId) {
+                csVideo.checkYoutubeLive(videoUrl, channelId, timestamp, false);
+            }
+            else {
+                csVideo.showChannelBtn(videoUrl);
+            }
         }
         else {
             window.open(videoUrl, "_blank");
