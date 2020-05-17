@@ -299,7 +299,7 @@ var csService = {
             console.log(csService.languageCount, csService.scheduleSrvCompletedCount);
             if (csService.scheduleSrvCompletedCount === csService.languageCount) {
                 console.log("Processing cache - diabled for now");
-                //csVideo.processChannelIdsToBeCached(); //process caching only after all schedules for the day.
+                csVideo.processChannelIdsToBeCached(); //process caching only after all schedules for the day.
             }
         });
     }

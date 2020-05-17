@@ -41,18 +41,20 @@ var csVideo = {
 
     getScheduleStatusClass: function (scheduleTime, videoType, videoUrl) {
         var mDif = csTimeZone.minutesDiffFromNow(scheduleTime);
+        var scheduleTimestamp = moment.tz(scheduleTime, 'Asia/Kolkata').unix()
         var statusObj = {
-            scheduleTimestamp: moment(scheduleTime).tz('Asia/Kolkata').unix()
+            scheduleTimestamp: scheduleTimestamp
         };
 
         if (videoType === "youtube") {
             var channelId = csVideo.getYoutubeChannelId(videoUrl);
             if (mDif >= -15 && mDif < 0) {
-                // csVideo.channelsToBeCached.upcoming.push(channelId); -- disable fetching upcoming live for now
+                // DISABLED fetching upcoming live for now due to Youtube API quota limitations
+                // csVideo.channelsToBeCached.upcoming.push({ channelId: channelId, scheduleTime: scheduleTimestamp });
             }
 
             if (mDif >= 0 && mDif <= 30) {
-                csVideo.channelsToBeCached.live.push({ channelId: channelId, scheduleTime: scheduleTime });
+                csVideo.channelsToBeCached.live.push({ channelId: channelId, scheduleTime: scheduleTimestamp });
             }
         }
 
@@ -104,7 +106,8 @@ var csVideo = {
     /**
      * CHeck if we have valid cache entries for a channel at a scheduled time
      */
-    isStreamCacheValid: function (channelId, scheduleTime) {
+    isStreamCacheValid: function (channelId, scheduleTimestamp) {
+        var scheduleTime = moment.unix(scheduleTimestamp);
         if (csVideo.liveVideoCache[channelId]) {
             var validStreams = [];
             var metadata = csVideo.liveVideoCache[channelId]['metadata'];
@@ -174,14 +177,17 @@ var csVideo = {
             $.each(csVideo.channelsToBeCached[eventType], function (index, obj) {
                 if (csVideo.isStreamCacheValid(obj.channelId, obj.scheduleTime)) {
                     console.log("Live video cache already upto date for " + obj.channelId);
+                    obj.status = "cached";
                 }
                 else {
                     csVideo.refreshLiveStream(obj.channelId, eventType)
                         .done(function (data) {
                             csVideo.validateAndSaveStreams(data.channels);
+                            obj.status = "refreshed";
                         })
                         .fail(function () {
                             console.log("Cache refresh failed for " + obj.channelId);
+                            obj.status = "failed";
                         });
                 }
             });
