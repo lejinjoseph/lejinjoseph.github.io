@@ -15,6 +15,10 @@ var csVideo = {
         upcoming: []
     },
 
+    channelsPendingRefresh: 0, //gloabl counter for ajax
+
+    videosToBeRefreshed: {},
+
     registerEvents: function () {
 
         csVideo.videoModal = $("#videoModal");
@@ -80,9 +84,7 @@ var csVideo = {
     addToLiveCache: function (cacheObj) {
         var channelId = cacheObj.channelKey.channelId;
         var streamId = cacheObj.channelKey.streamId;
-        // cacheObj.timestamp = moment.utc(cacheObj.timestamp).unix();
-        // delete cacheObj.channelId;
-        // delete cacheObj.streamId;
+
         if (typeof csVideo.liveVideoCache[channelId] === "undefined") {
             csVideo.liveVideoCache[channelId] = {};
         }
@@ -94,6 +96,18 @@ var csVideo = {
             };
         } else {
             csVideo.liveVideoCache[channelId][streamId] = cacheObj;
+            //save videoIds for fetching time details
+            if (cacheObj.scheduledStartTime === null || cacheObj.scheduledEndTime === null || cacheObj.actualEndTime === null) {
+                csVideo.videosToBeRefreshed[streamId] = {
+                    title: cacheObj.title,
+                    channelId: channelId
+                };
+            }
+            else {
+                if (csVideo.videosToBeRefreshed[streamId]) {
+                    delete csVideo.videosToBeRefreshed[streamId];
+                }
+            }
         }
     },
 
@@ -172,12 +186,30 @@ var csVideo = {
         return $.get(csService.url + `/liveStreamRefresh/${channelId}/${eventType}`);
     },
 
+    refreshVideoDetails: function (videoIds) {
+        $.ajax({
+            method: "POST",
+            url: csService.url + `/refreshVideoDetails`,
+            contentType: "application/json; charset=UTF-8",
+            dataType: "json",
+            data: JSON.stringify({ id: videoIds })
+        })
+            .done(function (data) {
+                console.log("video refresh success: " + data);
+            })
+            .fail(function () {
+                console.log("video refresh failed: " + data);
+            });
+    },
+
     processChannelIdsToBeCached: function () {
         for (const eventType in csVideo.channelsToBeCached) {
+            csVideo.channelsPendingRefresh += (csVideo.channelsToBeCached[eventType].length || 0);
             $.each(csVideo.channelsToBeCached[eventType], function (index, obj) {
                 if (csVideo.isStreamCacheValid(obj.channelId, obj.scheduleTime)) {
                     console.log("Live video cache already upto date for " + obj.channelId);
                     obj.status = "cached";
+                    --csVideo.channelsPendingRefresh;
                 }
                 else {
                     csVideo.refreshLiveStream(obj.channelId, eventType)
@@ -188,9 +220,30 @@ var csVideo = {
                         .fail(function () {
                             console.log("Cache refresh failed for " + obj.channelId);
                             obj.status = "failed";
+                        })
+                        .always(function () {
+                            --csVideo.channelsPendingRefresh;
+                            if (csVideo.channelsPendingRefresh === 0) { //checking when every api call completes
+                                console.log("Processing videos to be refreshed...");
+                                csVideo.processVideoDetailsRefresh();
+                            }
                         });
                 }
             });
+        }
+
+        if (csVideo.channelsPendingRefresh === 0) { //checking after the looping - for no service calls and no channels.
+            console.log("Processing videos to be refreshed...");
+            csVideo.processVideoDetailsRefresh();
+        }
+    },
+
+    processVideoDetailsRefresh: function () {
+        var videoIdArr = Object.keys(csVideo.videosToBeRefreshed);
+        if (videoIdArr.length) {
+            var videoIds = videoIdArr.join(",");
+            console.log("videoIds: " + videoIds);
+            csVideo.refreshVideoDetails(videoIds);
         }
     },
 
