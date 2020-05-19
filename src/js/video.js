@@ -281,8 +281,17 @@ var csVideo = {
                 csVideo.showChannelBtn(videoUrl);
             } else {
                 console.log("cache valid and have streams");
-                var cacheStreamId = cacheStreamsValid[0].channelKey.streamId;
-                csVideo.showYoutubeLive(cacheStreamId);
+                console.log(cacheStreamsValid);
+                // todo: May need better logic here if we have multiple Live within the schedule
+                var streamObj = cacheStreamsValid[0];
+                if (streamObj.embeddable) {
+                    var cacheStreamId = streamObj.channelKey.streamId;
+                    csVideo.showYoutubeLive(cacheStreamId);
+                }
+                else {
+                    console.log("Live Embedding permission denied!!");
+                    csVideo.showChannelBtn(videoUrl);
+                }
             }
         }
         else if (refreshed) {
