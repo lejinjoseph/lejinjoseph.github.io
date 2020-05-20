@@ -943,6 +943,10 @@ body.mobile-nav-active {
         display: none;
         cursor: pointer;
         padding: 0 10px 10px;
+
+        i {
+            margin-right: 5px;
+        }
     }
 
     .schedule-item {

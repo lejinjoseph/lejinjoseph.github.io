@@ -1,8 +1,3 @@
-jQuery(document).ready(function ($) {
-    csTimeZone.registerEvents();
-    csTimeZone.createDropDown('#timeZones');
-});
-
 var csTimeZone = {
 
     defaultTz: function () {
@@ -66,7 +61,7 @@ var csTimeZone = {
                 if (indexOfWeek >= 0) {
                     let todayIstDayIndex = moment.tz('Asia/Kolkata').day();
                     indexOfWeek = indexOfWeek < todayIstDayIndex ? indexOfWeek + 7 : indexOfWeek;
-                    let date = moment().day(indexOfWeek).tz('Asia/Kolkata');
+                    let date = moment.tz('Asia/Kolkata').day(indexOfWeek);
 
                     day.sortIndex = indexOfWeek;
                     day.date = date.format("YYYY-MM-DD");
@@ -101,7 +96,7 @@ var csTimeZone = {
         });
     },
 
-    formatScheduleDateTime: function (date, istTime) {
+    formatScheduleISTDateTime: function (date, istTime) {
         var fullDateIST = date + " " + istTime + " +05:30";
         var mDateTime = moment.parseZone(fullDateIST, "YYYY-MM-DD hh:mm A ZZ");
         return mDateTime.format();
@@ -125,13 +120,13 @@ var csTimeZone = {
             return nowUtc.diff(inputUtc, "minutes");
         }
         else {
-            var inputLocalTz = moment(inputTime);
-            var nowLocalTz = moment();
+            var inputIstTz = moment.tz(inputTime, 'Asia/Kolkata');
+            var nowIstTz = moment().tz('Asia/Kolkata');
             // testing
-            // nowLocalTz.add(3, 'hours').add(45, "minutes");
-            // console.log(nowLocalTz.format("LTZ"));
+            // nowIstTz.add(3, 'hours').add(10, "minutes");
+            // console.log(nowIstTz.format("LTZ"));
             // test end
-            return nowLocalTz.diff(inputLocalTz, "minutes");
+            return nowIstTz.diff(inputIstTz, "minutes");
         }
     }
 

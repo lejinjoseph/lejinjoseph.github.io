@@ -27,6 +27,13 @@ jQuery(document).ready(function ($) {
       }
     }
   });
+  csVideo.getLiveStreamCache();
+
+  csService.init();
+  csVideo.registerEvents();
+  csTimeZone.registerEvents();
+  csTimeZone.createDropDown('#timeZones');
+
 
   $('[data-toggle="tooltip"]').tooltip();
 
