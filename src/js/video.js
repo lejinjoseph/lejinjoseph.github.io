@@ -8,12 +8,15 @@ var csVideo = {
 
     videoModal: null,
 
+    //all timing in minutes
     timing: {
         startingSoonLimit: -15,
         justStartedLimit: 5,
         inProgressLimit: 30,
         channelLiveRefresh: 30,
         videoDetailsRefresh: 30,
+        scheduledStartDelayLimit: 60,
+        noUpdateLimit: 2880 //two days
     },
 
     liveVideoCache: {},
@@ -91,16 +94,26 @@ var csVideo = {
 
     validateAndSaveVideosToBeRefreshed: function (cacheObj) {
         var streamId = cacheObj.channelKey.streamId;
+        var updatedMinBefore = csTimeZone.minutesDiffFromNow(cacheObj.timestamp, 'utc');
+        var scheduleStartMinBefore = cacheObj.scheduledStartTime ? csTimeZone.minutesDiffFromNow(cacheObj.scheduledStartTime, 'utc') : 0;
+        var publishedMinBefore = cacheObj.publishedAt ? csTimeZone.minutesDiffFromNow(cacheObj.publishedAt, 'utc') : 0;
 
-        if ((cacheObj.scheduledStartTime === null && cacheObj.actualStartTime === null) //video details never fetched
-            || (cacheObj.scheduledEndTime === null && cacheObj.actualEndTime === null
-                && csTimeZone.minutesDiffFromNow(cacheObj.timestamp, 'utc') > csVideo.timing.videoDetailsRefresh)) { //refresh details periodically
-            csVideo.videosToBeRefreshed[streamId] = cacheObj;
-        }
-        else {
-            if (csVideo.videosToBeRefreshed[streamId]) {
+        /**
+         * video has endtime
+         * video not started one hour after scheduled time
+         * video updated with refresh duration
+         * video published and updated before 2 days and scheduleStart and actualStart are empty - possible invalid video
+         */
+        if (cacheObj.actualEndTime !== null
+            || (cacheObj.actualStartTime === null && scheduleStartMinBefore > csVideo.timing.scheduledStartDelayLimit)
+            || updatedMinBefore < csVideo.timing.videoDetailsRefresh
+            || (cacheObj.scheduledStartTime === null && cacheObj.actualStartTime === null && updatedMinBefore > csVideo.timing.noUpdateLimit && publishedMinBefore > csVideo.timing.noUpdateLimit)) {
+            if (csVideo.videosToBeRefreshed[streamId]) { // Refresh not needed or invalid video
                 delete csVideo.videosToBeRefreshed[streamId];
             }
+        }
+        else {
+            csVideo.videosToBeRefreshed[streamId] = cacheObj;
         }
     },
 
