@@ -8,6 +8,14 @@ var csVideo = {
 
     videoModal: null,
 
+    timing: {
+        startingSoonLimit: -15,
+        justStartedLimit: 5,
+        inProgressLimit: 30,
+        channelLiveRefresh: 30,
+        videoDetailsRefresh: 30,
+    },
+
     liveVideoCache: {},
 
     channelsToBeCached: { //in progress and soon starting live channel Ids
@@ -52,26 +60,26 @@ var csVideo = {
 
         if (videoType === "youtube") {
             var channelId = csVideo.getYoutubeChannelId(videoUrl);
-            if (mDif >= -15 && mDif < 0) {
+            if (mDif >= csVideo.timing.startingSoonLimit && mDif < 0) {
                 // DISABLED fetching upcoming live for now due to Youtube API quota limitations
                 // csVideo.channelsToBeCached.upcoming.push({ channelId: channelId, scheduleTime: scheduleTimestamp });
             }
 
-            if (mDif >= 0 && mDif <= 30) {
+            if (mDif >= 0 && mDif <= csVideo.timing.inProgressLimit) {
                 csVideo.channelsToBeCached.live.push({ channelId: channelId, scheduleTime: scheduleTimestamp });
             }
         }
 
-        if (mDif < -15) {
+        if (mDif < csVideo.timing.startingSoonLimit) {
             $.extend(statusObj, { class: "upComing", title: null });
         }
-        else if (mDif >= -15 && mDif < 0) {
+        else if (mDif >= csVideo.timing.startingSoonLimit && mDif < 0) {
             $.extend(statusObj, { class: "startingSoon", title: `${Math.abs(mDif)} mins to go` });
         }
-        else if (mDif >= 0 && mDif <= 5) {
+        else if (mDif >= 0 && mDif <= csVideo.timing.justStartedLimit) {
             $.extend(statusObj, { class: "justStarted", title: "just started" });
         }
-        else if (mDif > 5 && mDif <= 30) {
+        else if (mDif > csVideo.timing.justStartedLimit && mDif <= csVideo.timing.inProgressLimit) {
             $.extend(statusObj, { class: "inProgress", title: `${Math.abs(mDif)} mins ago` });
         }
         else {
