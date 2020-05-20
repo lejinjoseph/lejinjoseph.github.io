@@ -249,8 +249,8 @@ var csService = {
             else {
                 $.each(data, function (index, row) {
                     var videoTypeObj = csVideo.getVideoType(row.link);
-                    var scheduleTime = csTimeZone.formatScheduleDateTime(date, row.prettyTime);
-                    var statusObj = csVideo.getScheduleStatusClass(scheduleTime, videoTypeObj.type, row.link);
+                    var scheduleTimeIst = csTimeZone.formatScheduleISTDateTime(date, row.prettyTime);
+                    var statusObj = csVideo.getScheduleStatusClass(scheduleTimeIst, videoTypeObj.type, row.link);
 
                     var videoBtnText = ['justStarted', 'inProgress'].includes(statusObj.class) ? "LIVE" : "Video";
                     finishedOrLateCount += statusObj.class === "finishedOrLate" ? 1 : 0;
@@ -259,11 +259,11 @@ var csService = {
                     var statusText = statusObj.title ? `<small class="float-right float-md-none">${statusObj.title}</small>` : '';
                     var $target = $('<time class="userTzTime d-inline-block d-md-block float-right float-md-none"></time>');
                     if (csTimeZone.defaultTz()) {
-                        var userTzDate = csTimeZone.convertIstToSelected(scheduleTime, csTimeZone.defaultTz());
+                        var userTzDate = csTimeZone.convertIstToSelected(scheduleTimeIst, csTimeZone.defaultTz());
                         $target = csTimeZone.updateDom(userTzDate, $target);
                     }
                     $(tabId).append(
-                        `<div class="row schedule-item ${wowClass} ${statusObj.class}" data-ist-date="${scheduleTime}">
+                        `<div class="row schedule-item ${wowClass} ${statusObj.class}" data-ist-date="${scheduleTimeIst}">
                             <div class="col-md-3 py-1">
                                 <time>${row.prettyTime} IST</time>
                                 ${$target[0].outerHTML}

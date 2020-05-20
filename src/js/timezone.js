@@ -96,7 +96,7 @@ var csTimeZone = {
         });
     },
 
-    formatScheduleDateTime: function (date, istTime) {
+    formatScheduleISTDateTime: function (date, istTime) {
         var fullDateIST = date + " " + istTime + " +05:30";
         var mDateTime = moment.parseZone(fullDateIST, "YYYY-MM-DD hh:mm A ZZ");
         return mDateTime.format();
@@ -120,13 +120,13 @@ var csTimeZone = {
             return nowUtc.diff(inputUtc, "minutes");
         }
         else {
-            var inputLocalTz = moment(inputTime);
-            var nowLocalTz = moment();
+            var inputIstTz = moment.tz(inputTime, 'Asia/Kolkata');
+            var nowIstTz = moment().tz('Asia/Kolkata');
             // testing
-            // nowLocalTz.add(3, 'hours').add(10, "minutes");
-            // console.log(nowLocalTz.format("LTZ"));
+            // nowIstTz.add(3, 'hours').add(10, "minutes");
+            // console.log(nowIstTz.format("LTZ"));
             // test end
-            return nowLocalTz.diff(inputLocalTz, "minutes");
+            return nowIstTz.diff(inputIstTz, "minutes");
         }
     }
 

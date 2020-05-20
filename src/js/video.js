@@ -51,9 +51,9 @@ var csVideo = {
         }
     },
 
-    getScheduleStatusClass: function (scheduleTime, videoType, videoUrl) {
-        var mDif = csTimeZone.minutesDiffFromNow(scheduleTime);
-        var scheduleTimestamp = moment.tz(scheduleTime, 'Asia/Kolkata').unix()
+    getScheduleStatusClass: function (scheduleTimeIst, videoType, videoUrl) {
+        var mDif = csTimeZone.minutesDiffFromNow(scheduleTimeIst);
+        var scheduleTimestamp = moment.tz(scheduleTimeIst, 'Asia/Kolkata').unix()
         var statusObj = {
             scheduleTimestamp: scheduleTimestamp
         };
@@ -89,6 +89,21 @@ var csVideo = {
         return statusObj;
     },
 
+    validateAndSaveVideosToBeRefreshed: function (cacheObj) {
+        var streamId = cacheObj.channelKey.streamId;
+
+        if ((cacheObj.scheduledStartTime === null && cacheObj.actualStartTime === null) //video details never fetched
+            || (cacheObj.scheduledEndTime === null && cacheObj.actualEndTime === null
+                && csTimeZone.minutesDiffFromNow(cacheObj.timestamp, 'utc') > csVideo.timing.videoDetailsRefresh)) { //refresh details periodically
+            csVideo.videosToBeRefreshed[streamId] = cacheObj;
+        }
+        else {
+            if (csVideo.videosToBeRefreshed[streamId]) {
+                delete csVideo.videosToBeRefreshed[streamId];
+            }
+        }
+    },
+
     addToLiveCache: function (cacheObj) {
         var channelId = cacheObj.channelKey.channelId;
         var streamId = cacheObj.channelKey.streamId;
@@ -105,17 +120,7 @@ var csVideo = {
         } else {
             csVideo.liveVideoCache[channelId][streamId] = cacheObj;
             //save videoIds for fetching time details
-            if (cacheObj.scheduledStartTime === null || cacheObj.scheduledEndTime === null || cacheObj.actualEndTime === null) {
-                csVideo.videosToBeRefreshed[streamId] = {
-                    title: cacheObj.title,
-                    channelId: channelId
-                };
-            }
-            else {
-                if (csVideo.videosToBeRefreshed[streamId]) {
-                    delete csVideo.videosToBeRefreshed[streamId];
-                }
-            }
+            csVideo.validateAndSaveVideosToBeRefreshed(cacheObj);
         }
     },
 
