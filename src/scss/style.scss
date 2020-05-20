@@ -797,52 +797,14 @@ body.mobile-nav-active {
         }
     }
 
-    .tns-nav {
-        text-align: center;
-
-        button {
-            width: 9px;
-            height: 9px;
-            padding: 0;
-            margin: 0 5px;
-            border-radius: 50%;
-            background: #ddd;
-            border: 0;
-
-            &.tns-nav-active {
-                background: #d29e02;
-            }
-        }
+    .glider-prev {
+        position: absolute;
+        left: 0px;
     }
 
-    .tns-controls {
-
-        &>button {
-            background: transparent;
-            color: ghostwhite;
-            margin: 0;
-            padding: 0 5px;
-            border: none;
-            font-size: 1.5rem;
-
-            &:focus {
-                outline: none;
-                border: none;
-            }
-
-            &[data-controls=prev] {
-                position: absolute;
-                top: 45%;
-                left: 0;
-            }
-
-            &[data-controls=next] {
-                position: absolute;
-                top: 45%;
-                right: 0;
-            }
-        }
-
+    .glider-next {
+        position: absolute;
+        right: 0px;
     }
 }
 
