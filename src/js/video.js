@@ -111,6 +111,10 @@ var csVideo = {
             if (csVideo.videosToBeRefreshed[streamId]) { // Refresh not needed or invalid video
                 delete csVideo.videosToBeRefreshed[streamId];
             }
+            // Valid and updated video need to added/updated to Video Gallery
+            if(cacheObj.actualStartTime !== null && cacheObj.actualEndTime === null){
+                csGallery.validateAndVideoToGallery(cacheObj);
+            } 
         }
         else {
             csVideo.videosToBeRefreshed[streamId] = cacheObj;
