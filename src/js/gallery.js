@@ -46,6 +46,8 @@ var csGallery = {
                 }
             ]
         })
+
+        $("#liveGallery").on("click", ".thumb", csGallery.thumbnailClicked);
     },
 
     validateAndVideoToGallery: function (cacheObj) {
@@ -63,22 +65,26 @@ var csGallery = {
         };
 
         if (csGallery.galleryVideos[streamId]) {
-            csGallery.updateVideo(galleryObj);
+            csGallery.updateVideo(streamId, galleryObj);
         } else {
-            csGallery.addVideo(galleryObj);
+            csGallery.addVideo(streamId, galleryObj);
         }
 
         csGallery.galleryVideos[streamId] = galleryObj;
     },
 
-    addVideo: function (galleryObj) {
-        var item = csGallery.createGalleryHtml(galleryObj);
+    addVideo: function (streamId, galleryObj) {
+        var item = csGallery.createGalleryHtml(streamId, galleryObj);
         csGallery.glider.addItem(item);
     },
 
-    createGalleryHtml: function (galleryObj) {
+    updateVideo: function (streamId, galleryObj) {
+        console.log("Updating gallery video: " + streamId);
+    },
+
+    createGalleryHtml: function (streamId, galleryObj) {
         var html = `<div>
-                        <div class="thumb">
+                        <div class="thumb" data-stream-id="${streamId}" data-channel-id="${galleryObj.channelId}">
                         <img src="${galleryObj.thumbnail}" alt="">
                         <h5>${galleryObj.channelTitle}</h5>
                         <p>${galleryObj.videoTitle}</p>
@@ -88,5 +94,11 @@ var csGallery = {
                         </div>
                     </div>`;
         return $(html)[0]; //get native node object
+    },
+
+    thumbnailClicked: function () {
+        var streamId = $(this).data('streamId');
+        csVideo.openYoutubeModal();
+        csVideo.showYoutubeLive(streamId);
     }
 };

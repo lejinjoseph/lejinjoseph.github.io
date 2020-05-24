@@ -453,8 +453,13 @@ var csVideo = {
     },
 
     openYoutubeModal: function (url, title) {
-        $("#videoModal #visitChannelName").text(title);
-        $("#videoModal #visitChannelLink").attr('href', url);
+        //url and title not required when opened on Video Gallery click
+        if (typeof title !== 'undefined') {
+            $("#videoModal #visitChannelName").text(title);
+        }
+        if (typeof url !== "undefined") {
+            $("#videoModal #visitChannelLink").attr('href', url);
+        }
         $("#videoModal #visitChannel").hide();
         csVideo.videoModal.modal("show");
         //csVideo.getYoutubeLiveStreamUrl(url);
