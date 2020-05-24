@@ -55,6 +55,7 @@ var csGallery = {
         var title = metadata ? metadata.title : "";
 
         var galleryObj = {
+            channelId: channelId,
             channelTitle: title,
             videoTitle: cacheObj.title,
             thumbnail: cacheObj.thumbnail,
@@ -72,8 +73,7 @@ var csGallery = {
 
     addVideo: function (galleryObj) {
         var item = csGallery.createGalleryHtml(galleryObj);
-        console.log(item);
-        //csGallery.glider.addItem(item);
+        csGallery.glider.addItem(item);
     },
 
     createGalleryHtml: function (galleryObj) {
@@ -87,6 +87,6 @@ var csGallery = {
                         </p>
                         </div>
                     </div>`;
-        return $(html);
+        return $(html)[0]; //get native node object
     }
 };

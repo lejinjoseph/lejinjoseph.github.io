@@ -112,9 +112,9 @@ var csVideo = {
                 delete csVideo.videosToBeRefreshed[streamId];
             }
             // Valid and updated video need to added/updated to Video Gallery
-            if(cacheObj.actualStartTime !== null && cacheObj.actualEndTime === null){
+            if (cacheObj.actualStartTime !== null && cacheObj.actualEndTime === null) {
                 csGallery.validateAndVideoToGallery(cacheObj);
-            } 
+            }
         }
         else {
             csVideo.videosToBeRefreshed[streamId] = cacheObj;
@@ -278,6 +278,22 @@ var csVideo = {
     },
 
     validateAndSaveStreams: function (data) {
+        //sort cache such that 'metadata' records comes first
+        // this is fix channelTitle missing issue while loading video gallery
+        data.sort(function (a, b) {
+            var aStream = a.channelKey.streamId;
+            var bStream = a.channelKey.streamId;
+            var comparison = 0;
+
+            if (aStream === 'metadata') {
+                comparison = -1;
+            }
+            else if (bStream === 'metadata') {
+                comparison = 1;
+            }
+            return comparison;
+        });
+
         $.each(data, function (index, cache) {
             if (['live', 'upcoming'].includes(cache.liveBroadcastContent)
                 || cache.channelKey.streamId === 'metadata') {
