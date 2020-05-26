@@ -305,11 +305,11 @@ h6 {
     }
 
     .menu-active a {
-        color: #9194a2;
+        color: #dc3545;
     }
 
     a:hover {
-        color: #9194a2;
+        color: #dc3545;
 
         &:before {
             visibility: visible;
@@ -318,7 +318,7 @@ h6 {
     }
 
     >li {
-        margin-left: 8px;
+        margin-left: 25px;
 
         >a:before {
             content: "";
@@ -327,7 +327,7 @@ h6 {
             height: 2px;
             bottom: 0;
             left: 0;
-            background-color: #d29e02;
+            background-color: #dc3545;
             visibility: hidden;
             transition: all 0.3s ease-in-out 0s;
         }
@@ -808,8 +808,14 @@ body.mobile-nav-active {
         }
     }
 
-    .glider-dot.active {
-        background: #d29e02;
+    .glider-dot {
+        &:focus {
+            outline: none;
+        }
+
+        &.active {
+            background: #d29e02;
+        }
     }
 
     .glider-prev {
