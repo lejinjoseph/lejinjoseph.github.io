@@ -4,7 +4,13 @@ var csGallery = {
 
     galleryVideos: {},
 
+    searchCardVisible: true,
+
     init: function () {
+
+        $(".glider-prev, .glider-next").show();
+        $("#liveGallery").on("click", ".thumb:not(.search)", csGallery.thumbnailClicked);
+
         csGallery.glider = new Glider(document.querySelector('#liveSlider'), {
             slidesToShow: 'auto',
             slidesToScroll: 'auto',
@@ -31,13 +37,6 @@ var csGallery = {
                     }
                 },
                 {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                    }
-                },
-                {
                     breakpoint: 1200,
                     settings: {
                         slidesToShow: 3,
@@ -46,8 +45,6 @@ var csGallery = {
                 }
             ]
         })
-
-        $("#liveGallery").on("click", ".thumb:not(.search)", csGallery.thumbnailClicked);
     },
 
     validateAndVideoToGallery: function (cacheObj) {
@@ -74,6 +71,13 @@ var csGallery = {
     },
 
     addVideo: function (streamId, galleryObj) {
+
+        if (csGallery.searchCardVisible) {
+            csGallery.init();
+            csGallery.glider.removeItem(0);
+            csGallery.searchCardVisible = false;
+        }
+
         var item = csGallery.createGalleryHtml(streamId, galleryObj);
         csGallery.glider.addItem(item);
     },

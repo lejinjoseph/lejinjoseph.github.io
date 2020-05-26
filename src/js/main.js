@@ -3,7 +3,6 @@ jQuery(document).ready(function ($) {
   csVideo.getLiveStreamCache();
 
   csService.init();
-  csGallery.init();
   csVideo.registerEvents();
   csTimeZone.registerEvents();
   csTimeZone.createDropDown('#timeZones');

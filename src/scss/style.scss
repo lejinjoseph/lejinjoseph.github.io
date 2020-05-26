@@ -737,7 +737,6 @@ body.mobile-nav-active {
 
 #liveGallery {
     background: rgba(6, 12, 34, 0.98);
-    min-height: 400px;
 
     .container {
         position: relative;
@@ -757,7 +756,6 @@ body.mobile-nav-active {
 
                 &.search {
                     cursor: wait;
-                    background: whitesmoke;
 
                     h5 {
                         color: #dc3545;
@@ -815,6 +813,7 @@ body.mobile-nav-active {
     }
 
     .glider-prev {
+        display: none;
         position: absolute;
         left: 0px;
         top: 40%;
@@ -825,6 +824,7 @@ body.mobile-nav-active {
     }
 
     .glider-next {
+        display: none;
         position: absolute;
         right: 0px;
         top: 40%;
