@@ -737,6 +737,7 @@ body.mobile-nav-active {
 
 #liveGallery {
     background: rgba(6, 12, 34, 0.98);
+    min-height: 400px;
 
     .container {
         position: relative;
@@ -753,6 +754,17 @@ body.mobile-nav-active {
                 padding: 10px;
                 border-radius: 5px;
                 background: #000;
+
+                &.search {
+                    cursor: wait;
+                    background: whitesmoke;
+
+                    h5 {
+                        color: #dc3545;
+                        padding: 20px 0;
+                        font-weight: 500;
+                    }
+                }
 
                 h5 {
                     text-align: center;
@@ -798,14 +810,28 @@ body.mobile-nav-active {
         }
     }
 
+    .glider-dot.active {
+        background: #d29e02;
+    }
+
     .glider-prev {
         position: absolute;
         left: 0px;
+        top: 40%;
+
+        &:focus {
+            outline: none;
+        }
     }
 
     .glider-next {
         position: absolute;
         right: 0px;
+        top: 40%;
+
+        &:focus {
+            outline: none;
+        }
     }
 }
 

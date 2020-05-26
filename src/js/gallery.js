@@ -47,7 +47,7 @@ var csGallery = {
             ]
         })
 
-        $("#liveGallery").on("click", ".thumb", csGallery.thumbnailClicked);
+        $("#liveGallery").on("click", ".thumb:not(.search)", csGallery.thumbnailClicked);
     },
 
     validateAndVideoToGallery: function (cacheObj) {
