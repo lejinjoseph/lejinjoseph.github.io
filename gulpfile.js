@@ -19,7 +19,7 @@ var vendorCssFiles = [
   'node_modules/@fortawesome/fontawesome-free/css/v4-shims.min.css',
   'node_modules/animate.css/animate.min.css',
   'node_modules/bootstrap-select/dist/css/bootstrap-select.min.css',
-  'node_modules/tiny-slider/dist/tiny-slider.css'
+  'node_modules/glider-js/glider.min.css'
 ];
 
 var vendorJsFiles = [
@@ -30,7 +30,7 @@ var vendorJsFiles = [
   'node_modules/bootstrap-select/dist/js/bootstrap-select.min.js',
   'node_modules/moment/min/moment.min.js',
   'node_modules/moment-timezone/builds/moment-timezone-with-data-1970-2030.min.js',
-  'node_modules/tiny-slider/dist/min/tiny-slider.js'
+  'node_modules/glider-js/glider.min.js'
 ];
 
 var myCssFiles = ['src/scss/*.scss'];
@@ -39,6 +39,7 @@ var myJsFiles = [
   'src/js/timezone.js',
   'src/js/service.js',
   'src/js/video.js',
+  'src/js/gallery.js',
   'src/js/main.js'
 ];
 
