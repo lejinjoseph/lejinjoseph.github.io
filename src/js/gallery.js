@@ -2,7 +2,9 @@ var csGallery = {
 
     glider: null,
 
-    galleryVideos: {},
+    publishedVideos: {},
+
+    videoOrderArray: [],
 
     searchCardVisible: true,
 
@@ -61,13 +63,11 @@ var csGallery = {
             elapsedMins: csTimeZone.minutesDiffFromNow(cacheObj.actualStartTime, 'utc')
         };
 
-        if (csGallery.galleryVideos[streamId]) {
+        if (csGallery.publishedVideos[streamId]) {
             csGallery.updateVideo(streamId, galleryObj);
         } else {
             csGallery.addVideo(streamId, galleryObj);
         }
-
-        csGallery.galleryVideos[streamId] = galleryObj;
     },
 
     addVideo: function (streamId, galleryObj) {
@@ -80,10 +80,18 @@ var csGallery = {
 
         var item = csGallery.createGalleryHtml(streamId, galleryObj);
         csGallery.glider.addItem(item);
+        csGallery.publishedVideos[streamId] = galleryObj;
+        csGallery.videoOrderArray.push(streamId);
     },
 
     updateVideo: function (streamId, galleryObj) {
         console.log("Updating gallery video: " + streamId);
+        var gliderIndex = csGallery.videoOrderArray.indexOf(streamId);
+        csGallery.glider.removeItem(gliderIndex);
+        delete csGallery.publishedVideos[streamId];
+        csGallery.videoOrderArray.splice(gliderIndex, 1);
+
+        csGallery.addVideo(streamId, galleryObj);
     },
 
     createGalleryHtml: function (streamId, galleryObj) {
