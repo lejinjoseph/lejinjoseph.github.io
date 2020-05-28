@@ -933,14 +933,16 @@ body.mobile-nav-active {
         transition: ease-in-out .2s;
     }
 
-    .showPrevSchedule,
-    .hidePrevSchedule {
+    .showFinishedSwitch {
         display: none;
-        cursor: pointer;
-        padding: 0 10px 10px;
 
-        i {
-            margin-right: 5px;
+        input,
+        label {
+            cursor: pointer;
+        }
+
+        .custom-control-input:focus~.custom-control-label::before {
+            box-shadow: none;
         }
     }
 

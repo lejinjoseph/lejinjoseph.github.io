@@ -123,7 +123,7 @@ var csTimeZone = {
             var inputIstTz = moment.tz(inputTime, 'Asia/Kolkata');
             var nowIstTz = moment().tz('Asia/Kolkata');
             // testing
-            // nowIstTz.add(3, 'hours').add(10, "minutes");
+            // nowIstTz.add(7, 'hours').add(10, "minutes");
             // console.log(nowIstTz.format("LTZ"));
             // test end
             return nowIstTz.diff(inputIstTz, "minutes");

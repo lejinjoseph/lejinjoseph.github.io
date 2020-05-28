@@ -11,24 +11,12 @@ var csService = {
 
         $("body").on("click", "#instructions", csService.showGuidelineModal);
 
-        $("#holyMass").on("click", ".showPrevSchedule", function () {
-            var showBtn = $(this);
-            var hideBtn = $(this).siblings(".hidePrevSchedule");
-            $(".scheduleItemContainer:visible .schedule-item.finishedOrLate").fadeIn(500, function () {
-                showBtn.fadeOut(100, function () {
-                    hideBtn.fadeIn(100);
-                });
-            });
-        });
-
-        $("#holyMass").on("click", ".hidePrevSchedule", function () {
-            var hideBtn = $(this);
-            var showBtn = $(this).siblings(".showPrevSchedule");
-            $(".scheduleItemContainer:visible .schedule-item.finishedOrLate").fadeOut(500, function () {
-                hideBtn.fadeOut(100, function () {
-                    showBtn.fadeIn(100);
-                });
-            });
+        $("#holyMass").on("change", ".showFinishedCheckbox", function () {
+            if ($(this).is(":checked")) {
+                $(".scheduleItemContainer:visible .schedule-item.finishedOrLate").fadeIn(500);
+            } else {
+                $(".scheduleItemContainer:visible .schedule-item.finishedOrLate").fadeOut(500);
+            }
         });
 
         $("body").on('shown.bs.tab', '.daySelection a[data-toggle="tab"]', function ($event) {
@@ -201,14 +189,10 @@ var csService = {
                             </div>
                             <div class="row schedule-item showHide text-info">
                                 <div class="col-12 offset-md-3 col-md-6 text-center">
-                                    <a class="showPrevSchedule">
-                                        <i class="fas fa-eye"></i>
-                                        Show Finished Holy Masses
-                                    </a>
-                                    <a class="hidePrevSchedule">
-                                        <i class="fas fa-eye-slash"></i>
-                                        Hide Finished Holy Masses
-                                    </a>
+                                    <div class="custom-control custom-switch showFinishedSwitch">
+                                        <input type="checkbox" class="custom-control-input showFinishedCheckbox" id="showFinished">
+                                        <label class="custom-control-label" for="showFinished">Show Finished Holy Masses</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>`
@@ -290,7 +274,7 @@ var csService = {
             }
 
             if (finishedOrLateCount > 0) {
-                $(tabId).find(".showPrevSchedule").fadeIn();
+                $(tabId).find(".showFinishedSwitch").fadeIn();
                 $(".scheduleItemContainer .schedule-item.finishedOrLate").fadeOut();
                 $(tabId).find(".schedule-item").removeClass("wow");
             }
