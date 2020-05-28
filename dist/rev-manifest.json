@@ -1,8 +1,8 @@
 {
-  "css/app.min.css": "css/app-de5bb2276b.min.css",
-  "css/bundle.min.css": "css/bundle-bd9528ecf3.min.css",
-  "css/vendor.min.css": "css/vendor-d2438a8d46.min.css",
-  "js/app.min.js": "js/app-f87ff90b9c.min.js",
-  "js/bundle.min.js": "js/bundle-c9f92bc839.min.js",
-  "js/vendor.min.js": "js/vendor-70b1b507ed.min.js"
+  "css/app.min.css": "css/app-5d81dd4f97.min.css",
+  "css/bundle.min.css": "css/bundle-bd1f7553a2.min.css",
+  "css/vendor.min.css": "css/vendor-13ba2d0cc1.min.css",
+  "js/app.min.js": "js/app-c2fd35e7bb.min.js",
+  "js/bundle.min.js": "js/bundle-04ed61ef59.min.js",
+  "js/vendor.min.js": "js/vendor-8daa7a2acf.min.js"
 }
